@@ -1,22 +1,32 @@
 #include "SineWave.h"
 #include "Constants.h"
 
-SineWave::SineWave(unsigned int frequency, unsigned int duration)
+SineWave::SineWave(unsigned int aFrequency) : frequency(aFrequency) 
 {
-	generate(frequency, duration);
+
+}
+
+SineWave::SineWave(unsigned int aFrequency, double duration) : frequency(aFrequency)
+{
+	generate(duration);
 }
 
 SineWave::SineWave(unsigned int frequency, unsigned int duration, unsigned int aSampleRate, unsigned int aVolume) : sampleRate(aSampleRate), volume(aVolume) 
 {
-	generate(frequency, duration);
+	generate(duration);
 }
 
-void SineWave::generate(unsigned int freq, unsigned int durationInMs) {
+void SineWave::generateOnePeriod() {
+	double period = (double(1) / frequency);
+	generate(period);
+}
+
+void SineWave::generate(double duration) {
 	//Something is weird with the samplefreq. Has to be twice the specified amount, to play back properly at said amount!
 
-	double phaseAdj = (freq * twopi) / (sampleRate * 2);
+	double phaseAdj = (frequency * twopi) / (sampleRate * 2);
 
-	int sampleNumb = int(durationInMs * ((sampleRate * 2) / 1000));
+	int sampleNumb = int(duration * (sampleRate * 2));
 
 	for (int i = 0; i < sampleNumb; ++i)
 	{

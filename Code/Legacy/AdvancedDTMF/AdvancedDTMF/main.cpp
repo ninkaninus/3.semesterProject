@@ -16,9 +16,11 @@ int main()
 
 	sf::SoundBuffer buffer;
 
-	SineWave sine(1000, 500);
+	SineWave sine(2000, 10);
 
-	buffer.loadFromSamples(&sine.getSamples()[0], sine.getSamples().size(), 2, 44100);
+	std::vector<sf::Int16> sounds;
+
+	buffer.loadFromSamples(&sine.getSamples()[0], sine.getSamples().size(), 2, 22050);
 
 	sf::Sound sound;
 
