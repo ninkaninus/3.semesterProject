@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< 62fe65b655464f1a22650d1ec2c903ffc1525e9b
 <<<<<<< 7da78e1e5841d494d60c1a75125838fabe03a57e
 <<<<<<< 0c840054aa2824bf65f44a54cb3cd071a394c077
     <ClCompile Include="Generator.cpp" />
@@ -35,11 +36,16 @@
 =======
     <ClCompile Include="Source.cpp" />
 >>>>>>> 87aad1b58824a7bb6c3e84784b7de5c63bfd8e73
+=======
+    <ClCompile Include="Generator.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Transmitter.cpp" />
+>>>>>>> 6579bef5345060ba63a9ceb681a848f45461889c
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="SineWave.h" />
+    <ClInclude Include="Generator.h" />
+    <ClInclude Include="Transmitter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDB97CE9-AB07-4C9C-B215-A775DD218395}</ProjectGuid>

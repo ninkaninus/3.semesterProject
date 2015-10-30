@@ -17,6 +17,3 @@ namespace DTMF
 		DTMF::Tone nibbleToDTMF(unsigned char c);
 		Generator toneGenerator;
 	};
-
-}
-
