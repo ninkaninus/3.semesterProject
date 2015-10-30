@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "Frame.h"
+#include "DataLinkTransmit.h"
 using namespace std;
 int main()
 
@@ -10,8 +10,8 @@ int main()
 	string str;
 	cout << "Enter message" << endl;
 	getline(cin, str);
-	Frame test1(str);
-	test1.printFrames();
-	test1.printText();
+	DataLinkTransmit test1(str);
+	//test1.printFrames();
+	//test1.printText();
 	}
 }
