@@ -19,13 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SineWave.cpp" />
+    <ClCompile Include="Generator.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Transmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="SineWave.h" />
+    <ClInclude Include="Generator.h" />
+    <ClInclude Include="Transmitter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDB97CE9-AB07-4C9C-B215-A775DD218395}</ProjectGuid>
