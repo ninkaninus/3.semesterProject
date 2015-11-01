@@ -1,6 +1,7 @@
 #include "Transmitter.h"
 
-namespace DTMF {
+namespace DTMF 
+{
 	Transmitter::Transmitter()
 	{
 	}
@@ -10,7 +11,7 @@ namespace DTMF {
 	{
 	}
 
-	void Transmitter::Transmit(std::vector<int>) {
+	void Transmitter::transmit(std::vector<int>) {
 
 	}
 

@@ -3,12 +3,14 @@
 #include <vector>
 #include "Constants.h"
 
-namespace DTMF {
+namespace DTMF 
+{
 	class Transmitter
 	{
 	public:
 		Transmitter();
-		void Transmit(std::vector<int>);
+		void Transmit();
+		void transmit(std::vector<int>);
 		virtual ~Transmitter();
 	private:
 		Generator toneGenerator;
