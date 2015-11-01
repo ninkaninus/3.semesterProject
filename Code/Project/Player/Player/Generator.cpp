@@ -1,5 +1,6 @@
 #include "Generator.h"
 #include <iostream>
+#include <stdlib.h>
 
 namespace DTMF {
 
@@ -7,42 +8,61 @@ namespace DTMF {
 	{
 	}
 
-	void Generator::setSampleRate(unsigned int aNumber) {
+	void Generator::setSampleRate(unsigned int aNumber) 
+	{
 		sampleRate = aNumber;
 	}
 
-	unsigned int Generator::getSampleRate() const {
+	unsigned int Generator::getSampleRate() const 
+	{
 		return sampleRate;
 	}
 
-	unsigned int Generator::getVolume() const {
+	unsigned int Generator::getVolume() const 
+	{
 		return volume;
 	}
 
-	void Generator::setVolume(unsigned int aNumber) {
+	void Generator::setVolume(unsigned int aNumber) 
+	{
 		volume = aNumber;
 	}
 
-	double Generator::getDuration() const {
+	double Generator::getDuration() const 
+	{
 		return duration;
 	}
 
-	void Generator::setDuration(double aNumber) {
+	void Generator::setDuration(double aNumber) 
+	{
 		duration = aNumber;
 	}
 
-	sf::SoundBuffer* Generator::generate(std::vector<DTMF::Tone> toneBuffer) {
+	void Generator::setTransitionMode(Transition mode) 
+	{
+		transition = mode;
+	}
+
+	Transition Generator::getTransitionMode() const 
+	{
+		return transition;
+	}
+
+	sf::SoundBuffer* Generator::generate(std::vector<DTMF::Tone> toneBuffer) 
+	{
 		unsigned int bufferSize = static_cast<unsigned int>((toneBuffer.size() * sampleRate) * duration);
 		sf::SoundBuffer* SBpoint = new sf::SoundBuffer();
 		sf::Int16* outputBuffer = new sf::Int16[bufferSize];
-		std::cout << bufferSize << std::endl;
+
+		int samplesPerTone = bufferSize / toneBuffer.size();
 
 		double phase1 = 0;
 		double phase2 = 0;
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
 
-		for (int i = 0; i < toneBuffer.size(); i++) {
+		for (int i = 0; i < toneBuffer.size(); i++) 
+		{
 
 			phase1 = 0;
 			phase2 = 0;
@@ -52,10 +72,11 @@ namespace DTMF {
 			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
 			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
 
-			for (int j = i * (bufferSize / toneBuffer.size()); j < ((i + 1)* (bufferSize / toneBuffer.size())); j++) {
+			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++) 
+			{
 
 				outputBuffer[j] = static_cast<sf::Int16>(volume * (std::sin(phase1) + std::sin(phase2)));
-				
+
 				phase1 += phaseAdj1;
 				phase2 += phaseAdj2;
 
@@ -65,12 +86,29 @@ namespace DTMF {
 			}
 		}
 
+		if (transition == Transition::zeroPadding)
+		{
+			int currentIndex = 0;
+
+			for (int i = 1; i <= toneBuffer.size(); i++) 
+			{
+				currentIndex = (i * samplesPerTone) - 1;
+
+				while (outputBuffer[currentIndex] != 0) 
+				{
+					outputBuffer[currentIndex] = 0;
+					currentIndex--;
+				}
+			}
+		}
+
 		SBpoint->loadFromSamples(&outputBuffer[0], bufferSize, 1, sampleRate);
 
 		return SBpoint;
 	}
 
-	DTMF::ToneFreq Generator::getFreq(DTMF::Tone tone) {
+	DTMF::ToneFreq Generator::getFreq(DTMF::Tone tone) 
+	{
 
 		ToneFreq freq;
 
