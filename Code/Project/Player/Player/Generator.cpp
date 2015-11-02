@@ -63,7 +63,6 @@ namespace DTMF {
 
 		for (int i = 0; i < toneBuffer.size(); i++) 
 		{
-
 			phase1 = 0;
 			phase2 = 0;
 
@@ -80,7 +79,6 @@ namespace DTMF {
 				phase1 += phaseAdj1;
 				phase2 += phaseAdj2;
 
-
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
 			}
@@ -90,15 +88,24 @@ namespace DTMF {
 		{
 			int currentIndex = 0;
 
-			for (int i = 1; i <= toneBuffer.size(); i++) 
-			{
-				currentIndex = (i * samplesPerTone) - 1;
+			bool peaked = false;
 
-				while (outputBuffer[currentIndex] != 0) 
+			for (int i = 1; i < toneBuffer.size() - 1; i++) 
+			{
+				currentIndex = (i * samplesPerTone);
+				peaked = false;
+
+				do 
+				{
+					if (std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex])) peaked = true;
+					else outputBuffer[currentIndex] = 0;
+
+				} while (peaked == false);
+
+				while(std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
 				{
 					outputBuffer[currentIndex] = 0;
-					currentIndex--;
-				}
+				} 
 			}
 		}
 
