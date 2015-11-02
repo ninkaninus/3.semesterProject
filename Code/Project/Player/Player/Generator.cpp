@@ -97,15 +97,34 @@ namespace DTMF {
 
 				do 
 				{
-					if (std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex])) peaked = true;
-					else outputBuffer[currentIndex] = 0;
+					std::cout << "Current Index Value: " << outputBuffer[currentIndex] << std::endl;
+					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
+					if (std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
+					{
+						peaked = true;
+						outputBuffer[currentIndex] = 0;
+						std::cout << "Peaked" <<std::endl;
+					}
+					else
+					{
+						outputBuffer[currentIndex] = 0;
+						std::cout << "Haven't Peaked Yet" << std::endl;
+					}
+
+					currentIndex--;
 
 				} while (peaked == false);
 
+				std::cout << "Done with the peaking" << std::endl << std::endl;
+
 				while(std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
 				{
+					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
+					std::cout << "Current Index Value: " << outputBuffer[currentIndex - 1] << std::endl <<std::endl;
 					outputBuffer[currentIndex] = 0;
+					currentIndex--;
 				} 
+				std::cout << "Done" << std::endl;
 			}
 		}
 
