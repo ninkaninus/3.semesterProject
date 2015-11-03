@@ -1,4 +1,13 @@
 #pragma once
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <random>
+#include <bitset>
+
+using namespace std;
+
 class DataLinkRecive
 {
 public:

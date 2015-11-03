@@ -9,6 +9,8 @@ using namespace std;
 const int GENERATOR = 0x107 << 7;
 
 //function declrations
+void bitStuffing(vector<int>&, vector<int>&);
+
 void generateCRC(vector<int>&);
 //adds a CRC byte in the end of vector 
 
@@ -17,8 +19,12 @@ void ChekCRC(vector<int>&);
 
 
 int main() {
+	cout << 1 << endl;
 		vector<int> hans;
+		vector<int> stuff;
+		stuff.push_back(0x00);
 		
+		cout << 2 << endl;
 		hans.push_back(0x1F);
 		hans.push_back(0xFF);
 		hans.push_back(0x87);
@@ -31,26 +37,17 @@ int main() {
 		hans.push_back(0x11);
 		hans.push_back(0x00);
 
+		cout << 3 << endl;
+			//afsender del
+	
+		//bitStuffing(hans, stuff);
 
-		//afsender del
-		generateCRC(hans);	
-
-		for (int y=0; y < hans.size(); y++) {
+		for (unsigned int y=0; y < hans.size(); y++) {
 			cout << hans[y] << endl;
 		}
-		
-		cout << "der tilføjes fejl på plas 2" << endl << endl;
+		cout << 4 << endl;
+		hans.clear();
 
-		hans[2] = 0x88;
-		hans[10] = 0x73;
-
-		for (unsigned int y = 0; y < hans.size(); y++) {
-			cout << hans[y] << endl;
-		}
-		cout << endl;
-
-		//modtager
-		ChekCRC(hans);
 		for (unsigned int y = 0; y < hans.size(); y++) {
 			cout << hans[y] << endl;
 		}
@@ -113,4 +110,54 @@ void generateCRC(vector<int>& iVector)
 	iByte = iByte >> 8;
 	iVector.pop_back();
 	iVector.push_back(iByte);
+}
+
+void bitStuffing(vector<int>& iVector, vector<int>& stuffVector)
+{
+	//opsætning af variable
+	stuffVector.clear();
+	int iByte = 0;
+	int Loop = 0;
+
+	int stuffByte = 0;
+	int stuffLoop = 0;
+
+
+
+	//Syndromet beregnes
+	for (int i : iVector)
+	{
+		iByte = iByte | i;
+		Loop = 0;
+		while (Loop < 8)
+		{
+			bitset<16> s(iByte);
+			if (!s[15])
+			{
+				cout << s << endl;
+				if (s[14] && s[13] && s[12] && s[11] && s[10])
+				{
+					cout << "dette er et falg der tilføjes " << 0 << endl;
+					//to do
+				}
+			}
+			else
+			{
+				stuffByte = stuffByte >> 1 | 1;
+				stuffLoop++;
+			}
+
+
+			if (!(stuffLoop < 8))
+			{
+
+			}
+			iByte = iByte << 1;
+			Loop++;
+		}
+	}
+
+	//Syndromet returneres
+	cout << "Syndromet er: " << iByte << endl;
+	iVector.pop_back();
 }

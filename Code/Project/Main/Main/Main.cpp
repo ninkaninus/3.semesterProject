@@ -20,6 +20,8 @@ using namespace std;
 int main()
 {
 
+	DataLinkTransmit test();
+	vector<int> hans;
 
 	cout << "Dette er en test " << endl; 
 
