@@ -2,17 +2,22 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <bitset>
 using namespace std;
-static const int CHARS_IN_DataLinkTransmit = 3;
+static const int CHARS_IN_FRAME = 3;
+static const int GENERATOR = 0x107 << 7;
 class DataLinkTransmit
 {
 public:
-	DataLinkTransmit(void);
+	DataLinkTransmit(void);							//instancieres
 	~DataLinkTransmit(void);    
-	DataLinkTransmit(string enC);
-	DataLinkTransmit(string enC, int etIndex);
+	void assembleFrame(vector<int>& Payload, int anIndex, int maxIndex);
+	void generateCRC(vector<int>&);
+	//	void bitStuffing();
+
+	void checkCRC(vector<int>&);
 	void printText();
-	void printDataLinkTransmits();
+	void printFrames();
 
 protected:
 	int index;

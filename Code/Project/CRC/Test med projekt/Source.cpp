@@ -10,7 +10,7 @@ const int GENERATOR = 0x107 << 7;
 
 //function declrations
 void generateCRC(vector<int>&);
-//adds a CRC byte in the end of vector 
+//adds a CRC byte in the end ovoid generateCRC(vector<int>&);f vector 
 
 void ChekCRC(vector<int>&);
 //checks CRC byte in the end of vector 
