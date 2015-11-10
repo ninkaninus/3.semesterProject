@@ -18,14 +18,14 @@ namespace DTMF {
 		return sampleRate;
 	}
 
-	unsigned int Generator::getVolume() const 
+	unsigned int Generator::getVolumeMax() const 
 	{
-		return volume;
+		return volumeMax;
 	}
 
-	void Generator::setVolume(unsigned int aNumber) 
+	void Generator::setVolumeMax(unsigned int aNumber) 
 	{
-		volume = aNumber;
+		volumeMax = aNumber;
 	}
 
 	double Generator::getDuration() const 
@@ -48,6 +48,13 @@ namespace DTMF {
 		return transition;
 	}
 
+	sf::SoundBuffer* Generator::generate(std::vector<bool> binarySequence)
+	{
+		std::vector<DTMF::Tone> tones;
+
+		return generate(tones);
+	}
+
 	sf::SoundBuffer* Generator::generate(std::vector<DTMF::Tone> toneBuffer) 
 	{
 		unsigned int bufferSize = static_cast<unsigned int>((toneBuffer.size() * sampleRate) * duration);
@@ -60,11 +67,16 @@ namespace DTMF {
 		double phase2 = 0;
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
+		double volume = 0.0;
+		double volumeAdj = double(volumeMax) / (samplesPerTone/2);
+		bool volumeRising = true;
 
 		for (int i = 0; i < toneBuffer.size(); i++) 
 		{
 			phase1 = 0;
 			phase2 = 0;
+			volume = 0.0;
+			volumeRising = true;
 
 			ToneFreq freq = getFreq(toneBuffer[i]);
 
@@ -81,6 +93,16 @@ namespace DTMF {
 
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
+				if (volume >= volumeMax) {
+					volumeRising = false;
+				}
+
+				if (volumeRising) {
+					volume += volumeAdj;
+				}
+				else {
+					volume -= volumeAdj;
+				}
 			}
 		}
 
