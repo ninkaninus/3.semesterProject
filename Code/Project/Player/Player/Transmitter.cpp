@@ -11,7 +11,11 @@ namespace DTMF
 	{
 	}
 
-	void Transmitter::transmit(std::vector<int>) {
+	void Transmitter::Transmit() {
+
+	}
+
+	void Transmitter::transmit(std::vector<bool>& bitVector) {
 
 	}
 

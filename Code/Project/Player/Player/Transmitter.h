@@ -10,7 +10,7 @@ namespace DTMF
 	public:
 		Transmitter();
 		void Transmit();
-		void transmit(std::vector<int>);
+		void transmit(std::vector<bool>&);
 		virtual ~Transmitter();
 	private:
 		Generator toneGenerator;
