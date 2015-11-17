@@ -21,27 +21,36 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
 <<<<<<< 62fe65b655464f1a22650d1ec2c903ffc1525e9b
 <<<<<<< 7da78e1e5841d494d60c1a75125838fabe03a57e
 <<<<<<< 0c840054aa2824bf65f44a54cb3cd071a394c077
 =======
 >>>>>>> 6579bef5345060ba63a9ceb681a848f45461889c
+=======
+>>>>>>> origin/feature/Player
     <ClCompile Include="Generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transmitter.cpp">
+<<<<<<< HEAD
 <<<<<<< 62fe65b655464f1a22650d1ec2c903ffc1525e9b
 =======
     <ClCompile Include="SineWave.cpp">
 >>>>>>> 00a4cd2af1da9540bad57be71d47dea666e6055b
 =======
 >>>>>>> 6579bef5345060ba63a9ceb681a848f45461889c
+=======
+>>>>>>> origin/feature/Player
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
 <<<<<<< 62fe65b655464f1a22650d1ec2c903ffc1525e9b
 <<<<<<< 7da78e1e5841d494d60c1a75125838fabe03a57e
+=======
+>>>>>>> origin/feature/Player
     <ClInclude Include="Generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +60,7 @@
     <ClInclude Include="Transmitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
 =======
 >>>>>>> 87aad1b58824a7bb6c3e84784b7de5c63bfd8e73
 =======
@@ -67,5 +77,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
 >>>>>>> 00a4cd2af1da9540bad57be71d47dea666e6055b
+=======
+>>>>>>> origin/feature/Player
   </ItemGroup>
 </Project>
