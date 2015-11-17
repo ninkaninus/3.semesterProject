@@ -20,10 +20,17 @@ using namespace std;
 int main()
 {
 
-	DataLinkTransmit test();
-	vector<int> hans;
+	DataLinkTransmit objD;
+	TransportLayer objT;
+	ApplikationsLayer objA;
 
-	cout << "Dette er en test " << endl; 
 
-	return 0;
+
+	objA.dataToBoolean("hej");
+
+	objT.newInput(objA.returnData());
+	objT.getPayload(0);
+	
+	objD.assembleFrame(objT.returnPayload(), 0, 1);
+
 }

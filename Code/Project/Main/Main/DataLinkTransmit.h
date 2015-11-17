@@ -11,15 +11,19 @@ class DataLinkTransmit
 {
 public:
 	DataLinkTransmit();
-	void generateCRC();
-	void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
-	void assembleFrame(vector<int>& payload,int index);
+	void generateCRC(vector<int>&);
+	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
+	void assembleFrame(vector<bool>& aPayload,int index, int maxIndex);
 	~DataLinkTransmit();
+
+	void printFrames(); //hjælpemetode til at printe under test
 
 private:
 	int index;
+	int max;
 	int GENERATOR;
-	vector<int> payload;
-	vector<int> stuffed;
-};
+	int CHARS_IN_FRAME;
+	vector<bool> payload;
+	vector<bool> stuffed;
 
+};

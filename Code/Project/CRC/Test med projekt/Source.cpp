@@ -5,6 +5,39 @@
 
 using namespace std;
 
+	void foo(int &value)
+	{
+		value = 6;
+	}
+
+	int main()
+	{
+		int value = 5;
+
+		cout << "value = " << value << '\n';
+		foo(value);
+		cout << "value = " << value << '\n';
+		return 0;
+	}
+	/*string chat;
+	chat = "hejsa";
+	vector<bool> iVec;
+	for (int i = 0; i < chat.size(); i++)
+	{
+		for (int j = 0; j <= 7; j++)
+		{
+			bitset<8> bits(chat[i]);
+			cout << bits[j] << endl;
+			iVec.push_back(bits[j]);
+		}
+		cout << endl;
+	}
+
+	for (unsigned int i = 0; i < iVec.size(); i++)
+		cout << iVec[i] << endl;
+}*/
+
+/*
 //definitions
 const int GENERATOR = 0x107 << 7;
 
@@ -160,4 +193,4 @@ void bitStuffing(vector<int>& iVector, vector<int>& stuffVector)
 	//Syndromet returneres
 	cout << "Syndromet er: " << iByte << endl;
 	iVector.pop_back();
-}
+}*/

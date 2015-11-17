@@ -17,14 +17,16 @@ void DataLinkTransmit::assembleFrame(vector<int>& Payload, int anIndex, int maxI
 		myFrame.push_back(126);											//Flag
 		myFrame.push_back(anIndex);										//Sekvensnummer
 		myFrame.push_back(maxIndex);
-			if (Payload.size() % CHARS_IN_FRAME != 0 && Payload.size() - (anIndex*CHARS_IN_FRAME) < CHARS_IN_FRAME && anIndex <= maxIndex) //maxindex skal findes matematisk
-				for (int i = anIndex*CHARS_IN_FRAME; i < anIndex*CHARS_IN_FRAME + (Payload.size() % CHARS_IN_FRAME); i++)
-				{
-					myFrame.push_back(Payload[i]);
-					generateCRC(myFrame);
-					myFrame.push_back(126);
-					printFrames();
-				}
+		if (Payload.size() % CHARS_IN_FRAME != 0 && Payload.size() - (anIndex*CHARS_IN_FRAME) < CHARS_IN_FRAME && anIndex <= maxIndex) //maxindex skal findes matematisk
+		{
+			for (int i = anIndex*CHARS_IN_FRAME; i < anIndex*CHARS_IN_FRAME + (Payload.size() % CHARS_IN_FRAME); i++)
+			{
+				myFrame.push_back(Payload[i]);
+				generateCRC(myFrame);
+				myFrame.push_back(126);
+				printFrames();
+			}
+		}
 			else if (anIndex > maxIndex)
 			{
 				cout << "index too large" << endl;
