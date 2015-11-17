@@ -34,8 +34,8 @@ namespace DTMF
 	protected:
 		DTMF::ToneFreq getFreq(DTMF::Tone);
 		unsigned int sampleRate = 8000;
-		unsigned int volumeMax = 5000;
-		double duration = 1;
+		unsigned int volumeMax = 15000;
+		double duration = 0.1;
 		Transition transition = Transition::instant;
 	};
 
