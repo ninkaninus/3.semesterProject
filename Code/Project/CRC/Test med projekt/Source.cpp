@@ -32,8 +32,8 @@ int main() {
 		print(hans, "hans med CRC");
 
 		//fejl tilføjes
-		//tilføjFejl(hans);
-		//print(hans, "hans med fejl");
+		tilføjFejl(hans);
+		print(hans, "hans med fejl");
 		
 
 
@@ -86,10 +86,12 @@ void generateCRC(vector<bool>& bVector, int& n)
 	{
 		if (CRC[i]) {
 			// der er 1 - XOR
+			
 			for (int GEN = 0; GEN < n + 1; GEN++)
 			{
 				CRC[i + GEN] = CRC[i + GEN] ^ G[n - GEN];
 			}
+			//print(CRC, "test");
 		}
 	}
 		
@@ -139,10 +141,12 @@ bool ChekCRC(vector<bool>& bVector, int& n) {
 	{
 		if (CRC[i]) {
 			// der er 1 - XOR
+			
 			for (int GEN = 0; GEN < n + 1; GEN++)
 			{
 				CRC[i + GEN] = CRC[i + GEN] ^ G[n - GEN];
 			}
+			//print(CRC, "test");
 		}
 	}
 
@@ -177,7 +181,7 @@ void print(vector<bool>& aVector, string aName)
 			cout << " ";
 		}
 	}
-	cout << endl << endl;
+	cout <<  endl;
 }
 
 void fyldVector(vector<bool>& aVector)
