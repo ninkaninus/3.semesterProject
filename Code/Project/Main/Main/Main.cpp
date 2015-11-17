@@ -24,8 +24,6 @@ int main()
 	TransportLayer objT;
 	ApplikationsLayer objA;
 
-
-
 	objA.dataToBoolean("hej");
 
 	objT.newInput(objA.returnData());
