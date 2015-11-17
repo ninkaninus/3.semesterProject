@@ -9,10 +9,12 @@ namespace DTMF
 	{
 	public:
 		Transmitter();
-		void Transmit();
+		void transmit();
 		void transmit(std::vector<bool>&);
 		virtual ~Transmitter();
 	private:
+		char DTMFToChar(DTMF::Tone);
+		DTMF::Tone nibbleToDTMF(unsigned char c);
 		Generator toneGenerator;
 	};
 

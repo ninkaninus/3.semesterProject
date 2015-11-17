@@ -4,34 +4,32 @@
 #include <math.h>
 #include <vector>
 #include "Generator.h"
+#include "Transmitter.h"
 #include "Constants.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
 
-	DTMF::Generator gen;
+	DTMF::Transmitter transmitter;
 
-	gen.setDuration(1.0/10);
+	std::vector<bool> bv;
 
-	gen.setVolumeMax(15000);
+	srand(time(NULL));
 
-	//gen.setTransitionMode(DTMF::Transition::zeroPadding);
+	int numberOfTones = 200;
 
-	std::vector<DTMF::Tone> arr = { DTMF::Tone::ASTERISK, DTMF::Tone::HASH, DTMF::Tone::ZERO, DTMF::Tone::ONE, DTMF::Tone::TWO, DTMF::Tone::THREE, DTMF::Tone::FOUR, DTMF::Tone::FIVE, DTMF::Tone::SIX, DTMF::Tone::SEVEN, DTMF::Tone::EIGHT, DTMF::Tone::NINE, DTMF::Tone::A, DTMF::Tone::B,  DTMF::Tone::C,  DTMF::Tone::D, DTMF::Tone::ZERO, DTMF::Tone::ZERO };
-	
-	sf::SoundBuffer* buff = gen.generate(arr);
+	bool value = false;
 
-	sf::Sound sound;
-
-	sound.setBuffer(*buff);
-
-	sound.play();
-
-	while (sound.getStatus() == sf::Sound::Playing) {
-
+	for (int i = 0; i < 4 * numberOfTones ; i++)
+	{
+		value = rand() % 2;
+		bv.emplace_back(value);
+		std::cout << value << std::endl;
 	}
 
-	delete buff;
+	transmitter.transmit(bv);
 
 	return 0;
 }
