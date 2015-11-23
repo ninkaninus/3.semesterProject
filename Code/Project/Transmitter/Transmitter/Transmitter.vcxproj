@@ -18,46 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-<<<<<<< HEAD
-<<<<<<< 62fe65b655464f1a22650d1ec2c903ffc1525e9b
-<<<<<<< 7da78e1e5841d494d60c1a75125838fabe03a57e
-<<<<<<< 0c840054aa2824bf65f44a54cb3cd071a394c077
-    <ClCompile Include="Generator.cpp" />
-=======
-    <ClCompile Include="SineWave.cpp" />
->>>>>>> 00a4cd2af1da9540bad57be71d47dea666e6055b
-=======
-    <ClCompile Include="Generator.cpp" />
->>>>>>> origin/feature/Player
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Transmitter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="Generator.h" />
-    <ClInclude Include="Transmitter.h" />
-<<<<<<< HEAD
-=======
-    <ClCompile Include="Source.cpp" />
->>>>>>> 87aad1b58824a7bb6c3e84784b7de5c63bfd8e73
-=======
-    <ClCompile Include="Generator.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Transmitter.cpp" />
->>>>>>> 6579bef5345060ba63a9ceb681a848f45461889c
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="Generator.h" />
-    <ClInclude Include="Transmitter.h" />
-=======
->>>>>>> origin/feature/Player
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{EDB97CE9-AB07-4C9C-B215-A775DD218395}</ProjectGuid>
+    <ProjectGuid>{84C03D82-94F0-4950-AA53-9FB97E3264F9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Player</RootNamespace>
+    <RootNamespace>Transmitter</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -125,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\Libraries\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Libraries\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\Libraries\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Libraries\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -158,14 +122,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\Libraries\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Libraries\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\..\..\Libraries\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Libraries\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -187,6 +151,16 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Generator.h" />
+    <ClInclude Include="Transmitter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Generator.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Transmitter.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
