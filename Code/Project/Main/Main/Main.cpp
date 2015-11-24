@@ -31,6 +31,8 @@ int main()
 	objT.newInput(objA.returnData());
 	objT.getPayload(0);
 	
-	objD.assembleFrame(objT.returnPayload(), 0, 1);
+	objD.assembleFrame(objT.returnPayload(), 0, 0);
+
+	objD.printFrames();
 
 }
