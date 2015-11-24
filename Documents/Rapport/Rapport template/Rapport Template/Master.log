@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.11)  29 OCT 2015 21:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.11)  17 NOV 2015 16:49
 entering extended mode
 **Master.tex
 
@@ -1176,7 +1176,11 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \titlewidthfirst=\dimen144
 ))
 ("C:\Users\Steen-Bjørn\3.semesterProject\Documents\Rapport\Rapport template\Ra
-pport Template\Master.aux")
+pport Template\Master.aux"
+
+LaTeX Warning: Label `fig:tidsplan' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
@@ -1193,8 +1197,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 2.
 LaTeX Font Info:    Try loading font information for LGR+cmr on input line 2.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\cbfonts-fd\lgrcmr.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\cbfonts-fd\lgrcmr.fd"
 File: lgrcmr.fd 2013/09/01 v1.0 Greek European Computer Regular
 )
 LaTeX Font Info:    ... okay on input line 2.
@@ -1300,7 +1303,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 20.
 
-<Billeder/SDU-logo.pdf, id=27, 597.23125pt x 592.8559pt>
+<Billeder/SDU-logo.pdf, id=51, 597.23125pt x 592.8559pt>
 File: Billeder/SDU-logo.pdf Graphic file (type pdf)
 
 <use Billeder/SDU-logo.pdf>
@@ -1356,7 +1359,9 @@ Rapport Template/Billeder/SDU-logo.pdf>]
 ("C:\Users\Steen-Bjørn\3.semesterProject\Documents\Rapport\Rapport template\Ra
 pport Template\Master.toc")
 \tf@toc=\write4
+ [3
 
+]
 ("C:\Users\Steen-Bjørn\3.semesterProject\Documents\Rapport\Rapport template\Ra
 pport Template\Sections/Indledning.tex"
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
@@ -1365,20 +1370,35 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 16.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [3
+) [4]
+<Billeder/Gyro.jpg, id=99, 1085.05376pt x 593.21625pt>
+File: Billeder/Gyro.jpg Graphic file (type jpg)
+ <use Billeder/Gyro.jpg>
+Package pdftex.def Info: Billeder/Gyro.jpg used on input line 64.
+(pdftex.def)             Requested size: 813.78831pt x 444.91109pt.
 
-]
-<Billeder/Tidsplan.PNG, id=56, 484.81125pt x 237.13594pt>
-File: Billeder/Tidsplan.PNG Graphic file (type png)
+Overfull \hbox (386.99696pt too wide) in paragraph at lines 64--65
+ [][] 
+ []
 
-<use Billeder/Tidsplan.PNG>
-Package pdftex.def Info: Billeder/Tidsplan.PNG used on input line 50.
-(pdftex.def)             Requested size: 363.60754pt x 177.8515pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 )
 ("C:\Users\Steen-Bjørn\3.semesterProject\Documents\Rapport\Rapport template\Ra
-pport Template\Sections/Konklusion.tex") [4 <C:/Users/Steen-Bjørn/3.semesterPr
-oject/Documents/Rapport/Rapport template/Rapport Template/Billeder/Tidsplan.PNG
->]
+pport Template\Sections/GUI.tex" [5] [6 <C:/Users/Steen-Bjørn/3.semesterProjec
+t/Documents/Rapport/Rapport template/Rapport Template/Billeder/Gyro.jpg>]
+<Billeder/Comm_Modtagelse.png, id=111, 463.7325pt x 335.2525pt>
+File: Billeder/Comm_Modtagelse.png Graphic file (type png)
+
+<use Billeder/Comm_Modtagelse.png>
+Package pdftex.def Info: Billeder/Comm_Modtagelse.png used on input line 50.
+(pdftex.def)             Requested size: 347.79851pt x 251.43875pt.
+)
+("C:\Users\Steen-Bjørn\3.semesterProject\Documents\Rapport\Rapport template\Ra
+pport Template\Sections/Konklusion.tex") [7 <C:/Users/Steen-Bjørn/3.semesterPr
+oject/Documents/Rapport/Rapport template/Rapport Template/Billeder/Comm_Modtage
+lse.png>]
 No file Sections/Ekstra.tex.
 ) 
 AED: lastpage setting LastPage
@@ -1390,33 +1410,35 @@ pport Template\Master.aux")
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 5.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 5.
 Package rerunfilecheck Info: File `Master.out' has not changed.
-(rerunfilecheck)             Checksum: B1E8C7BEF3D6DCA842674AFCC7F8C421;356.
+(rerunfilecheck)             Checksum: 18522984752D28FD10F920466DCF7CA9;678.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5.
  ) 
 Here is how much of TeX's memory you used:
- 11537 strings out of 493921
- 173934 string characters out of 3144854
- 258826 words of memory out of 3000000
- 14621 multiletter control sequences out of 15000+200000
- 20822 words of font info for 45 fonts, out of 3000000 for 9000
+ 11570 strings out of 493921
+ 174582 string characters out of 3144854
+ 258868 words of memory out of 3000000
+ 14636 multiletter control sequences out of 15000+200000
+ 26031 words of font info for 53 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 40i,11n,45p,462b,434s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{page.5} has been referenced but does not exist, r
-eplaced by a fixed one
-
-{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)
-/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
-e1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/time
-s/utmri8a.pfb>
-Output written on Master.pdf (4 pages, 100123 bytes).
+ 40i,11n,45p,462b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x
+86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/type1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/u
+rw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/ut
+mr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Master.pdf (7 pages, 267911 bytes).
 PDF statistics:
- 88 PDF objects out of 1000 (max. 8388607)
- 14 named destinations out of 1000 (max. 500000)
- 59 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 163 PDF objects out of 1000 (max. 8388607)
+ 24 named destinations out of 1000 (max. 500000)
+ 112 words of extra memory for PDF output out of 10000 (max. 10000000)
 
