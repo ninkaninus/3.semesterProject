@@ -59,3 +59,8 @@ vector<bool> TransportLayer::returnPayload()
 {
 	return payload;
 }
+
+int TransportLayer::returnMaxIndex()
+{
+	return maxIndex;
+}

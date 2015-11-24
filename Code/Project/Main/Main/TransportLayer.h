@@ -18,6 +18,8 @@ public:
 	void nextIndex();						
 	void setStatus(bool SR);	
 	void sendPayload();						//ved brug af denne funktion sendes den enkelte payload
+	
+	int returnMaxIndex();
 	vector<bool> returnPayload();
 
 	~TransportLayer();

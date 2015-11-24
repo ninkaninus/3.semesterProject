@@ -25,33 +25,17 @@ int main()
 	ApplikationsLayer objA;
 	DTMF::Transmitter objTransmit;
 
-
 	objA.dataToBoolean("hejhejhejhejhejhejhejhejddddddddddddddddddddddddhej");
 
 	objT.newInput(objA.returnData());
 	
 	objT.getPayload(0);
-	objD.assembleFrame(objT.returnPayload(), 0, 9);
+	objD.assembleFrame(objT.returnPayload(), 0, objT.returnMaxIndex());
 	objTransmit.transmit(objD.returnPayload());
 
 	objT.getPayload(1);
-	objD.assembleFrame(objT.returnPayload(), 1, 5);
+	objD.assembleFrame(objT.returnPayload(), 1, 16);
 	objTransmit.transmit(objD.returnPayload());
 
-	objT.getPayload(2);
-	objD.assembleFrame(objT.returnPayload(), 2, 5);
-	objTransmit.transmit(objD.returnPayload());
-
-	objT.getPayload(3);
-	objD.assembleFrame(objT.returnPayload(), 0, 5);
-	objTransmit.transmit(objD.returnPayload());
-
-	objT.getPayload(4);
-	objD.assembleFrame(objT.returnPayload(), 1, 5);
-	objTransmit.transmit(objD.returnPayload());
-
-	objT.getPayload(5);
-	objD.assembleFrame(objT.returnPayload(), 2, 5);
-	objTransmit.transmit(objD.returnPayload());
 
 }
