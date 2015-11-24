@@ -5,6 +5,11 @@ namespace DTMF
 {
 	Transmitter::Transmitter()
 	{
+
+		setToneDuration(1.0/50);
+
+		setVolume(15000);
+
 	}
 
 	Transmitter::~Transmitter()
@@ -13,6 +18,14 @@ namespace DTMF
 
 	void Transmitter::transmit() {
 
+	}
+
+	void Transmitter::setToneDuration(double duration) {
+		toneGenerator.setDuration(duration);
+	}
+
+	void Transmitter::setVolume(unsigned int vol) {
+		toneGenerator.setVolumeMax(vol);
 	}
 
 	void Transmitter::transmit(std::vector<bool>& bitVector) {
@@ -31,15 +44,36 @@ namespace DTMF
 			}
 		}
 
-		for (DTMF::Tone t : tones) std::cout << DTMFToChar(t) << " - ";
-
-		toneGenerator.setDuration(1.0 / 50);
-
-		toneGenerator.setVolumeMax(15000);
+		for (int i = 0; i < tones.size(); i++) {
+			std::cout << i + 1 << ". send char: " << DTMFToChar(tones[i]) << std::endl;
+		}
 
 		sf::SoundBuffer* buff = toneGenerator.generate(tones);
 
 		//buff->saveToFile("DTMFSexyness.ogg");
+
+		sf::Sound sound;
+
+		sound.setBuffer(*buff);
+
+		sound.play();
+
+		while (sound.getStatus() == sf::Sound::Playing) {
+
+		}
+
+		delete buff;
+
+		std::cout << "Done" << std::endl;
+	}
+
+	void Transmitter::playContinousDTMF(DTMF::Tone tone) {
+
+		std::vector<DTMF::Tone> tones;
+
+		tones.push_back(tone);
+
+		sf::SoundBuffer* buff = toneGenerator.generate(tones);
 
 		sf::Sound sound;
 

@@ -38,16 +38,6 @@ namespace DTMF {
 		duration = aNumber;
 	}
 
-	void Generator::setTransitionMode(Transition mode) 
-	{
-		transition = mode;
-	}
-
-	Transition Generator::getTransitionMode() const 
-	{
-		return transition;
-	}
-
 	sf::SoundBuffer* Generator::generate(std::vector<bool> binarySequence)
 	{
 		std::vector<DTMF::Tone> tones;
@@ -75,7 +65,8 @@ namespace DTMF {
 		{
 			phase1 = 0;
 			phase2 = 0;
-			volume = 0.0;
+			//volume = 0.0;
+			volume = volumeMax;
 			volumeRising = true;
 
 			ToneFreq freq = getFreq(toneBuffer[i]);
@@ -93,6 +84,7 @@ namespace DTMF {
 
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
+				/*
 				if (volume >= volumeMax) {
 					volumeRising = false;
 				}
@@ -103,50 +95,7 @@ namespace DTMF {
 				else {
 					volume -= volumeAdj;
 				}
-			}
-		}
-
-		if (transition == Transition::zeroPadding)
-		{
-			int currentIndex = 0;
-
-			bool peaked = false;
-
-			for (int i = 1; i < toneBuffer.size() - 1; i++) 
-			{
-				currentIndex = (i * samplesPerTone);
-				peaked = false;
-
-				do 
-				{
-					std::cout << "Current Index Value: " << outputBuffer[currentIndex] << std::endl;
-					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
-					if (std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
-					{
-						peaked = true;
-						outputBuffer[currentIndex] = 0;
-						std::cout << "Peaked" <<std::endl;
-					}
-					else
-					{
-						outputBuffer[currentIndex] = 0;
-						std::cout << "Haven't Peaked Yet" << std::endl;
-					}
-
-					currentIndex--;
-
-				} while (peaked == false);
-
-				std::cout << "Done with the peaking" << std::endl << std::endl;
-
-				while(std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
-				{
-					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
-					std::cout << "Current Index Value: " << outputBuffer[currentIndex - 1] << std::endl <<std::endl;
-					outputBuffer[currentIndex] = 0;
-					currentIndex--;
-				} 
-				std::cout << "Done" << std::endl;
+				*/
 			}
 		}
 

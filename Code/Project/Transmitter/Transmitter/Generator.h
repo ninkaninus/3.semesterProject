@@ -5,16 +5,6 @@
 
 namespace DTMF 
 {
-
-	enum Transition
-	{
-		instant,
-		linear,
-		smooth,
-		flat,
-		zeroPadding
-	};
-
 	class Generator
 	{
 
@@ -26,8 +16,6 @@ namespace DTMF
 		unsigned int getVolumeMax() const;
 		void setDuration(double aNumber);
 		double getDuration() const;
-		void setTransitionMode(Transition);
-		Transition getTransitionMode() const;
 		sf::SoundBuffer* generate(std::vector<bool>);
 		sf::SoundBuffer* generate(std::vector<DTMF::Tone>);
 		virtual ~Generator();
@@ -36,7 +24,6 @@ namespace DTMF
 		unsigned int sampleRate = 8000;
 		unsigned int volumeMax = 15000;
 		double duration = 0.1;
-		Transition transition = Transition::instant;
 	};
 
 }
