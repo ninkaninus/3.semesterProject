@@ -25,7 +25,7 @@ int main()
 	ApplikationsLayer objA;
 	DTMF::Transmitter objTransmit;
 
-	objA.dataToBoolean("hejhejhejhejhejhejhejhejddddddddddddddddddddddddhej");
+	objA.dataToBoolean("a");
 
 	objT.newInput(objA.returnData());
 	

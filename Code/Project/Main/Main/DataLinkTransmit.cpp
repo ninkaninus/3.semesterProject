@@ -16,8 +16,6 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	payload.clear();	
 	vector<bool> bitStuffVector;		// Separat vector til data som skal bitstuffes
 
-	//payload.insert(payload.begin(), 32);//preamble indsættes til sidst
-
 	payload.push_back(0);
 	payload.push_back(1); 
 	payload.push_back(1); 

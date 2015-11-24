@@ -19,7 +19,7 @@ void ApplikationsLayer::dataToBoolean(string aString) // konverterer indkommen d
 		for (int j = 0; j <= 7; j++)
 		{
 			bitset<8> bits(aString[i]);
-	//		cout << bits[j] << endl;
+			cout << bits[j] << endl;
 			data.push_back(bits[j]);
 		}
 	//	cout << endl;
