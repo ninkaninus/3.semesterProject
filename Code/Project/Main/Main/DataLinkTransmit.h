@@ -15,6 +15,7 @@ public:
 	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
 	void assembleFrame(vector<bool>& aPayload,int index, int maxIndex);
 	~DataLinkTransmit();
+	vector<bool> returnPayload();
 
 	void printFrames(); //hjælpemetode til at printe under test
 

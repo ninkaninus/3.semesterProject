@@ -31,9 +31,6 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	//generateCRC(payload);
 	payload.push_back(126);
 	payload.insert(payload.begin(), 32);//preamble indsættes til sidst
-
-	for (unsigned int i = 0; i < payload.size(); i++)
-		cout << payload[i] << endl;
 }
 
 void DataLinkTransmit::generateCRC(vector<int>& iVector)
@@ -63,6 +60,11 @@ void DataLinkTransmit::generateCRC(vector<int>& iVector)
 	iByte = iByte >> 8;
 	iVector.pop_back();
 	iVector.push_back(iByte);
+}
+
+vector<bool> DataLinkTransmit::returnPayload()
+{
+	return payload;
 }
 
 void DataLinkTransmit::printFrames()
