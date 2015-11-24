@@ -25,7 +25,7 @@ int main()
 	ApplikationsLayer objA;
 	DTMF::Transmitter objTransmit;
 
-	objA.dataToBoolean("a");
+	objA.dataToBoolean("hejhej");
 
 	objT.newInput(objA.returnData());
 	
@@ -34,7 +34,7 @@ int main()
 	objTransmit.transmit(objD.returnPayload());
 
 	objT.getPayload(1);
-	objD.assembleFrame(objT.returnPayload(), 1, 16);
+	objD.assembleFrame(objT.returnPayload(), 1, objT.returnMaxIndex());
 	objTransmit.transmit(objD.returnPayload());
 
 

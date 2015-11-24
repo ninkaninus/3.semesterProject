@@ -4,7 +4,7 @@
 DataLinkTransmit::DataLinkTransmit()
 {
 	GENERATOR = 0x107 << 7;
-	CHARS_IN_FRAME = 3;
+	CHARS_IN_FRAME = 100;
 }
 
 DataLinkTransmit::~DataLinkTransmit()
@@ -15,6 +15,15 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 {
 	payload.clear();	
 	vector<bool> bitStuffVector;		// Separat vector til data som skal bitstuffes
+
+	payload.push_back(1);
+	payload.push_back(0);
+	payload.push_back(1);
+	payload.push_back(0);					//Preamble
+	payload.push_back(1);
+	payload.push_back(1);				
+	payload.push_back(1);
+	payload.push_back(1);
 
 	payload.push_back(0);
 	payload.push_back(1); 
@@ -60,7 +69,11 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	payload.push_back(1);												//Flag
 	payload.push_back(1);
 	payload.push_back(0);
-
+	
+	while (payload.size() % 4 != 0)
+	{
+		payload.push_back(0);
+	}
 }
 
 void DataLinkTransmit::generateCRC(vector<bool>& bVector, int& n)
