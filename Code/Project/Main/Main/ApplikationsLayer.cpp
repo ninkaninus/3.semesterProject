@@ -4,6 +4,7 @@
 
 ApplikationsLayer::ApplikationsLayer()
 {
+
 }
 
 
@@ -30,7 +31,20 @@ void ApplikationsLayer::dataToBoolean(string aString) // konverterer indkommen d
 
 void ApplikationsLayer::send(vector<bool>& iVector)	//sender input
 {
+	
+	DataLinkTransmit objD;
+	DTMF::Transmitter objTransmit;
+	
+	dataToBoolean("hejhej");
+	objT.newInput(returnData());
 
+	objT.getPayload(0);
+	objD.assembleFrame(objT.returnPayload(), 0, objT.returnMaxIndex());
+	objTransmit.transmit(objD.returnPayload());
+
+	objT.getPayload(1);
+	objD.assembleFrame(objT.returnPayload(), 1, objT.returnMaxIndex());
+	objTransmit.transmit(objD.returnPayload());
 }
 
 vector<bool> ApplikationsLayer::returnData()

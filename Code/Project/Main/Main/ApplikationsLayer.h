@@ -5,6 +5,9 @@
 #include <vector>
 #include <random>
 #include <bitset>
+#include "TransportLayer.h"
+#include "DataLinkTransmit.h"
+#include "Transmitter/Transmitter/Transmitter.h"
 
 using namespace std;
 
@@ -24,6 +27,7 @@ public:
 	~ApplikationsLayer();
 
 protected:
+	TransportLayer objT;
 	bool sendStatus;					//Er beskeden nået frem og klar til at sende igen
 	vector<bool> data;					//Den konverterede datastreng som skal sendes
 	string input;						//Hvad en bruger vil sende
