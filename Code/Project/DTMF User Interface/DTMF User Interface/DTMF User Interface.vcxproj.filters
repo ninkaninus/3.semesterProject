@@ -50,22 +50,28 @@
     <ClCompile Include="GeneratedFiles\qrc_gui.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="ApplikationsLayer.cpp">
+    <ClCompile Include="..\..\Transmitter\Transmitter\Generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLinkRecive.cpp">
+    <ClCompile Include="..\..\Transmitter\Transmitter\Transmitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLinkTransmit.cpp">
+    <ClCompile Include="..\..\Main\Main\ApplikationsLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicalRecive.cpp">
+    <ClCompile Include="..\..\Main\Main\DataLinkRecive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicalTransmit.cpp">
+    <ClCompile Include="..\..\Main\Main\DataLinkTransmit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TransportLayer.cpp">
+    <ClCompile Include="..\..\Main\Main\PhysicalRecive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Main\Main\PhysicalTransmit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Main\Main\TransportLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,24 +89,6 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_gui.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ApplikationsLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataLinkRecive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataLinkTransmit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicalRecive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicalTransmit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TransportLayer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

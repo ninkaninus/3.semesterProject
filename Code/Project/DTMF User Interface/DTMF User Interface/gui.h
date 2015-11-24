@@ -1,5 +1,12 @@
 #include <iostream>
-#include <ApplikationsLayer.h>
+#include "Transmitter\Transmitter\Transmitter.h"
+#include "Main\Main\ApplikationsLayer.h"
+#include "Main\Main\DataLinkRecive.h"
+#include "Main\Main\DataLinkTransmit.h"
+#include "Main\Main\PhysicalRecive.h"
+#include "Main\Main\PhysicalTransmit.h"
+#include "Main\Main\TransportLayer.h"
+
 #ifndef GUI_H
 #define GUI_H
 
@@ -13,6 +20,7 @@ class Gui : public QMainWindow
 public:
 	Gui(QWidget *parent = 0);
 	void stringtoQString();
+	void transmitInfo();
 	~Gui();
 
 	private slots:
@@ -21,6 +29,9 @@ public:
 
 private:
 	ApplikationsLayer AppObj;
+	TransportLayer transObj;
+	DataLinkTransmit DLTransmit;
+	DTMF::Transmitter transmit;
 	QString qsData;
 	std::string data;
 	Ui::GuiClass ui;
