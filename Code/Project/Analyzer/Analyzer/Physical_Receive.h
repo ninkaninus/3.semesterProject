@@ -10,6 +10,9 @@ public:
 	void stopRecording();
 
 	void analyzeBuffer();
+	void nextCharacter();
+	void continuousAnalysis();
+
 	void printChars();
 	void printMagnitude(char aChar);
 
@@ -20,7 +23,8 @@ protected:
 	Analyzer DTMF_analyzer;
 	std::vector<char> charsReceived;
 
-	bool bufferEmpty;
 	bool charStringBroken;
+
+	int count = 1;
 };
 

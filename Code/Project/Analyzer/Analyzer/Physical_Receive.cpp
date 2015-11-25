@@ -23,18 +23,29 @@ void Physical_Receive::stopRecording()
 
 void Physical_Receive::analyzeBuffer()
 {
-	std::cout << "Size of active buffer before analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+	//std::cout << "Size of active buffer before analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
 
-		char firstDTMF = DTMF_analyzer.findFirstDTMF();
-		if (firstDTMF != '!' && firstDTMF != '?')
+		char firstDTMF = DTMF_analyzer.syncToFirstDTMF();
+		if (firstDTMF != '?')
 		{
 			charsReceived.push_back(firstDTMF);
 
-			std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+			std::cout << count << ". detected char: " << firstDTMF << std::endl;
+			count++;
 
-			for (int iterator = 2; DTMF_analyzer.getActiveBuffer().size() > DTMF_analyzer.getSampleWindow() * 2; iterator++)
+			charStringBroken = false;
+
+			//std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+
+			nextCharacter();
+
+			/*
+			while(DTMF_analyzer.bufferReady())
 			{
-				char detectedChar = DTMF_analyzer.findDTMF();
+				//std::cout << "Samplewindow: " << SW * 2 << std::endl;
+				//std::cout << "Buffer size : " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+
+				char detectedChar = DTMF_analyzer.findNextDTMF();
 				if (detectedChar != '?')
 				{
 					charsReceived.push_back(detectedChar);
@@ -42,21 +53,71 @@ void Physical_Receive::analyzeBuffer()
 				}
 				else
 				{
-					//std::cout << "No more characters" << std::endl;
+					charStringBroken = true;
+					std::cout << "No more characters" << std::endl;
 					break;
 				}
 			}
+			*/
 		}
-	
+		
+		else
+			charStringBroken = true;
 
-		if(firstDTMF == '!')
-			bufferEmpty = true;
+	//std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+}
 
+void Physical_Receive::nextCharacter()
+{
+	while (DTMF_analyzer.bufferReady())
+	{
+		char detectedChar = DTMF_analyzer.findNextDTMF();
+		if (detectedChar != '?')
+		{
+			charsReceived.push_back(detectedChar);
+			DTMF_analyzer.erasePreviousSamples();
 
-	if (firstDTMF == '?')
-		charStringBroken = true;
+			std::cout << count << ". detected char: " << detectedChar << std::endl;
+			count++;
 
-	std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+		}
+		else
+		{
+			charStringBroken = true;
+			std::cout << "No more characters" << std::endl;
+			break;
+		}
+	}
+}
+
+void Physical_Receive::continuousAnalysis()
+{
+	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+
+	while (count < 200)
+	{
+		if (DTMF_analyzer.bufferReady())
+		{
+			if (charStringBroken)
+			{
+				analyzeBuffer();
+			}
+			else
+			{
+				nextCharacter();
+			}
+		}
+		else
+		{
+			DTMF_analyzer.addToBuffer();
+		}
+	}
+
+	//DTMF_analyzer.stopRecording();
+
+	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+
+	Sleep(1000);
 }
 
 void Physical_Receive::printChars()
@@ -71,13 +132,12 @@ void Physical_Receive::printMagnitude(char aChar)
 {
 	std::vector<int> magnitudeArray;
 
-	for (std::size_t i = 0; i < DTMF_analyzer.getSampleWindow() * 50; i += 10)
+	std::cout << "Started magnitude for whole range" << std::endl;
+
+	for (std::size_t i = 0; i < DTMF_analyzer.getActiveBuffer().size() - DTMF_analyzer.getSampleWindow(); i += 10)
 	{
-		//if (getMagnitudeH(i, detectedChar) > threshold && getMagnitudeL(i, detectedChar) > threshold)
-		//{
-		int currentMagnitude = DTMF_analyzer.getMagnitudeL(i, aChar);
+		int currentMagnitude = DTMF_analyzer.getMagnitudeH(i, aChar);
 		magnitudeArray.push_back(currentMagnitude);
-		//}
 	}
 
 	//---------------EXPORT MAGNITUDES-------------------

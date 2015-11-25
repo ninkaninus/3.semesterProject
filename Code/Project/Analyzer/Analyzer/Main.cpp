@@ -1,10 +1,10 @@
 #include "Physical_Receive.h"
-#include <Windows.h>
+
 
 int main()
 {
 	Physical_Receive Receiver;
-	Receiver.init(8000, 100);
+	Receiver.init(8000, 25);
 
 	std::cout << "Recording" << std::endl;
 
@@ -13,34 +13,12 @@ int main()
 		Receiver.stopRecording();
 
 	std::cout << "Stopped Recording" << std::endl;
-	
-	//Receiver.analyzeBuffer();
 
-	//Receiver.printChars();
+//	Receiver.analyzeBuffer();
 
-	Receiver.printMagnitude('1');
+	Receiver.printMagnitude('A');
 
-	/*
-	std::cout << "Size of active buffer: " << myAnalyzer.getActiveBuffer().size() << std::endl;
-
-	std::cout << "First detected char: " << myAnalyzer.findFirstDTMF() << std::endl;
-
-	std::cout << "Size of active buffer: " << myAnalyzer.getActiveBuffer().size() << std::endl;
-
-	
-	for (int iterator = 2; myAnalyzer.getActiveBuffer().size() > myAnalyzer.getSampleWindow() * 2; iterator++)
-	{
-		char detectedChar = myAnalyzer.findDTMF();
-		std::cout << iterator << ". detected char: " << detectedChar << std::endl;
-		if (detectedChar != '?')
-			myAnalyzer.erasePreviousSamples();
-		else
-		{
-			std::cout << "No more characters" << std::endl;
-			break;
-		}
-	}
-	*/
+	Receiver.continuousAnalysis();
 
 	return 0;
 }

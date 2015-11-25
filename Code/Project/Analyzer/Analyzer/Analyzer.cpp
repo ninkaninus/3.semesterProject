@@ -111,14 +111,22 @@ int Analyzer::findTargetFreqH(char aChar)
 	return 0;
 }
 
-char Analyzer::findFirstDTMF()
+bool Analyzer::bufferReady()
+{
+	if(activeBuffer.size() < 2 * sampleWindow)
+		return false;
+
+	return true;
+}
+
+char Analyzer::syncToFirstDTMF()
 {
 	int offset = 0;
-	char detectedChar = '!';
+	char detectedChar = '?'; // Defaultkarakter der betyder at der ikke er fundet noget DTMF
 	
-	while (activeBuffer.size() > 2 * sampleWindow)
+	while (bufferReady())
 	{
-		detectedChar = findDTMF();
+		detectedChar = findNextDTMF();
 		if (detectedChar != '?')
 		{
 			isRecording = true;
@@ -142,16 +150,15 @@ char Analyzer::findFirstDTMF()
 
 			std::vector<int> magnitudeArray;
 
-			for (std::size_t i = 0; i < sampleWindow*2; i += 10)
+
+
+			for (std::size_t i = 0; i < sampleWindow*2; i++)
 			{
-				//if (getMagnitudeH(i, detectedChar) > threshold && getMagnitudeL(i, detectedChar) > threshold)
-				//{
 					int currentMagnitude = getMagnitudeH(i, detectedChar);
 					magnitudeArray.push_back(currentMagnitude);
-				//}
 			}
 
-			
+			/*
 			//---------------EXPORT MAGNITUDES-------------------
 			std::ofstream outFile("TestH.txt");
 
@@ -166,19 +173,19 @@ char Analyzer::findFirstDTMF()
 
 			std::cout << "Stopped Writing" << std::endl;
 			//----------------------------------------------------
-			
+			*/
 
 			std::vector<int> tempArray = magnitudeArray;
 			std::sort(tempArray.begin(), tempArray.end());
 			int largestMagnitude = tempArray[tempArray.size() - 1];
 
-			std::cout << "Largest Magnitude: " << largestMagnitude << std::endl;
+			//std::cout << "Largest Magnitude: " << largestMagnitude << std::endl;
 
 			for (std::size_t i = 0; i < magnitudeArray.size(); i++)
 			{
 				if (magnitudeArray[i] == largestMagnitude)
 				{
-					offset = i*10;
+					offset = i;
 					break;
 				}
 			}
@@ -191,14 +198,14 @@ char Analyzer::findFirstDTMF()
 		}
 		else
 		{
-			// slet sampleWindow/10 samples fra activeBuffer og start forfra -> findFirstDTMF()
-			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + sampleWindow/10);
+			// slet sampleWindow/4 samples fra activeBuffer og start forfra -> syncToFirstDTMF()
+			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + sampleWindow/4);
 		}
 	}
 	return detectedChar;
 }
 
-char Analyzer::findDTMF()
+char Analyzer::findNextDTMF()
 {
 	int column = 5;
 	int row = 5;
