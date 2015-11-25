@@ -31,7 +31,7 @@ protected:
 	const int freqL[4]{ 697,770,852,941 };
 	const char charTable[4][4]{ { '1','2','3','A' },{ '4','5','6','B' },{ '7','8','9','C' },{ '*','0','#','D' } };
 	
-	const float threshold = 2000;
+	const float threshold = 1500;
 	bool isRecording;
 	
 	std::size_t sampleWindow;

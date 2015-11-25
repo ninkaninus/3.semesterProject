@@ -151,7 +151,7 @@ char Analyzer::findFirstDTMF()
 				//}
 			}
 
-			/*
+			
 			//---------------EXPORT MAGNITUDES-------------------
 			std::ofstream outFile("TestH.txt");
 
@@ -166,7 +166,7 @@ char Analyzer::findFirstDTMF()
 
 			std::cout << "Stopped Writing" << std::endl;
 			//----------------------------------------------------
-			*/
+			
 
 			std::vector<int> tempArray = magnitudeArray;
 			std::sort(tempArray.begin(), tempArray.end());

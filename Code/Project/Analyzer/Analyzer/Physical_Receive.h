@@ -4,10 +4,23 @@ class Physical_Receive
 {
 public:
 	Physical_Receive();
+
+	void init(int aSampleRate, int aProcessingTime);
+	void startRecording();
+	void stopRecording();
+
+	void analyzeBuffer();
+	void printChars();
+	void printMagnitude(char aChar);
+
+	void addChar(char aChar);
 	~Physical_Receive();
 
 protected:
 	Analyzer DTMF_analyzer;
 	std::vector<char> charsReceived;
+
+	bool bufferEmpty;
+	bool charStringBroken;
 };
 

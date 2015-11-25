@@ -1,20 +1,26 @@
-#include "Analyzer.h"
+#include "Physical_Receive.h"
 #include <Windows.h>
 
 int main()
 {
-	Analyzer myAnalyzer;
-	myAnalyzer.init(8000,100); // Samplerate , Bredde af samplewindow i millisekunder
+	Physical_Receive Receiver;
+	Receiver.init(8000, 100);
 
 	std::cout << "Recording" << std::endl;
 
-		myAnalyzer.startRecording();
-		Sleep(5000);
-		myAnalyzer.stopRecording();
+		Receiver.startRecording();
+		Sleep(10000);
+		Receiver.stopRecording();
 
 	std::cout << "Stopped Recording" << std::endl;
 	
+	//Receiver.analyzeBuffer();
 
+	//Receiver.printChars();
+
+	Receiver.printMagnitude('1');
+
+	/*
 	std::cout << "Size of active buffer: " << myAnalyzer.getActiveBuffer().size() << std::endl;
 
 	std::cout << "First detected char: " << myAnalyzer.findFirstDTMF() << std::endl;
@@ -34,6 +40,7 @@ int main()
 			break;
 		}
 	}
+	*/
 
 	return 0;
 }
