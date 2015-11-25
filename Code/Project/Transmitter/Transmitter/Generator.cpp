@@ -38,6 +38,14 @@ namespace DTMF {
 		duration = aNumber;
 	}
 
+	void Generator::setVolumeSmoothing(bool b) {
+		volumeSmoothing = b;
+	}
+
+	bool Generator::getVolumeSmoothing() const {
+		return volumeSmoothing;
+	}
+
 	sf::SoundBuffer* Generator::generate(std::vector<bool> binarySequence)
 	{
 		std::vector<DTMF::Tone> tones;
@@ -57,17 +65,18 @@ namespace DTMF {
 		double phase2 = 0;
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
-		double volume = 0.0;
+		double volume = volumeMax;
 		double volumeAdj = double(volumeMax) / (samplesPerTone/2);
-		bool volumeRising = true;
-
+		bool volumeRising = false;
+	
 		for (int i = 0; i < toneBuffer.size(); i++) 
 		{
 			phase1 = 0;
 			phase2 = 0;
-			//volume = 0.0;
-			volume = volumeMax;
-			volumeRising = true;
+			if (volumeSmoothing == true) {
+				volume = 0.0;
+				volumeRising = true;
+			}
 
 			ToneFreq freq = getFreq(toneBuffer[i]);
 
@@ -84,7 +93,9 @@ namespace DTMF {
 
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
-				/*
+				
+				if (!volumeSmoothing) continue;
+
 				if (volume >= volumeMax) {
 					volumeRising = false;
 				}
@@ -95,7 +106,6 @@ namespace DTMF {
 				else {
 					volume -= volumeAdj;
 				}
-				*/
 			}
 		}
 

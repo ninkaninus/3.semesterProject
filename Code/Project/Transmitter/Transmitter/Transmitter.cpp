@@ -73,7 +73,13 @@ namespace DTMF
 
 		tones.push_back(tone);
 
+		bool smoothingTemp = toneGenerator.getVolumeSmoothing();
+
+		toneGenerator.setVolumeSmoothing(false);
+
 		sf::SoundBuffer* buff = toneGenerator.generate(tones);
+
+		toneGenerator.setVolumeSmoothing(smoothingTemp);
 
 		sf::Sound sound;
 
