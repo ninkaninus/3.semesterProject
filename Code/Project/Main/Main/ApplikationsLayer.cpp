@@ -29,13 +29,13 @@ void ApplikationsLayer::dataToBoolean(string aString) // konverterer indkommen d
 	//	cout << data[i] << endl;
 }				
 
-void ApplikationsLayer::send(vector<bool>& iVector)	//sender input
+void ApplikationsLayer::send(string message)	//sender input
 {
 	
 	DataLinkTransmit objD;
 	DTMF::Transmitter objTransmit;
 	
-	dataToBoolean("hejhej");
+	dataToBoolean(message);
 	objT.newInput(returnData());
 
 	objT.getPayload(0);

@@ -20,7 +20,7 @@ public:
 	void xToData(string input);			//konverter fra input til vektor af bytes
 	void dataToX();						//konverter fra vektor af bytes til output
 	void dataTypeExtract();				//hvilken datatype der skal sende
-	void send(vector<bool>& iVector);	//sender input
+	void send(string message);	//sender input
 	void dataToBoolean(string aString); // konverterer indkommen data til bool
 	vector<bool> returnData();
 

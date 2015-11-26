@@ -21,9 +21,7 @@ int main()
 {
 	ApplikationsLayer objA;
 
-	vector<bool> hej;
-
-	objA.send(hej);
+	objA.send("jegersejja");
 	
 
 	//objT.newInput(objA.returnData());
