@@ -1236,11 +1236,12 @@
 		<row><td>DATABASEDIR</td><td>ISYourDataBaseDir</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>DTMF_CHATPROTOCOL</td><td>SDU</td><td>DTMFCH~1|DTMF ChatProtocol</td><td/><td>0</td><td/></row>
 		<row><td>DTMF_CHATPROTOCOL1</td><td>ROBTEK_3._SEMESTER_GRP1</td><td>DTMFCH~1|DTMF ChatProtocol</td><td/><td>0</td><td/></row>
+		<row><td>DTMF_CHATPROTOCOL2</td><td>ROBTEK_3._BESTGRPEU</td><td>DTMFCH~1|DTMF ChatProtocol</td><td/><td>0</td><td/></row>
 		<row><td>DesktopFolder</td><td>TARGETDIR</td><td>.:Desktop</td><td/><td>3</td><td/></row>
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
-		<row><td>INSTALLDIR</td><td>DTMF_CHATPROTOCOL1</td><td>.</td><td/><td>0</td><td/></row>
+		<row><td>INSTALLDIR</td><td>DTMF_CHATPROTOCOL2</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
@@ -1255,6 +1256,7 @@
 		<row><td>ProgramFiles64Folder</td><td>TARGETDIR</td><td>.:Prog64~1|Program Files 64</td><td/><td>0</td><td/></row>
 		<row><td>ProgramFilesFolder</td><td>TARGETDIR</td><td>.:PROGRA~1|program files</td><td/><td>0</td><td/></row>
 		<row><td>ProgramMenuFolder</td><td>TARGETDIR</td><td>.:Programs</td><td/><td>3</td><td/></row>
+		<row><td>ROBTEK_3._BESTGRPEU</td><td>ProgramFilesFolder</td><td>ROBTEK~1|Robtek 3. BestGrpEU</td><td/><td>0</td><td/></row>
 		<row><td>ROBTEK_3._SEMESTER_GRP1</td><td>ProgramFilesFolder</td><td>ROBTEK~1|Robtek 3. Semester Grp1</td><td/><td>0</td><td/></row>
 		<row><td>RecentFolder</td><td>TARGETDIR</td><td>.:Recent</td><td/><td>0</td><td/></row>
 		<row><td>SDU</td><td>ProgramFilesFolder</td><td>Sdu</td><td/><td>0</td><td/></row>
@@ -2808,7 +2810,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Robtek 3. Semester Grp1</td><td>0</td><td/><td>-979130736</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Robtek 3. BestGrpEU</td><td>0</td><td/><td>-710736659</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>-979131632</td></row>
@@ -3620,7 +3622,7 @@
 		<row><td>IDS_PROGMSG_XML_UPDATE_FILE</td><td>1033</td><td>Updating XML file %s...</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDS_SETUPEXE_EXPIRE_MSG</td><td>1033</td><td>This setup works until %s. The setup will now exit.</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDS_SETUPEXE_LAUNCH_COND_E</td><td>1033</td><td>This setup was built with an evaluation version of InstallShield and can only be launched from setup.exe.</td><td>0</td><td/><td>-979131632</td></row>
-		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-979117072</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>DTMF Chat</td><td>0</td><td/><td>-710679315</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-979131632</td></row>
@@ -3910,8 +3912,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-979131632</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-979131632</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.Robtek3.SemesterGrp1.com</td><td>0</td><td/><td>-979130736</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Robtek 3. Semester Grp1</td><td>0</td><td/><td>-979130736</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.Robtek3.BestGrpEU.com</td><td>0</td><td/><td>-710736659</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Robtek 3. BestGrpEU</td><td>0</td><td/><td>-710736659</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-979160048</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-979131632</td></row>
 	</table>
