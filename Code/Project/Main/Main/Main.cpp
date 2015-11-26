@@ -6,13 +6,14 @@
 #include <random>
 #include <bitset>
 
+
 //inkludering af klasser
+#include "ApplikationsLayer.h"
 //#include "PhysicalRecive.h"
 //#include "PhysicalTransmit.h"
 //#include "DataLinkRecive.h"
 //#include "DataLinkTransmit.h"
 //#include "TransportLayer.h"
-#include "ApplikationsLayer.h"
 //#include "Transmitter/Transmitter/Transmitter.h"
 
 using namespace std;

@@ -6,8 +6,7 @@
 #include <random>
 #include <bitset>
 #include "TransportLayer.h"
-#include "DataLinkTransmit.h"
-#include "Transmitter/Transmitter/Transmitter.h"
+
 
 using namespace std;
 

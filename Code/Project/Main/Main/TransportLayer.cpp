@@ -1,7 +1,9 @@
 #include "TransportLayer.h"
 
 TransportLayer::TransportLayer()
-{}
+{
+
+}
 
 void TransportLayer::newInput(vector<bool>& anInput)
 {
@@ -49,8 +51,20 @@ void TransportLayer::nextIndex()
 void TransportLayer::setStatus(bool SR)
 {}
 
-void TransportLayer::sendPayload()
-{}
+
+void TransportLayer::send(vector<bool>& bVector)
+{
+	
+	DTMF::Transmitter objTransmit;
+	getPayload(0);
+	objD.assembleFrame(returnPayload(), 0, returnMaxIndex());
+	objTransmit.transmit(objD.returnPayload());
+
+	getPayload(2);
+	objD.assembleFrame(returnPayload(), 1, returnMaxIndex());
+	objTransmit.transmit(objD.returnPayload());
+
+}
 
 TransportLayer::~TransportLayer()
 {}

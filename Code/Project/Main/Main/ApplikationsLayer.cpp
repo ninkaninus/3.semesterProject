@@ -31,20 +31,12 @@ void ApplikationsLayer::dataToBoolean(string aString) // konverterer indkommen d
 
 void ApplikationsLayer::send(string message)	//sender input
 {
-	
-	DataLinkTransmit objD;
-	DTMF::Transmitter objTransmit;
-	
+		
 	dataToBoolean(message);
 	objT.newInput(returnData());
+	objT.send(returnData());
 
-	objT.getPayload(0);
-	objD.assembleFrame(objT.returnPayload(), 0, objT.returnMaxIndex());
-	objTransmit.transmit(objD.returnPayload());
-
-	objT.getPayload(1);
-	objD.assembleFrame(objT.returnPayload(), 1, objT.returnMaxIndex());
-	objTransmit.transmit(objD.returnPayload());
+	
 }
 
 vector<bool> ApplikationsLayer::returnData()

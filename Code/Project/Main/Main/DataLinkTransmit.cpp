@@ -14,12 +14,12 @@ DataLinkTransmit::~DataLinkTransmit()
 void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int maxIndex) 
 {
 	payload.clear();	
-	vector<bool> bitStuffVector;		// Separat vector til data som skal bitstuffes
+	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
 
 	payload.push_back(1);
 	payload.push_back(0);
 	payload.push_back(1);
-	payload.push_back(0);					//Preamble
+	payload.push_back(0);											// Preamble
 	payload.push_back(1);
 	payload.push_back(1);				
 	payload.push_back(1);
@@ -30,33 +30,32 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	payload.push_back(1); 
 	payload.push_back(1); 
 	payload.push_back(1); 
-	payload.push_back(1);												//Flag
+	payload.push_back(1);											// Start flag
 	payload.push_back(1);	
 	payload.push_back(0);
 								
 	for (int j = 7; j >= 0; j--)
 	{
-		bitset<8> indexBits(anIndex);							//Index tilføjes i binær
+		bitset<8> indexBits(anIndex);								// Index tilføjes i binær
 		bitStuffVector.push_back(indexBits[j]);
 	}
 
 
 	for (int j = 7; j >= 0; j--)
 	{
-		bitset<8> maxIndexBits(maxIndex);							//MaxIndex tilføjes i binær
+		bitset<8> maxIndexBits(maxIndex);							// MaxIndex tilføjes i binær
 		bitStuffVector.push_back(maxIndexBits[j]);
 	}
 
 	for (int i = 0; i < aPayload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(aPayload[i]);
 
-	int crcType = 32;
 
+	int crcType = 32;												// CRC og bitstuffing
 	generateCRC(bitStuffVector, crcType);
-
 	bitStuffing(bitStuffVector);
 
-	for (bool i : bitStuffVector)
+	for (bool i : bitStuffVector)									// Alt smides til bage i framen
 		payload.push_back(i);
 
 	bitStuffVector.clear();
@@ -66,11 +65,11 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	payload.push_back(1);
 	payload.push_back(1);
 	payload.push_back(1);
-	payload.push_back(1);												//Flag
+	payload.push_back(1);											// Stop flag
 	payload.push_back(1);
 	payload.push_back(0);
 	
-	while (payload.size() % 4 != 0)
+	while (payload.size() % 4 != 0)									// Der tilføjes 0'er til antallet af bits går op i 4
 	{
 		payload.push_back(0);
 	}
