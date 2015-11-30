@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML\Audio\SoundRecorder.hpp"
 #include "SFML\Audio\SoundBuffer.hpp"
+#include <boost\circular_buffer.hpp>
 //#include "Analyzer.h"
 #include <iostream>
 #include <vector>
@@ -23,5 +24,6 @@ public:
 protected:
 	int processingInterval;
 	std::vector<signed short> buffer;
+	boost::circular_buffer<signed short> buffer2;
 };
 
