@@ -8,7 +8,7 @@ namespace DTMF
 {
 	Transmitter::Transmitter()
 	{
-		setToneDuration(1.0/50);
+		setToneDuration(1.0/40);
 		setVolume(15000);
 	}
 
@@ -42,8 +42,9 @@ namespace DTMF
 		}
 
 		for (int i = 0; i < tones.size(); i++) {
-			std::cout << i + 1 << ". send char: " << DTMFToChar(tones[i]) << std::endl;
+			std::cout << "Nr: " << i + 1 << " : " << DTMFToChar(tones[i]) << std::endl;
 		}
+		std::cout << std::endl;
 
 		buffer = toneGenerator.generate(tones);
 		playBuffer();

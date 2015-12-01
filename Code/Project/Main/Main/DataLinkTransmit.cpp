@@ -1,4 +1,6 @@
 #include "DataLinkTransmit.h"
+#include <iostream>
+#include <fstream>
 
 
 DataLinkTransmit::DataLinkTransmit()
@@ -11,26 +13,18 @@ DataLinkTransmit::~DataLinkTransmit()
 {
 }
 
-void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int maxIndex) 
+void DataLinkTransmit::transmitFrame(vector<bool>& aPayload, int anIndex, int maxIndex) 
 {
 	payload.clear();	
 	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
 
-	payload.push_back(1);
-	payload.push_back(0);
-	payload.push_back(1);
-	payload.push_back(0);											// Preamble
-	payload.push_back(1);
-	payload.push_back(1);				
-	payload.push_back(1);
-	payload.push_back(1);
-
+	//Start flag in binary
 	payload.push_back(0);
 	payload.push_back(1); 
 	payload.push_back(1); 
 	payload.push_back(1); 
 	payload.push_back(1); 
-	payload.push_back(1);											// Start flag
+	payload.push_back(1);											
 	payload.push_back(1);	
 	payload.push_back(0);
 								
@@ -73,6 +67,21 @@ void DataLinkTransmit::assembleFrame(vector<bool>& aPayload, int anIndex, int ma
 	{
 		payload.push_back(0);
 	}
+
+	/*
+	//Debugging code to output the binary format of a data package
+	ofstream out;
+
+	out.open("test.txt");
+
+	out << "1, 0, 1, 0, 0, 1, 1, 0, ";
+
+	for (bool b : payload) out << b << ", ";
+
+	out.close();
+	*/
+
+	transmitter.transmit(payload);
 }
 
 void DataLinkTransmit::generateCRC(vector<bool>& bVector, int& n)
@@ -148,7 +157,7 @@ void DataLinkTransmit::bitStuffing(vector<bool>& bVector)
 			loop++;
 			if (loop == 5) {
 				//der er et flag
-				cout << "flag" << endl;
+				//cout << "flag" << endl;
 				stuff.push_back(0);
 				loop = 0;
 			}
@@ -164,11 +173,6 @@ void DataLinkTransmit::bitStuffing(vector<bool>& bVector)
 
 	for (bool i : stuff)
 		bVector.push_back(i);
-}
-
-vector<bool> DataLinkTransmit::returnPayload()
-{
-	return payload;
 }
 
 void DataLinkTransmit::printFrames()

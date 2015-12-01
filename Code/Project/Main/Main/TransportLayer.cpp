@@ -5,47 +5,36 @@ TransportLayer::TransportLayer()
 
 }
 
-void TransportLayer::newInput(vector<bool>& anInput)
+void TransportLayer::calculateIndex(unsigned int payloadSize)
 {
-	index = 0;
-	CHARS_IN_FRAME = 3*8;
-	for (int i = 0; i < anInput.size(); i++)
-		input.push_back(anInput[i]);
+	if (payloadSize <= BITS_IN_FRAME) {
+		maxIndex = 0;
+		return;
+	}
 
-	if (input.size() % CHARS_IN_FRAME == 0)
-		maxIndex = anInput.size() / CHARS_IN_FRAME - 1;
-	else
-		maxIndex = anInput.size() / CHARS_IN_FRAME;
-
-	cout << "maxIndex er :" << maxIndex << endl;
+	if (payloadSize % BITS_IN_FRAME == 0) {
+		maxIndex = (payloadSize / BITS_IN_FRAME) - 1;
+	}
+	else {
+		maxIndex = int(payloadSize / BITS_IN_FRAME);
+	}
 }
 
-void TransportLayer::getPayload(int anIndex)
+vector<bool> TransportLayer::extractPayload(unsigned int anIndex)
 {
-	payload.clear();
-	if (input.size() % CHARS_IN_FRAME != 0 && input.size() - (anIndex*CHARS_IN_FRAME) < CHARS_IN_FRAME && anIndex <= maxIndex) //maxindex skal findes matematisk
-	{
-		for (int i = anIndex*CHARS_IN_FRAME; i < anIndex*CHARS_IN_FRAME + (input.size() % CHARS_IN_FRAME); i++)
-		{
-			payload.push_back(input[i]);
-		}
-	}
-	else
-	{
-		for (int i = anIndex*CHARS_IN_FRAME; i < (anIndex*CHARS_IN_FRAME + CHARS_IN_FRAME); i++)			//Tekst
-		{
-			payload.push_back(input[i]);
-		}
-	
-	}
-	
-//	for (unsigned int i = 0; i < payload.size(); i++)
-	//	cout << payload[i] << endl;
-}
+	vector<bool>::const_iterator first;
+	vector<bool>::const_iterator last;
 
-void TransportLayer::nextIndex()
-{
-	index++;
+	if (anIndex < maxIndex) {
+		first = input.begin() + (anIndex * BITS_IN_FRAME);
+		last = input.begin() + ((anIndex * BITS_IN_FRAME) + BITS_IN_FRAME);
+	}
+	else {
+		first = input.begin() + (anIndex * BITS_IN_FRAME);
+		last = input.end();
+	}
+	vector<bool> pl(first, last);
+	return pl;
 }
 
 void TransportLayer::setStatus(bool SR)
@@ -54,27 +43,26 @@ void TransportLayer::setStatus(bool SR)
 
 void TransportLayer::send(vector<bool>& bVector)
 {
-	
-	DTMF::Transmitter objTransmit;
-	getPayload(0);
-	objD.assembleFrame(returnPayload(), 0, returnMaxIndex());
-	objTransmit.transmit(objD.returnPayload());
+	index = 0;
 
-	getPayload(2);
-	objD.assembleFrame(returnPayload(), 1, returnMaxIndex());
-	objTransmit.transmit(objD.returnPayload());
+	input = bVector;
 
+	calculateIndex(bVector.size());
+
+	cout << "Max index: " << maxIndex << endl << endl;
+
+	for (int i = 0; i <= maxIndex; i++) {
+		cout << "Payload: " << i << endl;
+		dataLinkT.transmitFrame(extractPayload(i), i, returnMaxIndex());
+		cout << endl;
+	}
+}
+
+int TransportLayer::returnMaxIndex() const
+{
+	return maxIndex;
 }
 
 TransportLayer::~TransportLayer()
 {}
 
-vector<bool> TransportLayer::returnPayload()
-{
-	return payload;
-}
-
-int TransportLayer::returnMaxIndex()
-{
-	return maxIndex;
-}
