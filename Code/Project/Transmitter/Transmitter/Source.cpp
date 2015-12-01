@@ -14,37 +14,9 @@ int main()
 
 	DTMF::Transmitter transmitter;
 
-	transmitter.setToneDuration(5);
+	transmitter.playContinousDTMF(DTMF::Tone::ONE, 5);
 
-	transmitter.playContinousDTMF(DTMF::Tone::ONE);
-
-	transmitter.setToneDuration(1.0 / 50);
-
-	std::vector<bool> bv;
-
-	srand(time(NULL));
-
-	int numberOfTones = 200;
-
-	bool value = false;
-
-	bv.push_back(1);
-	bv.push_back(0);
-	bv.push_back(1);
-	bv.push_back(0);
-	bv.push_back(0);
-	bv.push_back(1);
-	bv.push_back(1);
-	bv.push_back(0);
-
-	for (int i = 0; i < 4 * numberOfTones ; i++)
-	{
-		value = rand() % 2;
-		bv.push_back(value);
-		//std::cout << value << std::endl;
-	}
-
-	transmitter.transmit(bv);
+	transmitter.playRandomDTMF(200, 1.0 / 50.0);
 	
 	return 0;
 }
