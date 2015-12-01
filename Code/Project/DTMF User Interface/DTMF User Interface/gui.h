@@ -19,8 +19,10 @@ class Gui : public QMainWindow
 
 public:
 	Gui(QWidget *parent = 0);
-	void stringtoQString();
+	void stringToQString();
 	void transmitInfo();
+	void showOnGui();
+	void commands();
 	~Gui();
 
 	private slots:
@@ -33,7 +35,7 @@ private:
 	DataLinkTransmit DLTransmit;
 	DTMF::Transmitter transmit;
 	QString qsData;
-	std::string data;
+	string data;
 	Ui::GuiClass ui;
 };
 
