@@ -6,7 +6,7 @@
 #include <random>
 #include <bitset>
 #include "TransportLayer.h"
-
+#include <sstream>
 
 using namespace std;
 
@@ -15,21 +15,21 @@ class ApplikationsLayer
 {
 public:
 	ApplikationsLayer();				
-	void interfaceUpdate();				//eventuel understyttelse af UserInterface
-	void xToData(string input);			//konverter fra input til vektor af bytes
-	void dataToX();						//konverter fra vektor af bytes til output
-	void dataTypeExtract();				//hvilken datatype der skal sende
-	void send(string message);			//sender input
-	void dataToBoolean(string aString); // konverterer indkommen data til bool
-	vector<bool> returnData();
+
+	void send(string message);							// sender input
+
+	vector<bool> dataToBoolean(string aString);			// konverterer indkommen data til bool
+
+	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
+
+
+	//hjælpefunktioner
+	void print(vector<bool>& aVector, string aName);	// viser bits
 
 	~ApplikationsLayer();
 
 protected:
 	TransportLayer objT;
-	bool sendStatus;					//Er beskeden nået frem og klar til at sende igen
-	vector<bool> data;					//Den konverterede datastreng som skal sendes
-	string input;						//Hvad en bruger vil sende
-	int dataType;						//Her bruger vi et nummer til at indikere hvilken datatype der er tale om
+	bool sendStatus;									// Er beskeden nået frem og klar til at sende igen
+	
 };
-
