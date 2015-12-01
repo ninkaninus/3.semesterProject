@@ -22,19 +22,25 @@ int main()
 {
 	ApplikationsLayer objA;
 
-	objA.send("jegersejja");
+	string test = "Dette ";
+	//objA.send("jegersejja");
+
+	// data to bool
+	cout << test << endl;
+		
+
+	// bool to data
+	cout << objA.BooleanTodata(objA.dataToBoolean(test)) << endl;
+	
 	
 
-	//objT.newInput(objA.returnData());
-	//
-	//
-	//objT.getPayload(0);
-	//objD.assembleFrame(objT.returnPayload(), 0, objT.returnMaxIndex());
-	//objTransmit.transmit(objD.returnPayload());
-
-	//objT.getPayload(1);
-	//objD.assembleFrame(objT.returnPayload(), 1, objT.returnMaxIndex());
-	//objTransmit.transmit(objD.returnPayload());
 
 
+
+	return 0;
 }
+	
+
+	
+
+
