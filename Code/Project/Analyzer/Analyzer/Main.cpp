@@ -1,4 +1,5 @@
 #include "Physical_Receive.h"
+#include <thread>
 
 int main()
 {
@@ -8,7 +9,21 @@ int main()
 	Receiver.startRecording();
 	Sleep(2000);
 
-	Receiver.continuousAnalysis();
+	std::thread analysis(&Physical_Receive::continuousAnalysis,&Receiver);
+	analysis.detach();
+
+	while (true)
+	{
+		Sleep(4000);
+
+		if (Receiver.getBools().size() > 1)
+		{
+			for (int i = 0; i < Receiver.getBools().size(); i++)
+			{
+				std::cout << Receiver.getBools()[i] << " ";
+			}
+		}
+	}
 
 	return 0;
 }

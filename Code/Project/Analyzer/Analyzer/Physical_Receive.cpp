@@ -74,8 +74,8 @@ void Physical_Receive::continuousAnalysis()
 
 	DTMF_analyzer.addToBuffer();
 
-	//while (!breakAnalysis)
-	while(count < 190)
+	while (!breakAnalysis)
+	//while(count < 190)
 	{
 		if (DTMF_analyzer.bufferReady())
 		{
@@ -105,6 +105,11 @@ void Physical_Receive::continuousAnalysis()
 void Physical_Receive::stopAnalysis()
 {
 	breakAnalysis = true;
+}
+
+std::vector<bool> Physical_Receive::getBools()
+{
+	return boolsReceived;
 }
 
 std::vector<bool> Physical_Receive::charToNibble(char aChar)

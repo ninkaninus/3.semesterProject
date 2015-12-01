@@ -1,5 +1,6 @@
 #pragma once
 #include "Analyzer.h"
+#include <thread>
 
 class Physical_Receive
 {
@@ -15,6 +16,8 @@ public:
 	void continuousAnalysis();
 
 	void stopAnalysis();
+
+	std::vector<bool> getBools();
 
 	std::vector<bool> charToNibble(char aChar);
 	void addNibble(std::vector<bool> aNibble);
