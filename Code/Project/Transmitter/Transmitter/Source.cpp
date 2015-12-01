@@ -14,23 +14,10 @@ int main()
 
 	DTMF::Transmitter transmitter;
 
-	std::vector<bool> bv;
+	transmitter.playContinousDTMF(DTMF::Tone::ONE, 5);
 
-	srand(time(NULL));
-
-	int numberOfTones = 200;
-
-	bool value = false;
-
-	for (int i = 0; i < 4 * numberOfTones ; i++)
-	{
-		value = rand() % 2;
-		bv.emplace_back(value);
-		std::cout << value << std::endl;
-	}
-
-	transmitter.transmit(bv);
-
+	transmitter.playRandomDTMF(200, 1.0 / 50.0);
+	
 	return 0;
 }
 

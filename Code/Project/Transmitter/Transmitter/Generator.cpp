@@ -38,14 +38,12 @@ namespace DTMF {
 		duration = aNumber;
 	}
 
-	void Generator::setTransitionMode(Transition mode) 
-	{
-		transition = mode;
+	void Generator::setVolumeSmoothing(bool b) {
+		volumeSmoothing = b;
 	}
 
-	Transition Generator::getTransitionMode() const 
-	{
-		return transition;
+	bool Generator::getVolumeSmoothing() const {
+		return volumeSmoothing;
 	}
 
 	sf::SoundBuffer* Generator::generate(std::vector<bool> binarySequence)
@@ -67,16 +65,18 @@ namespace DTMF {
 		double phase2 = 0;
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
-		double volume = 0.0;
+		double volume = volumeMax;
 		double volumeAdj = double(volumeMax) / (samplesPerTone/2);
-		bool volumeRising = true;
-
+		bool volumeRising = false;
+	
 		for (int i = 0; i < toneBuffer.size(); i++) 
 		{
 			phase1 = 0;
 			phase2 = 0;
-			volume = 0.0;
-			volumeRising = true;
+			if (volumeSmoothing == true) {
+				volume = 0.0;
+				volumeRising = true;
+			}
 
 			ToneFreq freq = getFreq(toneBuffer[i]);
 
@@ -93,6 +93,9 @@ namespace DTMF {
 
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
+				
+				if (!volumeSmoothing) continue;
+
 				if (volume >= volumeMax) {
 					volumeRising = false;
 				}
@@ -103,50 +106,6 @@ namespace DTMF {
 				else {
 					volume -= volumeAdj;
 				}
-			}
-		}
-
-		if (transition == Transition::zeroPadding)
-		{
-			int currentIndex = 0;
-
-			bool peaked = false;
-
-			for (int i = 1; i < toneBuffer.size() - 1; i++) 
-			{
-				currentIndex = (i * samplesPerTone);
-				peaked = false;
-
-				do 
-				{
-					std::cout << "Current Index Value: " << outputBuffer[currentIndex] << std::endl;
-					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
-					if (std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
-					{
-						peaked = true;
-						outputBuffer[currentIndex] = 0;
-						std::cout << "Peaked" <<std::endl;
-					}
-					else
-					{
-						outputBuffer[currentIndex] = 0;
-						std::cout << "Haven't Peaked Yet" << std::endl;
-					}
-
-					currentIndex--;
-
-				} while (peaked == false);
-
-				std::cout << "Done with the peaking" << std::endl << std::endl;
-
-				while(std::abs(outputBuffer[currentIndex - 1]) < std::abs(outputBuffer[currentIndex]))
-				{
-					std::cout << "Next Index Value: " << outputBuffer[currentIndex - 1] << std::endl;
-					std::cout << "Current Index Value: " << outputBuffer[currentIndex - 1] << std::endl <<std::endl;
-					outputBuffer[currentIndex] = 0;
-					currentIndex--;
-				} 
-				std::cout << "Done" << std::endl;
 			}
 		}
 

@@ -1,22 +1,39 @@
 #include "Transmitter.h"
 #include <iostream>
+#include <Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 namespace DTMF 
 {
 	Transmitter::Transmitter()
 	{
+
+		setToneDuration(1.0/50);
+
+		setVolume(15000);
+
 	}
 
 	Transmitter::~Transmitter()
 	{
+		delete buffer;
 	}
 
 	void Transmitter::transmit() {
 
 	}
 
+	void Transmitter::setToneDuration(double duration) {
+		toneGenerator.setDuration(duration);
+	}
+
+	void Transmitter::setVolume(unsigned int vol) {
+		toneGenerator.setVolumeMax(vol);
+	}
+
 	void Transmitter::transmit(std::vector<bool>& bitVector) {
-		std::vector<DTMF::Tone> tones;
+		std::vector<DTMF::Tone> tones = { DTMF::Tone::A, DTMF::Tone::SIX}; //Preamble assignment
 		unsigned char nibble = 0;
 		int count = 3;
 		for (bool b : bitVector) 
@@ -31,19 +48,65 @@ namespace DTMF
 			}
 		}
 
-		for (DTMF::Tone t : tones) std::cout << DTMFToChar(t) << " - ";
+		for (int i = 0; i < tones.size(); i++) {
+			std::cout << i + 1 << ". send char: " << DTMFToChar(tones[i]) << std::endl;
+		}
 
-		toneGenerator.setDuration(1.0 / 50);
+		buffer = toneGenerator.generate(tones);
 
-		toneGenerator.setVolumeMax(15000);
+		playBuffer();
 
-		sf::SoundBuffer* buff = toneGenerator.generate(tones);
+	}
 
-		//buff->saveToFile("DTMFSexyness.ogg");
+	void Transmitter::playContinousDTMF(DTMF::Tone tone, double duration) {
 
-		sf::Sound sound;
+		double prevDuration = toneGenerator.getDuration();
 
-		sound.setBuffer(*buff);
+		toneGenerator.setDuration(duration);
+
+		std::vector<DTMF::Tone> tones;
+
+		tones.push_back(tone);
+
+		bool smoothingTemp = toneGenerator.getVolumeSmoothing();
+
+		toneGenerator.setVolumeSmoothing(false);
+
+		buffer = toneGenerator.generate(tones);
+
+		playBuffer();
+
+		toneGenerator.setVolumeSmoothing(smoothingTemp);
+
+		toneGenerator.setDuration(prevDuration);
+	}
+
+	void Transmitter::playRandomDTMF(int numberOfTones, double duration) {
+
+		double prevDuration = toneGenerator.getDuration();
+
+		toneGenerator.setDuration(duration);
+
+		std::vector<bool> bv;
+
+		srand(time(NULL));
+
+		bool value;
+
+		for (int i = 0; i < 4 * numberOfTones; i++)
+		{
+			value = rand() % 2;
+			bv.push_back(value);
+			//std::cout << value << std::endl;
+		}
+
+		transmit(bv);
+
+		toneGenerator.setDuration(prevDuration);
+	}
+
+	void Transmitter::playBuffer() {
+		sound.setBuffer(*buffer);
 
 		sound.play();
 
@@ -51,9 +114,7 @@ namespace DTMF
 
 		}
 
-		delete buff;
-
-		std::cout << "Done" << std::endl;
+		Sleep(1);
 	}
 
 	DTMF::Tone Transmitter::nibbleToDTMF(unsigned char c) {
