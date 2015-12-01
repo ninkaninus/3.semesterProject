@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <bitset>
+#include <Windows.h>
 
 
 //inkludering af klasser
@@ -22,8 +23,9 @@ int main()
 {
 	ApplikationsLayer objA;
 
-	objA.send("jegersejja");
+	objA.send("Mr. Watson, come here, I want to see you!");
 	
+	Sleep(5000);
 
 	//objT.newInput(objA.returnData());
 	//

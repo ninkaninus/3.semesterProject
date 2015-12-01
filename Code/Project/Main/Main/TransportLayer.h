@@ -6,33 +6,28 @@
 #include <random>
 #include <bitset>
 #include "DataLinkTransmit.h"
-#include "Transmitter/Transmitter/Transmitter.h"
 
 using namespace std;
-
 
 class TransportLayer
 {
 public:
 	TransportLayer();
-	void newInput(vector<bool>& anInput);
-	void getPayload(int index);				//finder en payload udfra indexnummer - gemmes i payload			
-	void nextIndex();						
+	void calculateIndex(unsigned int payloadSize);	
+	vector<bool> extractPayload(unsigned int index);
 	void setStatus(bool SR);	
 	void send(vector<bool>& bVector);
 	
-	int returnMaxIndex();
-	vector<bool> returnPayload();
+	int returnMaxIndex() const;
 
 	~TransportLayer();
 
 protected:
-	DataLinkTransmit objD;
+	DataLinkTransmit dataLinkT;
 	vector<bool> input;						//user input
-	vector<bool> payload;					//pakkedel
 	bool SR;								//status sender eller modtager
 	int index;								//Framenummer
 	int maxIndex;
-	int CHARS_IN_FRAME;
+	const unsigned int BITS_IN_FRAME = 160 * 8;
 };
 

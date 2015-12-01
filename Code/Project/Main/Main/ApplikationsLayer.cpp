@@ -31,12 +31,8 @@ void ApplikationsLayer::dataToBoolean(string aString) // konverterer indkommen d
 
 void ApplikationsLayer::send(string message)	//sender input
 {
-		
 	dataToBoolean(message);
-	objT.newInput(returnData());
 	objT.send(returnData());
-
-	
 }
 
 vector<bool> ApplikationsLayer::returnData()
