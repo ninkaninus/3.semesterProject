@@ -8,11 +8,8 @@ namespace DTMF
 {
 	Transmitter::Transmitter()
 	{
-
 		setToneDuration(1.0/50);
-
 		setVolume(15000);
-
 	}
 
 	Transmitter::~Transmitter()
@@ -24,16 +21,12 @@ namespace DTMF
 
 	}
 
-	void Transmitter::setToneDuration(double duration) {
-		toneGenerator.setDuration(duration);
-	}
-
-	void Transmitter::setVolume(unsigned int vol) {
-		toneGenerator.setVolumeMax(vol);
-	}
-
 	void Transmitter::transmit(std::vector<bool>& bitVector) {
-		std::vector<DTMF::Tone> tones = { DTMF::Tone::A, DTMF::Tone::SIX}; //Preamble assignment
+		std::vector<DTMF::Tone> tones; 
+		for (int i = 0; i < preambleAmount; i++) {
+			tones.push_back(DTMF::Tone::A);
+			tones.push_back(DTMF::Tone::SIX);
+		}
 		unsigned char nibble = 0;
 		int count = 3;
 		for (bool b : bitVector) 
@@ -53,9 +46,7 @@ namespace DTMF
 		}
 
 		buffer = toneGenerator.generate(tones);
-
 		playBuffer();
-
 	}
 
 	void Transmitter::playContinousDTMF(DTMF::Tone tone, double duration) {
@@ -107,7 +98,6 @@ namespace DTMF
 
 	void Transmitter::playBuffer() {
 		sound.setBuffer(*buffer);
-
 		sound.play();
 
 		while (sound.getStatus() == sf::Sound::Playing) {
@@ -196,6 +186,22 @@ namespace DTMF
 		default:
 			std::cerr << "YOU DONE GOOFED" << std::endl;
 		}
+	}
+
+	void Transmitter::setToneDuration(double duration) {
+		toneGenerator.setDuration(duration);
+	}
+
+	void Transmitter::setVolume(unsigned int vol) {
+		toneGenerator.setVolumeMax(vol);
+	}
+
+	void Transmitter::setPreambleAmount(unsigned int amount) {
+		preambleAmount = amount;
+	}
+
+	unsigned int Transmitter::getPreambleAmount() const {
+		return preambleAmount;
 	}
 
 }
