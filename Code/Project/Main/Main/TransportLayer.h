@@ -9,11 +9,6 @@
 
 using namespace std;
 
-struct frame {
-	vector<bool> payload;
-	unsigned int frameNumb;
-};
-
 class TransportLayer
 {
 public:
