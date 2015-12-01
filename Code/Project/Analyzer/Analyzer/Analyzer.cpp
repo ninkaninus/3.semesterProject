@@ -199,7 +199,7 @@ char Analyzer::syncToFirstDTMF()
 		else
 		{
 			// slet sampleWindow/4 samples fra activeBuffer og start forfra -> syncToFirstDTMF()
-			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + sampleWindow/4);
+			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + int(sampleWindow/4));
 		}
 	}
 	return detectedChar;

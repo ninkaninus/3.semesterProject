@@ -16,7 +16,6 @@ public:
 	void printChars();
 	void printMagnitude(char aChar);
 
-	void addChar(char aChar);
 	~Physical_Receive();
 
 protected:

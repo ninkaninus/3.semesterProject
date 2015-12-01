@@ -2,6 +2,7 @@
 #include "SFML\Audio\SoundRecorder.hpp"
 #include "SFML\Audio\SoundBuffer.hpp"
 #include <boost\circular_buffer.hpp>
+#include <SFML\System\Mutex.hpp>
 #include <iostream>
 #include <vector>
 
@@ -20,9 +21,10 @@ public:
 	std::vector<signed short> getBuffer();
 	std::vector<signed short> extractBuffer();
 	~MyRecorder();
+
 protected:
+	sf::Mutex mutex;
 	int processingInterval;
 	std::vector<signed short> buffer;
-	boost::circular_buffer<signed short> buffer2;
 };
 

@@ -34,37 +34,10 @@ void Physical_Receive::analyzeBuffer()
 			count++;
 
 			charStringBroken = false;
-
-			//std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
-
-			nextCharacter();
-
-			/*
-			while(DTMF_analyzer.bufferReady())
-			{
-				//std::cout << "Samplewindow: " << SW * 2 << std::endl;
-				//std::cout << "Buffer size : " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
-
-				char detectedChar = DTMF_analyzer.findNextDTMF();
-				if (detectedChar != '?')
-				{
-					charsReceived.push_back(detectedChar);
-					DTMF_analyzer.erasePreviousSamples();
-				}
-				else
-				{
-					charStringBroken = true;
-					std::cout << "No more characters" << std::endl;
-					break;
-				}
-			}
-			*/
 		}
 		
 		else
 			charStringBroken = true;
-
-	//std::cout << "Size of active buffer after analysis: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
 }
 
 void Physical_Receive::nextCharacter()
@@ -111,16 +84,15 @@ void Physical_Receive::continuousAnalysis()
 		}
 		else
 		{
+			//std::cout << " !";
 			DTMF_analyzer.addToBuffer();
-			Sleep(2000);
+			Sleep(1000);
 		}
 	}
 
 	//DTMF_analyzer.stopRecording();
 
 	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
-
-	Sleep(2000);
 }
 
 void Physical_Receive::printChars()
@@ -157,12 +129,6 @@ void Physical_Receive::printMagnitude(char aChar)
 
 	std::cout << "Stopped Writing" << std::endl;
 	//----------------------------------------------------
-}
-
-
-void Physical_Receive::addChar(char aChar)
-{
-	charsReceived.push_back(aChar);
 }
 
 Physical_Receive::~Physical_Receive()
