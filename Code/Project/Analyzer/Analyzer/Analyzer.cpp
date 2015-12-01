@@ -15,12 +15,14 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 void Analyzer::startRecording()
 {
 	recorder.start(sampleRate);
+	isRecording = true;
 }
 
 void Analyzer::stopRecording()
 {
 	recorder.stop();
 	addToBuffer();
+	isRecording = false;
 }
 
 std::vector<signed short> Analyzer::getActiveBuffer()
@@ -129,7 +131,6 @@ char Analyzer::syncToFirstDTMF()
 		detectedChar = findNextDTMF();
 		if (detectedChar != '?')
 		{
-			isRecording = true;
 
 			/*
 			//-----------------EXPORT MAGNITUDES FOR FIRST CHAR-----------------
