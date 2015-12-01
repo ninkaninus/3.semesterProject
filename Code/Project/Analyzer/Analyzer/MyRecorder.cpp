@@ -67,10 +67,10 @@ std::vector<signed short> MyRecorder::extractBuffer()
 {
 	mutex.lock();
 
-	std::vector<signed short> tempBuffer;
-	tempBuffer = buffer;
+		std::vector<signed short> tempBuffer;
+		tempBuffer = buffer;
 
-	buffer.erase(buffer.begin(), buffer.begin() + tempBuffer.size());
+		buffer.clear();
 
 	mutex.unlock();
 
