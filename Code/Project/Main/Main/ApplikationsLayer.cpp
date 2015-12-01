@@ -67,9 +67,6 @@ string ApplikationsLayer::BooleanTodata(vector<bool>& bVector)
 void ApplikationsLayer::send(string message)	//sender input
 {
 	objT.send(dataToBoolean(message));
-
-	//dataToBoolean(message);
-	//objT.newInput(dataToBoolean(message));
 }
 
 

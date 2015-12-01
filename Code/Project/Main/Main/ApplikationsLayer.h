@@ -22,7 +22,6 @@ public:
 
 	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
 
-
 	//hjælpefunktioner
 	void print(vector<bool>& aVector, string aName);	// viser bits
 

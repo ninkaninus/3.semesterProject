@@ -25,18 +25,5 @@ int main()
 
 	objA.send("Mr. Watson, come here, I want to see you!");
 	
-	Sleep(5000);
-
-	//objT.newInput(objA.returnData());
-	//
-	//
-	//objT.getPayload(0);
-	//objD.assembleFrame(objT.returnPayload(), 0, objT.returnMaxIndex());
-	//objTransmit.transmit(objD.returnPayload());
-
-	//objT.getPayload(1);
-	//objD.assembleFrame(objT.returnPayload(), 1, objT.returnMaxIndex());
-	//objTransmit.transmit(objD.returnPayload());
-
-
+	Sleep(1000);
 }
