@@ -9,14 +9,14 @@ int main()
 	std::cout << "Recording" << std::endl;
 
 		Receiver.startRecording();
-		Sleep(10000);
-		Receiver.stopRecording();
+		Sleep(2000);
+//		Receiver.stopRecording();
 
 	std::cout << "Stopped Recording" << std::endl;
 
 //	Receiver.analyzeBuffer();
 
-	Receiver.printMagnitude('A');
+//	Receiver.printMagnitude('A');
 
 	Receiver.continuousAnalysis();
 

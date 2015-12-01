@@ -2,7 +2,6 @@
 #include "SFML\Audio\SoundRecorder.hpp"
 #include "SFML\Audio\SoundBuffer.hpp"
 #include <boost\circular_buffer.hpp>
-//#include "Analyzer.h"
 #include <iostream>
 #include <vector>
 

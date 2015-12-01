@@ -21,6 +21,8 @@ bool MyRecorder::onStart() // optional
 	sf::Time t = sf::milliseconds(processingInterval);
 	sf::SoundRecorder::setProcessingInterval(t);
 	
+	buffer2.set_capacity(100000);
+
 	// return true to start the capture, or false to cancel it
 	return true;
 }
@@ -33,7 +35,7 @@ bool MyRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCo
 	// tager de nyeste samples og tilføjer dem til bufferen
 	for (std::size_t i = 0; i < sampleCount; i++)
 	{
-		buffer.push_back(samples[i]);		
+		buffer2.push_back(samples[i]);		
 	}
 		
 	// return true to continue the capture, or false to stop it
@@ -59,28 +61,20 @@ std::vector<signed short> MyRecorder::getBuffer()
 std::vector<signed short> MyRecorder::extractBuffer()
 {
 	std::vector<signed short> tempBuffer;
-
-	tempBuffer = buffer;
-	/*
-	for (std::size_t i = 0; i < buffer.size(); i++)
+	boost::circular_buffer<signed short> temp = buffer2;
+	//tempBuffer = buffer;
+	
+	for (std::size_t i = 0; i < temp.size(); i++)
 	{
-		tempBuffer.push_back(buffer[i]);
+		tempBuffer.push_back(buffer2[i]);
 	}
-	*/
-	buffer.erase(buffer.begin(), buffer.begin() + tempBuffer.size());
+
+	buffer2.erase(buffer2.begin(), buffer2.begin() + tempBuffer.size());
+
+	//buffer.erase(buffer.begin(), buffer.begin() + tempBuffer.size());
 
 	return tempBuffer;
 }
-
-/*
-void MyRecorder::detectKey()
-{
-	//Analyzer myAnalyzer;
-
-	analyzer.charTest(buffer, sampleWindow, sampleRate);
-	buffer.erase(buffer.begin(), buffer.begin() + sampleWindow);
-}
-*/
 
 MyRecorder::~MyRecorder()
 {

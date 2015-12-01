@@ -94,7 +94,9 @@ void Physical_Receive::continuousAnalysis()
 {
 	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
 
-	while (count < 200)
+	DTMF_analyzer.addToBuffer();
+
+	while (true)
 	{
 		if (DTMF_analyzer.bufferReady())
 		{
@@ -110,6 +112,7 @@ void Physical_Receive::continuousAnalysis()
 		else
 		{
 			DTMF_analyzer.addToBuffer();
+			Sleep(2000);
 		}
 	}
 
@@ -117,7 +120,7 @@ void Physical_Receive::continuousAnalysis()
 
 	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
 
-	Sleep(1000);
+	Sleep(2000);
 }
 
 void Physical_Receive::printChars()
