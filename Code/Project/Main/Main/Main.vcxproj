@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Bosse\Documents\3SemGitHub\Code\Project\Transmitter\Transmitter\Debug;..\..\..\Libraries\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Libraries\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -156,19 +156,25 @@
   <ItemGroup>
     <ClCompile Include="..\..\Transmitter\Transmitter\Generator.cpp" />
     <ClCompile Include="..\..\Transmitter\Transmitter\Transmitter.cpp" />
-    <ClCompile Include="ApplikationsLayer.cpp" />
-    <ClCompile Include="DataLinkRecive.cpp" />
+    <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="ApplicationLayer.cpp" />
+    <ClCompile Include="DataLinkReceive.cpp" />
     <ClCompile Include="DataLinkTransmit.cpp" />
+    <ClCompile Include="Goertzel.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PhysicalRecive.cpp" />
+    <ClCompile Include="MyRecorder.cpp" />
+    <ClCompile Include="PhysicalReceive.cpp" />
     <ClCompile Include="PhysicalTransmit.cpp" />
     <ClCompile Include="TransportLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ApplikationsLayer.h" />
-    <ClInclude Include="DataLinkRecive.h" />
+    <ClInclude Include="Analyzer.h" />
+    <ClInclude Include="ApplicationLayer.h" />
+    <ClInclude Include="DataLinkReceive.h" />
     <ClInclude Include="DataLinkTransmit.h" />
-    <ClInclude Include="PhysicalRecive.h" />
+    <ClInclude Include="Goertzel.h" />
+    <ClInclude Include="MyRecorder.h" />
+    <ClInclude Include="PhysicalReceive.h" />
     <ClInclude Include="PhysicalTransmit.h" />
     <ClInclude Include="TransportLayer.h" />
   </ItemGroup>

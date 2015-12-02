@@ -9,10 +9,10 @@
 
 
 //inkludering af klasser
-#include "ApplikationsLayer.h"
-#include "PhysicalRecive.h"
+#include "ApplicationLayer.h"
+//#include "PhysicalReceive.h"
 //#include "PhysicalTransmit.h"
-#include "DataLinkRecive.h"
+#include "DataLinkReceive.h"
 //#include "DataLinkTransmit.h"
 //#include "TransportLayer.h"
 //#include "Transmitter/Transmitter/Transmitter.h"
@@ -21,21 +21,26 @@ using namespace std;
 
 int main()
 {
-	ApplikationsLayer objA;
-	DataLinkRecive objD;
+	//ApplicationLayer objA;
+	DataLinkReceive objD;
+	objD.init(8000, 25);
 
+	while(true)
+	{
+		//objD.makeFrame();
+	}
 	string test = "Dette";
 	//objA.send("Hej");
 
 
 	// bool to data
-	cout << objA.BooleanTodata(objA.dataToBoolean(test)) << endl;
+	//cout << objA.BooleanTodata(objA.dataToBoolean(test)) << endl;
 
 	// Opsætningn af recieve (simulering af valid omdtaget data)
 	
 
 	
-	objD.makeFrame();
+	//
 	//objA.print(objD.getFrame(), "framen");
 
 	
