@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML\Audio\SoundRecorder.hpp"
 #include "SFML\Audio\SoundBuffer.hpp"
-#include <SFML\System\Mutex.hpp>
+#include "SFML\System\Mutex.hpp"
 #include <iostream>
 #include <vector>
 

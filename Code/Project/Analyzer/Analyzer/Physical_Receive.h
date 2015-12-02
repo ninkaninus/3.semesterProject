@@ -11,17 +11,10 @@ public:
 	void startRecording();
 	void stopRecording();
 
-	void searchBuffer();
-	void nextCharacter();
 	void continuousAnalysis();
-
 	void stopAnalysis();
 
 	std::vector<bool> getBools();
-
-	std::vector<bool> charToNibble(char aChar);
-	void addNibble(std::vector<bool> aNibble);
-
 	std::vector<bool> extractBoolVector();
 
 	void printChars();
@@ -29,8 +22,15 @@ public:
 
 	~Physical_Receive();
 protected:
+	void searchBuffer();
+	void nextCharacter();
+
+	std::vector<bool> charToNibble(char aChar);
+	void addNibble(std::vector<bool> aNibble);
+
 	Analyzer DTMF_analyzer;
 	sf::Mutex mutex;
+
 	std::vector<char> charsReceived;
 	std::vector<bool> boolsReceived;
 
