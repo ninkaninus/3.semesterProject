@@ -25,13 +25,16 @@ int main()
 	DataLinkRecive objD;
 
 	string test = "Dette";
-	//objA.send("jegersejja");
+	//objA.send("Hej");
 
 
 	// bool to data
 	cout << objA.BooleanTodata(objA.dataToBoolean(test)) << endl;
 
 	// Opsætningn af recieve (simulering af valid omdtaget data)
+	
+
+	
 	objD.makeFrame();
 	//objA.print(objD.getFrame(), "framen");
 

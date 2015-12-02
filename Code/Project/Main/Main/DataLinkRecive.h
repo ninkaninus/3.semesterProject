@@ -7,6 +7,7 @@
 #include <bitset>
 #include <deque>
 #include "PhysicalRecive.h"
+#include <sstream>
  
 using namespace std;
 
@@ -22,23 +23,28 @@ class DataLinkRecive
 {
 public:
 	DataLinkRecive();
-	void makeFrame();
 	Frame getFrame();
-	
+	void makeFrame();
 	unsigned int numberOfFrames();
-	
-	void print(vector<bool>& aVector, string aName);
-	
-	//vector<bool> getIndex();
-	//vector<bool> getMaxIndex();
-	//vector<bool> extractPayload();
-	//bool checkCRC();
-	//bool validFrame();
-	//void antiBitStuffing();	
+
 	
 	~DataLinkRecive();
 
 protected:
+	// funkitoner 
+	unsigned int getIndex(vector<bool>& bVector);
+	unsigned int getMaxIndex(vector<bool>& bVector);
+	vector<bool> getPayload(vector<bool>& bVector);
+	
+	bool ChekCRC(vector<bool>& bVector, int& n);
+	bool validFrame(vector<bool>& bVector);
+	void antiBitStuffing(vector<bool>& bVector);
+
+	//hjælpe funktioner
+	void print(vector<bool>& aVector, string aName);
+	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
+
+	// Atributter
 	PhysicalRecive objR;
 	vector<bool> data;
 	deque<Frame> toTrans;
