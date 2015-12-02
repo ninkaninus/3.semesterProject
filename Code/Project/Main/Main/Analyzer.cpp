@@ -10,6 +10,17 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 	sampleRate = aSampleRate;
 	sampleWindow = aProcessingTime * sampleRate / 1000; // Processing time in ms
 	myGoertzel.init(sampleWindow, sampleRate);
+
+//---------------------------DEFAULT THRESHOLDS----------------------------------
+
+	std::vector<int> targetFrequencies{ 697,770,852,941,1209,1336,1477,1633 };
+	std::vector<float> thresholds{ 2200,2600,1500,1800,3000,2400,6100,7000 }; // De mindste peaks for hver frekvens aflæst fra grafer
+
+	for (int i = 0; i < targetFrequencies.size(); i++)
+	{
+		thresholdMap[targetFrequencies[i]] = thresholds[i] * 0.7; // 70% af max virker som et udemærket threshold ud fra de foreløbige grafer
+	}
+
 }
 
 void Analyzer::startRecording()
@@ -45,7 +56,7 @@ void Analyzer::addToBuffer()
 	}
 }
 
-float Analyzer::getMagnitudeL(int anOffset, char aChar)
+float Analyzer::getMagnitudeLo(int anOffset, char aChar)
 {
 	float magnitude;
 	std::vector<signed short> tempSamples;
@@ -55,12 +66,12 @@ float Analyzer::getMagnitudeL(int anOffset, char aChar)
 		tempSamples.push_back(activeBuffer[i]);
 	}
 
-	int targetFrequency = findTargetFreqL(aChar);
+	int targetFrequency = findTargetFreqLo(aChar);
 	magnitude = myGoertzel.algorithm(tempSamples, sampleWindow, targetFrequency);
 	return magnitude;
 }
 
-float Analyzer::getMagnitudeH(int anOffset, char aChar)
+float Analyzer::getMagnitudeHi(int anOffset, char aChar)
 {
 	float magnitude;
 	std::vector<signed short> tempSamples;
@@ -70,44 +81,44 @@ float Analyzer::getMagnitudeH(int anOffset, char aChar)
 		tempSamples.push_back(activeBuffer[i]);
 	}
 
-	int targetFrequency = findTargetFreqH(aChar);
+	int targetFrequency = findTargetFreqHi(aChar);
 	magnitude = myGoertzel.algorithm(tempSamples, sampleWindow, targetFrequency);
 	return magnitude;
 }
 
-int Analyzer::findTargetFreqL(char aChar)
+int Analyzer::findTargetFreqLo(char aChar)
 {
 	int row = 0;
 	int column = 0;
 	
 	for (row; row < 4; row++)
 	{
-		if (aChar == charTable[row][column])
-			return freqL[row];
+		if (aChar == CHAR_TABLE[row][column])
+			return FREQ_LO[row];
 
 		for (int column = 0; column < 4; column++)
 		{
-			if (aChar == charTable[row][column])
-				return freqL[row];
+			if (aChar == CHAR_TABLE[row][column])
+				return FREQ_LO[row];
 		}
 	}
 	return 0;
 }
 
-int Analyzer::findTargetFreqH(char aChar)
+int Analyzer::findTargetFreqHi(char aChar)
 {
 	int row = 0;
 	int column = 0;
 
 	for (row; row < 4; row++)
 	{
-		if (aChar == charTable[row][column])
-			return freqH[column];
+		if (aChar == CHAR_TABLE[row][column])
+			return FREQ_HI[column];
 
 		for (int column = 0; column < 4; column++)
 		{
-			if (aChar == charTable[row][column])
-				return freqH[column];
+			if (aChar == CHAR_TABLE[row][column])
+				return FREQ_HI[column];
 		}
 	}
 	return 0;
@@ -155,7 +166,7 @@ char Analyzer::syncToFirstDTMF()
 
 			for (std::size_t i = 0; i < sampleWindow*2; i++)
 			{
-					int currentMagnitude = getMagnitudeH(i, detectedChar);
+					int currentMagnitude = getMagnitudeHi(i, detectedChar);
 					magnitudeArray.push_back(currentMagnitude);
 			}
 
@@ -214,7 +225,7 @@ char Analyzer::findNextDTMF()
 
 	for (int i = 0; i < 4; i++)
 	{
-		if(myGoertzel.algorithm(activeBuffer, sampleWindow, freqH[i]) > threshold)
+		if(myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_HI[i]) > thresholdMap[FREQ_HI[i]])
 		{
 			column = i;
 			break;
@@ -229,7 +240,7 @@ char Analyzer::findNextDTMF()
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (myGoertzel.algorithm(activeBuffer, sampleWindow, freqL[i]) > threshold)
+			if (myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_LO[i]) > thresholdMap[FREQ_LO[i]])
 			{
 				row = i;
 				break;
@@ -244,7 +255,7 @@ char Analyzer::findNextDTMF()
 	}
 	else
 	{
-		char detectedDTMF = charTable[row][column];
+		char detectedDTMF = CHAR_TABLE[row][column];
 		return detectedDTMF;
 	}
 }

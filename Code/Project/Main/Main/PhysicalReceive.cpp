@@ -210,7 +210,7 @@ void PhysicalReceive::printMagnitude(char aChar)
 
 	for (std::size_t i = 0; i < DTMF_analyzer.getActiveBuffer().size() - DTMF_analyzer.getSampleWindow(); i += 10)
 	{
-		int currentMagnitude = DTMF_analyzer.getMagnitudeH(i, aChar);
+		int currentMagnitude = DTMF_analyzer.getMagnitudeHi(i, aChar);
 		magnitudeArray.push_back(currentMagnitude);
 	}
 

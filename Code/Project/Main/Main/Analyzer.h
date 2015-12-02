@@ -19,10 +19,12 @@ public:
 	int getSampleWindow();
 	void addToBuffer();
 
-	float getMagnitudeL(int anOffset, char aChar);
-	float getMagnitudeH(int anOffset, char aChar);
-	int findTargetFreqL(char aChar);	
-	int findTargetFreqH(char aChar);
+	float getMagnitudeLo(int anOffset, char aChar);
+	float getMagnitudeHi(int anOffset, char aChar);
+	int findTargetFreqLo(char aChar);	
+	int findTargetFreqHi(char aChar);
+
+
 
 	bool bufferReady();
 
@@ -31,11 +33,12 @@ public:
 	void erasePreviousSamples();
 	~Analyzer();
 protected:
-	const int freqH[4]{ 1209,1336,1477,1633 };
-	const int freqL[4]{ 697,770,852,941 };
-	const char charTable[4][4]{ { '1','2','3','A' },{ '4','5','6','B' },{ '7','8','9','C' },{ '*','0','#','D' } };
+	const int FREQ_HI[4]{ 1209,1336,1477,1633 };
+	const int FREQ_LO[4]{ 697,770,852,941 };
+	const char CHAR_TABLE[4][4]{ { '1','2','3','A' },{ '4','5','6','B' },{ '7','8','9','C' },{ '*','0','#','D' } };
 	
-	const float threshold = 2500;
+	float threshold = 7000;
+	std::map<int, float> thresholdMap;
 	bool isRecording;
 	
 	std::size_t sampleWindow;
