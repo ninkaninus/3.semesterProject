@@ -14,19 +14,20 @@ void DataLinkReceive::makeFrame()
 	// Opsætning 
 	Frame newFrame;
 	vector<bool> frame = objR.extractBoolVector();
-	//print(frame, "Frame efter");
-	//print(data, "data efter");
+	//print(frame, "Frame foer: ");
+	//print(data, "Data foer: ");
 
 	// Tilføje bools til data vectoren 
 	for (bool i : frame)
 		data.push_back(i);
 	frame.clear();
 
-	if (data.size() > 72) {
-		// Find næste frame af data
-		int aFlag = 0;
-		int length = 0;
 
+	// Find næste frame af data
+	int aFlag = 0;
+	int length = 0;
+	if (data.size() > 10)
+	{
 		for (unsigned int i = 7; i < data.size(); i++)
 		{
 			length++;
@@ -51,7 +52,8 @@ void DataLinkReceive::makeFrame()
 		}
 
 		int i = frame.size();
-		if (!data[i - 1] && data[i - 2] && data[i - 3] && data[i - 4] && data[i - 5] && data[i - 6] && data[i - 7] && !data[i - 8]) {
+		if(!frame[i - 1] && frame[i - 2] && frame[i - 3] && frame[i - 4] && frame[i - 5] && frame[i - 6] && frame[i - 7] && !frame[i - 8]){
+		//if (true) {
 			for (int i = 0; i < 8; i++) {
 				frame.pop_back();
 			}
@@ -91,17 +93,18 @@ void DataLinkReceive::makeFrame()
 			}
 			else
 			{
-				cout << "deffekt frame" << endl;
+				cout << "defekt frame" << endl;
 
 			}
 
 			// Består den testen returneres payload ellers returneres en tom vektor
 
-			print(toTrans[toTrans.size() - 1].payload, "Frame efter");
-			print(data, "data efter");
+
 		}
 	}
 	
+	//print(frame, "Frame efter: ");
+	//print(data, "Data efter: ");
 	
 }
 
@@ -188,7 +191,7 @@ void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
 			loop++;
 			if (loop == 5) {
 				//der er et flag
-				cout << "flag" << endl;
+				//cout << "flag" << endl;
 				i++;
 				loop = 0;
 			}

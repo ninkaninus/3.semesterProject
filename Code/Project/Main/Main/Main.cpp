@@ -27,7 +27,8 @@ int main()
 
 	while(true)
 	{
-		//objD.makeFrame();
+		//Sleep(5000);
+		objD.makeFrame();
 	}
 	string test = "Dette";
 	//objA.send("Hej");
