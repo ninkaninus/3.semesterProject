@@ -7,11 +7,8 @@ PhysicalReceive::PhysicalReceive()
 void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 {
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
-	syncMode = false;
-	for (int i = 0; i < charSynced.size(); i++)
-	{
-		charSynced[]
-	}
+	syncMode = true;
+
 }
 
 void PhysicalReceive::startRecording()
@@ -28,26 +25,20 @@ void PhysicalReceive::stopRecording()
 
 void PhysicalReceive::searchBuffer()
 {
-	if (!syncMode)
+	char firstDTMF = DTMF_analyzer.syncToFirstDTMF();
+	if (firstDTMF != '?')
 	{
-		char firstDTMF = DTMF_analyzer.syncToFirstDTMF();
-		if (firstDTMF != '?')
-		{
-			//charsReceived.push_back(firstDTMF);
+		//charsReceived.push_back(firstDTMF);
 
-			std::cout << count << ". detected char: " << firstDTMF << std::endl;
-			count++;
+		std::cout << count << ". detected char: " << firstDTMF << std::endl;
+		count++;
 
-			charStringBroken = false;
-		}
-
-		else
-			charStringBroken = true;
+		charStringBroken = false;
 	}
+
 	else
-	{
-		syncThresholds();
-	}
+		charStringBroken = true;
+	
 }
 
 void PhysicalReceive::nextCharacter()
@@ -62,6 +53,8 @@ void PhysicalReceive::nextCharacter()
 				charsReceived.push_back(detectedChar);
 				addNibble(charToNibble(detectedChar));
 			}
+
+			checkThreshold(detectedChar);
 
 			DTMF_analyzer.erasePreviousSamples();
 
@@ -120,9 +113,33 @@ void PhysicalReceive::stopAnalysis()
 	breakAnalysis = true;
 }
 
-bool PhysicalReceive::syncNeeded(char aChar)
+void PhysicalReceive::checkThreshold(char aChar)
 {
-	return syncMode;
+	if (syncMode)
+	{
+		int loFreq = DTMF_analyzer.findTargetFreqLo(aChar);
+		int hiFreq = DTMF_analyzer.findTargetFreqHi(aChar);
+
+		if (!thresholdUpToDate[loFreq] && !thresholdUpToDate[hiFreq])
+		{
+			DTMF_analyzer.updateThreshold(aChar);
+
+			thresholdUpToDate[loFreq] = true;
+			thresholdUpToDate[hiFreq] = true;
+		}
+
+		std::vector<int> freqs{ 697,770,852,941,1209,1336,1477,1633 };
+		bool allTrue;
+
+		for (int i = 0; i < freqs.size(); i++)
+		{
+			if (!thresholdUpToDate[freqs[i]])
+				allTrue = false;
+		}
+
+		if (allTrue)
+			syncMode = false;
+	}
 }
 
 void PhysicalReceive::setSyncMode()
@@ -130,26 +147,6 @@ void PhysicalReceive::setSyncMode()
 	syncMode = true;
 }
 
-void PhysicalReceive::syncThresholds()
-{
-	char detectedChar = DTMF_analyzer.syncToFirstDTMF();
-	if (detectedChar != '?')
-	{
-		if (DTMF_analyzer.bufferReady())
-		{
-			detectedChar = DTMF_analyzer.findNextDTMF();
-			int loFreq = DTMF_analyzer.findTargetFreqLo(detectedChar);
-			//int hiFreq = DTMF_analyzer.findTargetFreqHi(detectedChar);
-			float loMag = DTMF_analyzer.getMagnitudeLo(0, detectedChar);
-			//float hiMag = DTMF_analyzer.getMagnitudeHi(0, detectedChar);
-
-			DTMF_analyzer.updateThresholds(loFreq, loMag);
-			//something here
-
-			syncMode = false;
-		}
-	}
-}
 
 std::vector<bool> PhysicalReceive::getBools()
 {

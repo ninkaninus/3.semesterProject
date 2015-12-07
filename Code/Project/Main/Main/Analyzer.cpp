@@ -13,15 +13,14 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 
 //---------------------------DEFAULT THRESHOLDS----------------------------------
 
-	std::vector<float> thresholds{ 5000,5000,5000,5000,5000,5000,5000,5000 }; // De mindste peaks for hver frekvens aflæst fra grafer
+	std::vector<float> thresholds{ 5000,5000,5000,5000,5000,5000,5000,5000 }; 
 	float ratio = 0.6;
 
 	for (int i = 0; i < 4; i++)
 	{
-		thresholdMap[FREQ_LO[i]] = thresholds[i] * ratio; // 70% af max virker som et udemærket threshold ud fra de foreløbige grafer
+		thresholdMap[FREQ_LO[i]] = thresholds[i] * ratio; 
 		thresholdMap[FREQ_HI[i]] = thresholds[i + 4] * ratio;
 	}
-
 }
 
 void Analyzer::startRecording()
@@ -161,17 +160,14 @@ bool Analyzer::bufferReady()
 	return true;
 }
 
-void Analyzer::updateThresholds(int aFrequency, float aMagnitude)
+void Analyzer::updateThreshold(char aChar)
 {
-	float newThresh = aMagnitude * 0.7;
-	float prevThresh = thresholdMap[aFrequency];
-	float ratio = newThresh / prevThresh;
-
-	for (int i = 0; i < 4; i++)
-	{
-		thresholdMap[FREQ_LO[i]] *= ratio;
-		thresholdMap[FREQ_HI[i]] *= ratio;
-	}
+	int loFreq = findTargetFreqLo(aChar);
+	int hiFreq = findTargetFreqHi(aChar);
+	float loMag = getMagnitudeLo(0, aChar);
+	float hiMag = getMagnitudeHi(0, aChar);
+	thresholdMap[loFreq] = loMag * 0.7;
+	thresholdMap[hiFreq] = hiMag * 0.7;
 }
 
 char Analyzer::syncToFirstDTMF()

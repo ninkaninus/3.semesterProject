@@ -17,9 +17,8 @@ public:
 	void continuousAnalysis();
 	void stopAnalysis();
 
-	bool syncNeeded(char aChar);
+	void checkThreshold(char aChar);
 	void setSyncMode();
-	void syncThresholds();
 
 	std::vector<bool> getBools();
 
@@ -40,11 +39,12 @@ protected:
 	std::vector<char> charsReceived;
 	std::vector<bool> boolsReceived;
 
-	std::map<char, bool> charSynced;
 	bool isRecording;
 	bool breakAnalysis;
 	bool charStringBroken;
 	bool preambleExpected;
+
+	std::map<int, bool> thresholdUpToDate;
 	bool syncMode;
 
 	int count = 1;
