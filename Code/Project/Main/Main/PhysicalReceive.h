@@ -13,9 +13,13 @@ public:
 
 	void searchBuffer();
 	void nextCharacter();
-	void continuousAnalysis();
 
+	void continuousAnalysis();
 	void stopAnalysis();
+
+	bool syncNeeded(char aChar);
+	void setSyncMode();
+	void syncThresholds();
 
 	std::vector<bool> getBools();
 
@@ -26,6 +30,8 @@ public:
 
 	void printChars();
 	void printMagnitude(char aChar);
+	void printMagnitudes();
+	void vectorToFile(std::string aTitle, std::vector<int> aVector);
 
 	~PhysicalReceive();
 protected:
@@ -34,9 +40,12 @@ protected:
 	std::vector<char> charsReceived;
 	std::vector<bool> boolsReceived;
 
+	std::map<char, bool> charSynced;
+	bool isRecording;
 	bool breakAnalysis;
 	bool charStringBroken;
 	bool preambleExpected;
+	bool syncMode;
 
 	int count = 1;
 };

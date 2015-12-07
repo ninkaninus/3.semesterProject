@@ -13,12 +13,13 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 
 //---------------------------DEFAULT THRESHOLDS----------------------------------
 
-	std::vector<int> targetFrequencies{ 697,770,852,941,1209,1336,1477,1633 };
-	std::vector<float> thresholds{ 2200,2600,1500,1800,3000,2400,6100,7000 }; // De mindste peaks for hver frekvens aflæst fra grafer
+	std::vector<float> thresholds{ 5000,5000,5000,5000,5000,5000,5000,5000 }; // De mindste peaks for hver frekvens aflæst fra grafer
+	float ratio = 0.6;
 
-	for (int i = 0; i < targetFrequencies.size(); i++)
+	for (int i = 0; i < 4; i++)
 	{
-		thresholdMap[targetFrequencies[i]] = thresholds[i] * 0.7; // 70% af max virker som et udemærket threshold ud fra de foreløbige grafer
+		thresholdMap[FREQ_LO[i]] = thresholds[i] * ratio; // 70% af max virker som et udemærket threshold ud fra de foreløbige grafer
+		thresholdMap[FREQ_HI[i]] = thresholds[i + 4] * ratio;
 	}
 
 }
@@ -26,14 +27,14 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 void Analyzer::startRecording()
 {
 	recorder.start(sampleRate);
-	isRecording = true;
+	//isRecording = true;
 }
 
 void Analyzer::stopRecording()
 {
 	recorder.stop();
 	addToBuffer();
-	isRecording = false;
+	//isRecording = false;
 }
 
 std::vector<signed short> Analyzer::getActiveBuffer()
@@ -124,12 +125,53 @@ int Analyzer::findTargetFreqHi(char aChar)
 	return 0;
 }
 
+std::vector<int> Analyzer::bufferMagnitudesLo(char aChar)
+{
+	std::vector<int> magnitudeArray;
+
+	//std::cout << "Started magnitude for whole range" << std::endl;
+
+	for (std::size_t i = 0; i < activeBuffer.size() - sampleWindow; i += 10)
+	{
+		int currentMagnitude = getMagnitudeLo(i, aChar);
+		magnitudeArray.push_back(currentMagnitude);
+	}
+	return magnitudeArray;
+}
+
+std::vector<int> Analyzer::bufferMagnitudesHi(char aChar)
+{
+	std::vector<int> magnitudeArray;
+
+	//std::cout << "Started magnitude for whole range" << std::endl;
+
+	for (std::size_t i = 0; i < activeBuffer.size() - sampleWindow; i += 10)
+	{
+		int currentMagnitude = getMagnitudeHi(i, aChar);
+		magnitudeArray.push_back(currentMagnitude);
+	}
+	return magnitudeArray;
+}
+
 bool Analyzer::bufferReady()
 {
 	if(activeBuffer.size() < 2 * sampleWindow)
 		return false;
 
 	return true;
+}
+
+void Analyzer::updateThresholds(int aFrequency, float aMagnitude)
+{
+	float newThresh = aMagnitude * 0.7;
+	float prevThresh = thresholdMap[aFrequency];
+	float ratio = newThresh / prevThresh;
+
+	for (int i = 0; i < 4; i++)
+	{
+		thresholdMap[FREQ_LO[i]] *= ratio;
+		thresholdMap[FREQ_HI[i]] *= ratio;
+	}
 }
 
 char Analyzer::syncToFirstDTMF()

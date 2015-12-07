@@ -110,6 +110,7 @@ namespace DTMF {
 		}
 
 		SBpoint->loadFromSamples(&outputBuffer[0], bufferSize, 1, sampleRate);
+		SBpoint->saveToFile("test.ogg");
 
 		return SBpoint;
 	}

@@ -16,21 +16,26 @@ using namespace std;
 
 int main()
 {
+	//DataLinkReceive objD;
+	//objD.init(8000, 20);
+	//ApplicationLayer objA;
 	PhysicalReceive Receiver;
 	Receiver.init(8000, 25);
 
 	Receiver.startRecording();
-	Sleep(2000);
+	//Sleep(500);
+	//objA.send("Det er klart at det er tykt, når det er taaget..");
+	Sleep(5000);
+	Receiver.stopRecording();
 
-	std::thread analysis(&PhysicalReceive::continuousAnalysis, &Receiver);
-	analysis.detach();
+	////Receiver.continuousAnalysis();
+	Receiver.printMagnitudes();
 
-	while(true)
-	{
-		//Sleep(5000);
-		//objD.makeFrame();
-	}
-
+	//while (true)
+	//{
+	//	Sleep(5000);
+	//	//objD.makeFrame();
+	//}
 
 	return 0;
 }

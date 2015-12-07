@@ -40,6 +40,9 @@ bool MyRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sampleCo
 		buffer.push_back(samples[i]);		
 	}
 	
+	if (buffer.size() > 100000)
+		buffer.clear();
+
 	mutex.unlock();
 
 

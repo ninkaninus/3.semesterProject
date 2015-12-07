@@ -18,8 +18,8 @@ void DataLinkReceive::makeFrame()
 	//print(data, "Data foer: ");
 
 	// Tilføje bools til data vectoren 
-	for (bool i : frame)
-		data.push_back(i);
+	for (int i = 0; i < frame.size();i++)
+		data.push_back(frame[i]);
 	frame.clear();
 
 
@@ -28,7 +28,7 @@ void DataLinkReceive::makeFrame()
 	int length = 0;
 	if (data.size() > 10)
 	{
-		for (unsigned int i = 7; i < data.size(); i++)
+		for (unsigned int i = 8; i < data.size(); i++)
 		{
 			length++;
 
@@ -66,8 +66,8 @@ void DataLinkReceive::makeFrame()
 			}
 
 			data.clear();
-			for (bool i : temp)
-				data.push_back(i);
+			for (int i = 0; i < temp.size(); i++)
+				data.push_back(temp[i]);
 
 
 			// antibitstuffing 
@@ -126,8 +126,9 @@ void DataLinkReceive::init(int aSampleRate, int aProcessingTime)
 	objR.startRecording();
 	Sleep(2000);
 
-	std::thread analysis(&PhysicalReceive::continuousAnalysis, &objR);
-	analysis.detach();
+		std::thread analysis(&PhysicalReceive::continuousAnalysis, &objR);
+		analysis.detach();
+
 }
 
 
@@ -204,8 +205,8 @@ void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
 
 	//smid resultatet tilbage i bVector
 	bVector.clear();
-	for (bool i : stuff)
-		bVector.push_back(i);
+	for (int i = 0; i < stuff.size();i++)
+		bVector.push_back(stuff[i]);
 }
 
 bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
@@ -237,8 +238,8 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 
 	//Opsætning
 	vector<bool> CRC;
-	for (bool i : bVector)
-		CRC.push_back(i);
+	for (int i = 0; i < bVector.size();i++)
+		CRC.push_back(bVector[i]);
 
 
 	//Syndromet beregnes
@@ -262,9 +263,9 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 	}
 
 	//returner 1 hvis syndromet er 0 (ingen fejl) ellers returner 0
-	for (bool i : CRC)
+	for (int i = 0; i < CRC.size(); i++)
 	{
-		if (i)
+		if (CRC[i])
 			return 0;
 	}
 	return 1;
@@ -273,7 +274,7 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 bool DataLinkReceive::validFrame(vector<bool>& bVector)
 {
 	int n = 32;
-	return ChekCRC(bVector,n);
+	return ChekCRC(bVector, n);
 }
 
 string DataLinkReceive::BooleanTodata(vector<bool>& bVector)

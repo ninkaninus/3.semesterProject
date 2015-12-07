@@ -7,6 +7,11 @@ PhysicalReceive::PhysicalReceive()
 void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 {
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
+	syncMode = false;
+	for (int i = 0; i < charSynced.size(); i++)
+	{
+		charSynced[]
+	}
 }
 
 void PhysicalReceive::startRecording()
@@ -23,6 +28,8 @@ void PhysicalReceive::stopRecording()
 
 void PhysicalReceive::searchBuffer()
 {
+	if (!syncMode)
+	{
 		char firstDTMF = DTMF_analyzer.syncToFirstDTMF();
 		if (firstDTMF != '?')
 		{
@@ -33,9 +40,14 @@ void PhysicalReceive::searchBuffer()
 
 			charStringBroken = false;
 		}
-		
+
 		else
 			charStringBroken = true;
+	}
+	else
+	{
+		syncThresholds();
+	}
 }
 
 void PhysicalReceive::nextCharacter()
@@ -102,9 +114,41 @@ void PhysicalReceive::continuousAnalysis()
 	stopRecording();
 }
 
+
 void PhysicalReceive::stopAnalysis()
 {
 	breakAnalysis = true;
+}
+
+bool PhysicalReceive::syncNeeded(char aChar)
+{
+	return syncMode;
+}
+
+void PhysicalReceive::setSyncMode()
+{
+	syncMode = true;
+}
+
+void PhysicalReceive::syncThresholds()
+{
+	char detectedChar = DTMF_analyzer.syncToFirstDTMF();
+	if (detectedChar != '?')
+	{
+		if (DTMF_analyzer.bufferReady())
+		{
+			detectedChar = DTMF_analyzer.findNextDTMF();
+			int loFreq = DTMF_analyzer.findTargetFreqLo(detectedChar);
+			//int hiFreq = DTMF_analyzer.findTargetFreqHi(detectedChar);
+			float loMag = DTMF_analyzer.getMagnitudeLo(0, detectedChar);
+			//float hiMag = DTMF_analyzer.getMagnitudeHi(0, detectedChar);
+
+			DTMF_analyzer.updateThresholds(loFreq, loMag);
+			//something here
+
+			syncMode = false;
+		}
+	}
 }
 
 std::vector<bool> PhysicalReceive::getBools()
@@ -206,29 +250,65 @@ void PhysicalReceive::printMagnitude(char aChar)
 {
 	std::vector<int> magnitudeArray;
 
-	std::cout << "Started magnitude for whole range" << std::endl;
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesHi(aChar);
 
-	for (std::size_t i = 0; i < DTMF_analyzer.getActiveBuffer().size() - DTMF_analyzer.getSampleWindow(); i += 10)
+	vectorToFile("Magnitude.txt", magnitudeArray);
+}
+
+void PhysicalReceive::printMagnitudes()
+{
+	//DTMF_analyzer.syncToFirstDTMF();
+
+	std::vector<int> magnitudeArray;
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesLo('1'); // 697 Hz
+	vectorToFile("697.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesLo('4'); // 770 Hz
+	vectorToFile("770.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesLo('9'); // 852 Hz
+	vectorToFile("852.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesLo('D'); // 941 Hz
+	vectorToFile("941.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesHi('1'); // 1209 Hz
+	vectorToFile("1209.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesHi('5'); // 1336 Hz
+	vectorToFile("1336.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesHi('9'); // 1477 Hz
+	vectorToFile("1477.txt", magnitudeArray);
+	magnitudeArray.clear();
+
+	magnitudeArray = DTMF_analyzer.bufferMagnitudesHi('D'); // 1633 Hz
+	vectorToFile("1633.txt", magnitudeArray);
+	magnitudeArray.clear();
+}
+
+void PhysicalReceive::vectorToFile(std::string aTitle, std::vector<int> aVector)
+{
+	std::ofstream outFile(aTitle);
+
+	std::cout << "Started Writing " << aTitle << std::endl;
+
+	for (std::size_t i = 0; i < aVector.size(); i++)
 	{
-		int currentMagnitude = DTMF_analyzer.getMagnitudeHi(i, aChar);
-		magnitudeArray.push_back(currentMagnitude);
-	}
-
-	//---------------EXPORT MAGNITUDES-------------------
-	std::ofstream outFile("Afstand.txt");
-
-	std::cout << "Started Writing" << std::endl;
-
-	for (std::size_t i = 0; i < magnitudeArray.size(); i++)
-	{
-		outFile << magnitudeArray[i] << '\n';
+		outFile << aVector[i] << '\n';
 	}
 
 	outFile.close();
 
-	std::cout << "Stopped Writing" << std::endl;
-	//----------------------------------------------------
+	std::cout << "Stopped Writing " << aTitle << std::endl;
 }
+
 
 PhysicalReceive::~PhysicalReceive()
 {
