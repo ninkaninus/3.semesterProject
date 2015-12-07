@@ -13,7 +13,7 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 
 //---------------------------DEFAULT THRESHOLDS----------------------------------
 
-	std::vector<float> thresholds{ 5000,5000,5000,5000,5000,5000,5000,5000 }; 
+	std::vector<float> thresholds{ 2000,2000,2000,2000,2000,2000,2000,2000 }; 
 	float ratio = 0.6;
 
 	for (int i = 0; i < 4; i++)

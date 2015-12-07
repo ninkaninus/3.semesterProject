@@ -7,8 +7,7 @@ PhysicalReceive::PhysicalReceive()
 void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 {
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
-	syncMode = true;
-
+	setSyncMode(true);
 }
 
 void PhysicalReceive::startRecording()
@@ -87,6 +86,7 @@ void PhysicalReceive::continuousAnalysis()
 			if (charStringBroken)
 			{
 				searchBuffer();
+				setSyncMode(true);
 			}
 			else
 			{
@@ -129,7 +129,7 @@ void PhysicalReceive::checkThreshold(char aChar)
 		}
 
 		std::vector<int> freqs{ 697,770,852,941,1209,1336,1477,1633 };
-		bool allTrue;
+		bool allTrue = true;
 
 		for (int i = 0; i < freqs.size(); i++)
 		{
@@ -142,9 +142,25 @@ void PhysicalReceive::checkThreshold(char aChar)
 	}
 }
 
-void PhysicalReceive::setSyncMode()
+void PhysicalReceive::setSyncMode(bool aBool)
 {
-	syncMode = true;
+	std::vector<int> freqs{ 697,770,852,941,1209,1336,1477,1633 };
+	syncMode = aBool;
+
+	if (syncMode)
+	{
+		for (int i = 0; i < freqs.size(); i++)
+		{
+			thresholdUpToDate[freqs[i]] = false;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < freqs.size(); i++)
+		{
+			thresholdUpToDate[freqs[i]] = true;
+		}
+	}
 }
 
 

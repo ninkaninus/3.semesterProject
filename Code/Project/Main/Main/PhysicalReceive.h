@@ -18,7 +18,7 @@ public:
 	void stopAnalysis();
 
 	void checkThreshold(char aChar);
-	void setSyncMode();
+	void setSyncMode(bool aBool);
 
 	std::vector<bool> getBools();
 

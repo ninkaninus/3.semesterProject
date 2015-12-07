@@ -26,10 +26,11 @@ int main()
 	//Sleep(500);
 	//objA.send("Det er klart at det er tykt, når det er taaget..");
 	Sleep(5000);
-	Receiver.stopRecording();
+	//Receiver.stopRecording();
 
-	////Receiver.continuousAnalysis();
-	Receiver.printMagnitudes();
+	//Receiver.printMagnitudes();
+
+	Receiver.continuousAnalysis();
 
 	//while (true)
 	//{
