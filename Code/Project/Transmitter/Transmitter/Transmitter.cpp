@@ -105,7 +105,7 @@ namespace DTMF
 
 		}
 
-		Sleep(1);
+		Sleep(400);
 	}
 
 	DTMF::Tone Transmitter::nibbleToDTMF(unsigned char c) {
