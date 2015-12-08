@@ -15,17 +15,16 @@ using namespace std;
 
 int main()
 {
-	//ApplicationLayer objA;
+	ApplicationLayer objA;
 	DataLinkReceive objD;
 	objD.init(8000, 25);
 
+	objA.send("Hej");
 	while(true)
 	{
 		
 		objD.makeMessage();
 	}
-	string test = "Dette";
-	//objA.send("Hej");
 
 
 	// bool to data

@@ -15,18 +15,18 @@ DataLinkTransmit::~DataLinkTransmit()
 
 void DataLinkTransmit::transmitFrame(DTMF::Frame frame) 
 {
-	payload.clear();	
+	frame.payload.clear();	
 	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
 
 	//Start flag in binary
-	payload.push_back(0);
-	payload.push_back(1); 
-	payload.push_back(1); 
-	payload.push_back(1); 
-	payload.push_back(1); 
-	payload.push_back(1);											
-	payload.push_back(1);	
-	payload.push_back(0);
+	frame.payload.push_back(0);
+	frame.payload.push_back(1);
+	frame.payload.push_back(1);
+	frame.payload.push_back(1);
+	frame.payload.push_back(1);
+	frame.payload.push_back(1);
+	frame.payload.push_back(1);
+	frame.payload.push_back(0);
 								
 	for (int j = 7; j >= 0; j--)
 	{
