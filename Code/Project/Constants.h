@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 namespace DTMF {
 
 	static const double TWO_PI = 6.283185307179586476925286766559;
@@ -25,6 +27,12 @@ namespace DTMF {
 	struct ToneFreq {
 		unsigned int frequency1;
 		unsigned int frequency2;
+	};
+
+	struct Frame {
+		std::vector<bool> payload;
+		unsigned int index;
+		unsigned int maxIndex;
 	};
 
 }

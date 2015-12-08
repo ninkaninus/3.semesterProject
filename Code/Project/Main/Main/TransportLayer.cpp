@@ -1,4 +1,5 @@
 #include "TransportLayer.h"
+#include <Constants.h>
 
 TransportLayer::TransportLayer()
 {
@@ -51,9 +52,14 @@ void TransportLayer::send(vector<bool>& bVector)
 
 	cout << "Max index: " << maxIndex << endl << endl;
 
+	DTMF::Frame frame;
+
 	for (int i = 0; i <= maxIndex; i++) {
 		cout << "Payload: " << i << endl;
-		dataLinkT.transmitFrame(extractPayload(i), i, returnMaxIndex());
+		frame.payload = extractPayload(i);
+		frame.index = i;
+		frame.maxIndex = returnMaxIndex();
+		dataLinkT.transmitFrame(frame);
 		cout << endl;
 	}
 }

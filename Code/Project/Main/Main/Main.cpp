@@ -7,7 +7,6 @@
 #include <bitset>
 #include <Windows.h>
 
-
 //inkludering af klasser
 #include "ApplicationLayer.h"
 #include "DataLinkReceive.h"

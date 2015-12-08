@@ -1,7 +1,7 @@
 #include "DataLinkTransmit.h"
 #include <iostream>
 #include <fstream>
-
+#include <Constants.h>
 
 DataLinkTransmit::DataLinkTransmit()
 {
@@ -13,7 +13,7 @@ DataLinkTransmit::~DataLinkTransmit()
 {
 }
 
-void DataLinkTransmit::transmitFrame(vector<bool>& aPayload, int anIndex, int maxIndex) 
+void DataLinkTransmit::transmitFrame(DTMF::Frame frame) 
 {
 	payload.clear();	
 	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
@@ -30,19 +30,19 @@ void DataLinkTransmit::transmitFrame(vector<bool>& aPayload, int anIndex, int ma
 								
 	for (int j = 7; j >= 0; j--)
 	{
-		bitset<8> indexBits(anIndex);								// Index tilføjes i binær
+		bitset<8> indexBits(frame.index);								// Index tilføjes i binær
 		bitStuffVector.push_back(indexBits[j]);
 	}
 
 
 	for (int j = 7; j >= 0; j--)
 	{
-		bitset<8> maxIndexBits(maxIndex);							// MaxIndex tilføjes i binær
+		bitset<8> maxIndexBits(frame.maxIndex);							// MaxIndex tilføjes i binær
 		bitStuffVector.push_back(maxIndexBits[j]);
 	}
 
-	for (int i = 0; i < aPayload.size(); i++)						// Payload tilføjes
-		bitStuffVector.push_back(aPayload[i]);
+	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
+		bitStuffVector.push_back(frame.payload[i]);
 
 
 	int crcType = 32;												// CRC og bitstuffing
