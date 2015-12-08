@@ -4,31 +4,31 @@
 
 DataLinkReceive::DataLinkReceive()
 {
-	//dette er til test
-	//vector<bool> sim = { 0, 1, 1, 1, 1, 1, 1, 0,	0, 0, 0, 0, 0, 0, 0, 0,		 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 1, 0, 0, 1, 0,		1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 };
-	//objR.setCharInBool(sim);
+
 }
 
-void DataLinkReceive::makeFrame()
+void DataLinkReceive::makeMessage()
 {
 	// Opsætning 
 	Frame newFrame;
 	vector<bool> frame = objR.extractBoolVector();
-	//print(frame, "Frame foer: ");
-	//print(data, "Data foer: ");
+
+	//print(frame, "frame før");
+	//print(data, "data før");
 
 	// Tilføje bools til data vectoren 
-	for (int i = 0; i < frame.size();i++)
-		data.push_back(frame[i]);
+	for (bool i : frame) {
+		data.push_back(i);
+	}
 	frame.clear();
 
 
 	// Find næste frame af data
 	int aFlag = 0;
-	int length = 0;
+	int length = 7;
 	if (data.size() > 10)
 	{
-		for (unsigned int i = 8; i < data.size(); i++)
+		for (unsigned int i = 8; i < data.size() + 1; i++)
 		{
 			length++;
 
@@ -38,47 +38,34 @@ void DataLinkReceive::makeFrame()
 				aFlag++;
 			}
 
-
 			// tilføj data uden frame 
-			if (aFlag == 1)
-				frame.push_back(data[i]);
-
+			if (aFlag == 1){
+				if (data.size() > i) {
+					frame.push_back(data[i]);
+				}
+			}
 
 			//stop hvis der et nyt flag
 			if (aFlag > 1) {
 				break;
-
 			}
 		}
+			
 
-		int i = frame.size();
-		if(!frame[i - 1] && frame[i - 2] && frame[i - 3] && frame[i - 4] && frame[i - 5] && frame[i - 6] && frame[i - 7] && !frame[i - 8]){
-		//if (true) {
+		if(aFlag == 2){
 			for (int i = 0; i < 8; i++) {
 				frame.pop_back();
 			}
 
-			// Fjern denne frame fra data
-			vector<bool> temp;
-			for (unsigned int i = 0; i < data.size(); i++) {
-				if (i > length + 6)
-					temp.push_back(data[i]);
-			}
-
-			data.clear();
-			for (int i = 0; i < temp.size(); i++)
-				data.push_back(temp[i]);
-
-
-			// antibitstuffing 
-			antiBitStuffing(frame);
+			// Fjern denne frame fra data 
+			data.erase(data.begin(), data.begin()+length - 8);
+			antiBitStuffing(frame);			
 
 
 			// CRC og validering
-			int n = 32;
 			if (validFrame(frame))
 			{
-				cout << "valid frame " << endl;
+				//cout << "valid frame " << endl;
 				// extract payload
 				newFrame.payload = getPayload(frame);
 
@@ -93,19 +80,10 @@ void DataLinkReceive::makeFrame()
 			}
 			else
 			{
-				cout << "defekt frame" << endl;
-
+				//cout << "defekt frame" << endl;
 			}
-
-			// Består den testen returneres payload ellers returneres en tom vektor
-
-
 		}
 	}
-	
-	//print(frame, "Frame efter: ");
-	//print(data, "Data efter: ");
-	
 }
 
 Frame DataLinkReceive::getFrame()
@@ -126,8 +104,8 @@ void DataLinkReceive::init(int aSampleRate, int aProcessingTime)
 	objR.startRecording();
 	Sleep(2000);
 
-		std::thread analysis(&PhysicalReceive::continuousAnalysis, &objR);
-		analysis.detach();
+	std::thread analysis(&PhysicalReceive::continuousAnalysis, &objR);
+	analysis.detach();
 
 }
 
@@ -213,6 +191,10 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 	//Valg af generatorpolynomium
 	double GENERATOR = 0;
 
+	if (bVector.size() < n) {
+		return false;
+	}
+
 	switch (n)
 	{
 	case 8:
@@ -238,8 +220,8 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 
 	//Opsætning
 	vector<bool> CRC;
-	for (int i = 0; i < bVector.size();i++)
-		CRC.push_back(bVector[i]);
+	for (bool i : bVector)
+		CRC.push_back(i);
 
 
 	//Syndromet beregnes
@@ -263,9 +245,9 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 	}
 
 	//returner 1 hvis syndromet er 0 (ingen fejl) ellers returner 0
-	for (int i = 0; i < CRC.size(); i++)
+	for (bool i : CRC)
 	{
-		if (CRC[i])
+		if (i)
 			return 0;
 	}
 	return 1;
@@ -274,6 +256,7 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 bool DataLinkReceive::validFrame(vector<bool>& bVector)
 {
 	int n = 32;
+
 	return ChekCRC(bVector, n);
 }
 

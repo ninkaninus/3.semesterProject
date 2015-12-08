@@ -15,27 +15,33 @@ using namespace std;
 
 int main()
 {
-	//DataLinkReceive objD;
-	//objD.init(8000, 20);
 	//ApplicationLayer objA;
-	PhysicalReceive Receiver;
-	Receiver.init(8000, 25);
+	DataLinkReceive objD;
+	objD.init(8000, 25);
 
-	Receiver.startRecording();
-	//Sleep(500);
-	//objA.send("Det er klart at det er tykt, når det er taaget..");
-	Sleep(5000);
-	//Receiver.stopRecording();
+	while(true)
+	{
+		
+		objD.makeMessage();
+	}
+	string test = "Dette";
+	//objA.send("Hej");
 
-	//Receiver.printMagnitudes();
 
-	Receiver.continuousAnalysis();
+	// bool to data
+	//cout << objA.BooleanTodata(objA.dataToBoolean(test)) << endl;
 
-	//while (true)
-	//{
-	//	Sleep(5000);
-	//	//objD.makeFrame();
-	//}
+	// Opsætningn af recieve (simulering af valid omdtaget data)
+	
+
+	
+	//
+	//objA.print(objD.getFrame(), "framen");
+
+	
+	// objA.print(objR.getCharInBool(),"print fra objR");
+	// objA.print(objR.getCharInBool(), "print fra objR");
+	
 
 	return 0;
 }

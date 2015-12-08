@@ -5,7 +5,6 @@
 #include <random>
 #include <bitset>
 #include "Transmitter/Transmitter/Transmitter.h"
-#include <Constants.h>
 
 using namespace std;
 
@@ -17,11 +16,11 @@ public:
 	void bitStuffing(vector<bool>& iVector);
 
 	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
-	void transmitFrame(DTMF::Frame f);
-
+	void transmitFrame(vector<bool>& aPayload, int index, int maxIndex);
+	
 	~DataLinkTransmit();
 
-	void print(vector<bool>& aVector, string aName);
+	void print(vector<bool>& aVector, string aName); 
 	void printFrames(); //hjælpemetode til at printe under test
 
 private:

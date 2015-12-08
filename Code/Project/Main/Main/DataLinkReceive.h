@@ -16,6 +16,7 @@ struct Frame
 	vector<bool> payload;
 	unsigned int index;
 	unsigned int maxIndex;
+	unsigned int type;
 };
 
 
@@ -24,7 +25,8 @@ class DataLinkReceive
 public:
 	DataLinkReceive();
 	Frame getFrame();
-	void makeFrame();
+	void makeMessage();
+
 	unsigned int numberOfFrames();
 	void init(int aSampleRate, int aProcessingTime);
 	
