@@ -154,7 +154,7 @@ std::vector<int> Analyzer::bufferMagnitudesHi(char aChar)
 
 bool Analyzer::bufferReady()
 {
-	if(activeBuffer.size() < 2 * sampleWindow)
+	if(activeBuffer.size() < 4 * sampleWindow)
 		return false;
 
 	return true;
