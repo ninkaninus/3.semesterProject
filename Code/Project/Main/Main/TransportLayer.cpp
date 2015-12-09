@@ -12,7 +12,7 @@ void TransportLayer::calculateIndex(unsigned int payloadSize)
 		maxIndex = 0;
 		return;
 	}
-
+		
 	if (payloadSize % BITS_IN_FRAME == 0) {
 		maxIndex = (payloadSize / BITS_IN_FRAME) - 1;
 	}

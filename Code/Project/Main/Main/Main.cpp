@@ -19,10 +19,12 @@ int main()
 	DataLinkReceive objD;
 	objD.init(8000, 25);
 
-	objA.send("Hej");
+	string hej;
+
 	while(true)
-	{
-		
+	{	
+		getline(cin, hej);
+		objA.send(hej);
 		objD.makeMessage();
 	}
 
