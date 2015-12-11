@@ -16,6 +16,9 @@ void DataLinkReceive::makeMessage()
 	//print(frame, "frame før");
 	//print(data, "data før");
 
+	if (fail > 1)
+		objR.setSyncMode(true);
+
 	// Tilføje bools til data vectoren 
 	for (bool i : frame) {
 		data.push_back(i);
@@ -65,7 +68,8 @@ void DataLinkReceive::makeMessage()
 			// CRC og validering
 			if (validFrame(frame))
 			{
-				//cout << "valid frame " << endl;
+				std::cout << "valid frame " << std::endl;
+				fail = 0;
 				// extract payload
 				newFrame.payload = getPayload(frame);
 
@@ -76,11 +80,13 @@ void DataLinkReceive::makeMessage()
 				newFrame.maxIndex = getMaxIndex(frame);
 
 				toTrans.push_back(newFrame);
-				cout << BooleanTodata(newFrame.payload) << endl;
+				std::cout << BooleanTodata(newFrame.payload) << std::endl;
 			}
 			else
 			{
-				//cout << "defekt frame" << endl;
+				fail++;
+				std::cout << "defekt frame" << std::endl;
+				std::cout << "Number of fails: " << fail << std::endl;
 			}
 		}
 	}
@@ -104,9 +110,21 @@ void DataLinkReceive::init(int aSampleRate, int aProcessingTime)
 	objR.startRecording();
 	Sleep(2000);
 
+	startAnalysis();
+
+	fail = 0;
+
+}
+
+void DataLinkReceive::startAnalysis()
+{
 	std::thread analysis(&PhysicalReceive::continuousAnalysis, &objR);
 	analysis.detach();
+}
 
+void DataLinkReceive::stopAnalysis()
+{
+	objR.stopAnalysis();
 }
 
 
@@ -140,19 +158,19 @@ vector<bool> DataLinkReceive::getPayload(vector<bool>& bVector)
 
 void DataLinkReceive::print(vector<bool>& aVector, string aName)
 {
-	cout << endl << "dette er et plot af: " << aName << endl;
+	std::cout << std::endl << "dette er et plot af: " << aName << std::endl;
 	int space = 0;
 	for (int i : aVector)
 	{
-		cout << i;
+		std::cout << i;
 		space++;
 		if (space > 7)
 		{
 			space = 0;
-			cout << " ";
+			std::cout << " ";
 		}
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
 
 void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
@@ -210,7 +228,7 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 		GENERATOR = 0b100000100110000010001110110110111;
 		break;
 	default:
-		cout << "Fejl CRC ugyldigt skal vaere 8, 10, 16 eller 32 " << endl << n << " blev brugt, der erstattes med " << 8 << endl;
+		std::cout << "Fejl CRC ugyldigt skal vaere 8, 10, 16 eller 32 " << std::endl << n << " blev brugt, der erstattes med " << 8 << std::endl;
 		GENERATOR = 0b100000111;
 		n = 8;
 	}

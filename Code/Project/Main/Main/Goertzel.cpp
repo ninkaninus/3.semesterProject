@@ -31,6 +31,35 @@ void Goertzel::init(int aSampleWindow, int aSampleRate)
 		sineTerms[targetFrequencies[i]] = sine;
 		cosineTerms[targetFrequencies[i]] = cosine;
 	}
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		hannWindow.push_back(0.5*(1 - cos(2 * M_PI*i / (aSampleWindow - 1))));
+	}
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		float temp = 0.53836 - 0.46164*cos(2 * M_PI*i / (aSampleWindow - 1));
+		hammingWindow.push_back(temp);
+	}
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		float temp = 0.42659 - 0.49656 * cos(2 * M_PI*i / (aSampleWindow - 1)) + 0.076849 * cos(4 * M_PI*i / (aSampleWindow - 1));
+		blackmanWindow.push_back(temp);
+	}
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		float temp = 0.3635819 - 0.4891775 * cos(2 * M_PI*i / (aSampleWindow - 1)) + 0.1365995 * cos(4 * M_PI*i / (aSampleWindow - 1)) - 0.0106411 * cos(6 * M_PI*i / (aSampleWindow - 1));
+		blackmanNuttallWindow.push_back(temp);
+	}
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		float temp = 0.35875 - 0.48829 * cos(2 * M_PI*i / (aSampleWindow - 1)) + 0.14128 * cos(4 * M_PI*i / (aSampleWindow - 1)) - 0.01168 * cos(6 * M_PI*i / (aSampleWindow - 1));
+		blackmanHarrisWindow.push_back(temp);
+	}
 }
 
 float Goertzel::algorithm(std::vector<signed short> someSamples, int aSampleWindow, int aTargetFreq)
@@ -42,9 +71,17 @@ float Goertzel::algorithm(std::vector<signed short> someSamples, int aSampleWind
 	q1 = 0;
 	q2 = 0;
 
+	std::vector<signed short> temp;
+
+	for (int i = 0; i < aSampleWindow; i++)
+	{
+		temp.push_back(someSamples[i]);
+		temp[i] *= hannWindow[i];
+	}
+
 	for (int i = 0; i<aSampleWindow; i++)
 	{
-		q0 = coeff * q1 - q2 + someSamples[i];
+		q0 = coeff * q1 - q2 + temp[i];
 		q2 = q1;
 		q1 = q0;
 	}
@@ -53,6 +90,7 @@ float Goertzel::algorithm(std::vector<signed short> someSamples, int aSampleWind
 	imag = (q2 * sineTerms[aTargetFreq]) / scalingFactor;
 
 	magnitude = sqrtf(real*real + imag*imag);
+
 	return magnitude;
 }
 

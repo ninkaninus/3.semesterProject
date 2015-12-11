@@ -1,4 +1,5 @@
 #include "PhysicalReceive.h"
+#include <exception>
 
 PhysicalReceive::PhysicalReceive()
 {
@@ -8,6 +9,7 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 {
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
 	setSyncMode(true);
+	isRunning = false;
 }
 
 void PhysicalReceive::startRecording()
@@ -74,43 +76,55 @@ void PhysicalReceive::nextCharacter()
 
 void PhysicalReceive::continuousAnalysis()
 {
-	breakAnalysis = false;
-
-	DTMF_analyzer.addToBuffer();
-
-	while (!breakAnalysis)
-	//while(count < 190)
+	try
 	{
-		if (DTMF_analyzer.bufferReady())
+		if (isRunning)
+			throw "Analysis is running already";
+
+		breakAnalysis = false;
+		isRunning = true;
+
+		DTMF_analyzer.addToBuffer();
+
+		while (!breakAnalysis)
 		{
-			if (charStringBroken)
+			if (DTMF_analyzer.bufferReady())
 			{
-				searchBuffer();
-				setSyncMode(true);
+				if (charStringBroken)
+				{
+					searchBuffer();
+					setSyncMode(true);
+				}
+				else
+				{
+					nextCharacter();
+				}
 			}
 			else
 			{
-				nextCharacter();
+				//std::cout << " !";
+				DTMF_analyzer.addToBuffer();
+				Sleep(1000);
 			}
 		}
-		else
-		{
-			//std::cout << " !";
-			DTMF_analyzer.addToBuffer();
-			Sleep(1000);
-		}
+
+		//DTMF_analyzer.stopRecording();
+
+		std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
+		stopRecording();
 	}
-
-	//DTMF_analyzer.stopRecording();
-
-	std::cout << "Buffer size: " << DTMF_analyzer.getActiveBuffer().size() << std::endl;
-	stopRecording();
+	catch (std::string error)
+	{
+		std::cout << "Exception occured!" << std::endl;
+		std::cout << error << std::endl;
+	}
 }
 
 
 void PhysicalReceive::stopAnalysis()
 {
 	breakAnalysis = true;
+	isRunning = false;
 }
 
 void PhysicalReceive::checkThreshold(char aChar)

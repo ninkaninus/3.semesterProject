@@ -15,6 +15,12 @@ protected:
 	std::map<int,float> sineTerms;
 	std::map<int,float> cosineTerms;
 
+	std::vector<float> hannWindow;
+	std::vector<float> hammingWindow;
+	std::vector<float> blackmanWindow;
+	std::vector<float> blackmanNuttallWindow;
+	std::vector<float> blackmanHarrisWindow;
+
 	std::vector<int> targetFrequencies;
 	float scalingFactor;
 };

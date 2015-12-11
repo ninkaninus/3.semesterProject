@@ -13,7 +13,7 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 
 //---------------------------DEFAULT THRESHOLDS----------------------------------
 
-	std::vector<float> thresholds{ 2000,2000,2000,2000,2000,2000,2000,2000 }; 
+	std::vector<float> thresholds{ 1000,1000,1000,1000,1000,1000,1000,1000 }; 
 	float ratio = 0.6;
 
 	for (int i = 0; i < 4; i++)
@@ -166,8 +166,8 @@ void Analyzer::updateThreshold(char aChar)
 	int hiFreq = findTargetFreqHi(aChar);
 	float loMag = getMagnitudeLo(0, aChar);
 	float hiMag = getMagnitudeHi(0, aChar);
-	thresholdMap[loFreq] = loMag * 0.7;
-	thresholdMap[hiFreq] = hiMag * 0.7;
+	thresholdMap[loFreq] = loMag * 0.75;
+	thresholdMap[hiFreq] = hiMag * 0.75;
 }
 
 char Analyzer::syncToFirstDTMF()

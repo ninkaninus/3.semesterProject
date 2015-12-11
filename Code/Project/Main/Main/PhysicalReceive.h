@@ -39,7 +39,7 @@ protected:
 	std::vector<char> charsReceived;
 	std::vector<bool> boolsReceived;
 
-	bool isRecording;
+	bool isRunning;
 	bool breakAnalysis;
 	bool charStringBroken;
 	bool preambleExpected;

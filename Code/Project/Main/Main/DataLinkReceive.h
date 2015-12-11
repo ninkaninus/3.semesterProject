@@ -29,6 +29,8 @@ public:
 
 	unsigned int numberOfFrames();
 	void init(int aSampleRate, int aProcessingTime);
+	void startAnalysis();
+	void stopAnalysis();
 	
 	~DataLinkReceive();
 
@@ -50,6 +52,7 @@ protected:
 	PhysicalReceive objR;
 	vector<bool> data;
 	deque<Frame> toTrans;
+	int fail;
 
 };
 
