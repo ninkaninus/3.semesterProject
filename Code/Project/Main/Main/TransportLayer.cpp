@@ -88,8 +88,11 @@ void TransportLayer::loop() {
 void TransportLayer::sendData() {
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
+	delete currPacket;
+	currPacket = nullptr;
 	transmitter.transmitFrame(frame);
 	receiveACK();
+
 }
 
 void TransportLayer::sendACK() {
@@ -113,6 +116,10 @@ void TransportLayer::receiveACK() {
 		timeDifference = diffTimePoint.count();
 	}
 	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
+
+	//We assume ack was received here, untill it is implemented
+
+
 }
 
 void TransportLayer::receiveData() {
