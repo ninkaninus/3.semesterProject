@@ -73,15 +73,15 @@ float Goertzel::algorithm(std::vector<signed short> someSamples, int aSampleWind
 
 	std::vector<signed short> temp;
 
-	for (int i = 0; i < aSampleWindow; i++)
-	{
-		temp.push_back(someSamples[i]);
-		temp[i] *= hannWindow[i];
-	}
+	//for (int i = 0; i < aSampleWindow; i++)
+	//{
+	//	temp.push_back(someSamples[i]);
+	//	temp[i] *= hannWindow[i];
+	//}
 
 	for (int i = 0; i<aSampleWindow; i++)
 	{
-		q0 = coeff * q1 - q2 + temp[i];
+		q0 = coeff * q1 - q2 + someSamples[i] * hannWindow[i];
 		q2 = q1;
 		q1 = q0;
 	}
