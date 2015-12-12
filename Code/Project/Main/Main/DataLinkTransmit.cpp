@@ -13,8 +13,9 @@ DataLinkTransmit::~DataLinkTransmit()
 {
 }
 
-void DataLinkTransmit::transmitFrame(DTMF::Frame frame) 
+void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 {
+	
 	payload.clear();	
 	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
 

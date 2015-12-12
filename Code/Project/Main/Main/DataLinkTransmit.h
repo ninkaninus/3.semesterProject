@@ -18,7 +18,7 @@ public:
 	void bitStuffing(vector<bool>& iVector);
 
 	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
-	void transmitFrame(vector<bool>& aPayload, int index, int maxIndex);
+	void transmitFrame(DTMF::Frame frame);
 	void aCKFrame(vector<bool>& aPayload, int anOption, int anAddress, int index, int maxIndex);
 
 	~DataLinkTransmit();
