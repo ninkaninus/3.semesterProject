@@ -15,6 +15,7 @@ using namespace std;
 
 int main()
 {
+
 	ApplicationLayer objA;
 	DataLinkReceive objD;
 
@@ -25,6 +26,10 @@ int main()
 	}
 	
 
+	while (true) {
+		
+
+	}
 	return 0;
 }
 	
