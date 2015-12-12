@@ -26,10 +26,11 @@ int main()
 	}
 	
 
-	while (true) {
-		
-
+	while (true)
+	{
+		1 + 2;
 	}
+
 	return 0;
 }
 	
