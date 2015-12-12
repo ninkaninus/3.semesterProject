@@ -20,7 +20,9 @@ int main()
 
 	//objA.send("Penis");
 	objD.init(8000,25);
+
 	while (true) {
+		Sleep(5000);
 		objD.makeMessage();
 	}
 	
