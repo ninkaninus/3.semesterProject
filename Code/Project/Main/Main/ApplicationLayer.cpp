@@ -129,56 +129,90 @@ string ApplicationLayer::BooleanTodata(vector<bool>& bVector)
 void ApplicationLayer::newMessage()
 {
 	mutex.lock();
-	messageBuffer.pop_front();
-
-	std::vector<bool> temp = dataToBoolean(messageBuffer[0]);
-	int length = temp.size();
-	std::vector<bool>* boolPtr;
-	boolPtr = new std::vector<bool>;
 	
-	for (int j = 31; j >= 0; j--)
+	if (!messageBuffer.empty())
 	{
-		bitset<32> bits(length);
-		boolPtr->push_back(bits[j]);
-	}
-	
-	for (int i = 0; i < BITS_IN_FRAME - 32; i++)
-	{
-		boolPtr->push_back(temp[i]);				
-	}
-
-	temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
-	
-	currentBuffer.push_back(boolPtr);
-
-	while (temp.size() > BITS_IN_FRAME)
-	{
+		std::vector<bool> temp = dataToBoolean(messageBuffer[0]);
+		messageBuffer.pop_front();
+		int length = temp.size();
+		std::vector<bool>* boolPtr;
 		boolPtr = new std::vector<bool>;
-		for (int i = 0; i < BITS_IN_FRAME; i++)
+
+		for (int j = 31; j >= 0; j--)
+		{
+			bitset<32> bits(length);
+			boolPtr->push_back(bits[j]);
+		}
+
+		for (int i = 0; i < BITS_IN_FRAME - 32; i++)
+		{
+			boolPtr->push_back(temp[i]);
+		}
+
+		temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+
+		currentBuffer.push_back(boolPtr);
+
+		while (temp.size() > BITS_IN_FRAME)
+		{
+			boolPtr = new std::vector<bool>;
+			for (int i = 0; i < BITS_IN_FRAME; i++)
+			{
+				boolPtr->push_back(temp[i]);
+			}
+
+			currentBuffer.push_back(boolPtr);
+
+			temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+
+		}
+
+		boolPtr = new std::vector<bool>;
+		for (int i = 0; i < temp.size(); i++)
 		{
 			boolPtr->push_back(temp[i]);
 		}
 
 		currentBuffer.push_back(boolPtr);
-
-		temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
-
 	}
-
-	boolPtr = new std::vector<bool>;
-	for (int i = 0; i < temp.size(); i++)
-	{
-		boolPtr->push_back(temp[i]);
-	}
-
-	currentBuffer.push_back(boolPtr);
 
 	mutex.unlock();
 }
 
+void ApplicationLayer::handleTransmit()
+{
+	if (objT.checkPacketBuffer())
+	{
+		objT.setPacket(currentBuffer[0]);
+		currentBuffer.pop_front();
+	}
+	if (currentBuffer.empty())
+	{
+		newMessage();
+	}
+}
+
+void ApplicationLayer::handleReceive()
+{
+	std::vector<bool>* tempChunk = objT.getPacketFromQueue();
+
+	if(tempChunk != nullptr)
+}
+
+void ApplicationLayer::loop()
+{
+	while (true);
+	{
+		handleTransmit();
+		handleReceive();
+	}
+}
+
 void ApplicationLayer::send(string message)	//sender input
 {
-	//objT.send(dataToBoolean(message));
+	mutex.lock();
+	messageBuffer.push_back(message);
+	mutex.unlock();
 }
 
 

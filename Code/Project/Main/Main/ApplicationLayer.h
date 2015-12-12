@@ -23,6 +23,10 @@ public:
 	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
 
 	void newMessage();
+	void handleTransmit();
+	void handleReceive();
+
+	void loop();
 
 	//hjælpefunktioner
 	void print(vector<bool>& aVector, string aName);	// viser bits
