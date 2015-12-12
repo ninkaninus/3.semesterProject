@@ -124,7 +124,11 @@ void TransportLayer::receiveACK()
 	float timeDifference = 0;
 
 	//start timer
+<<<<<<< af314a2b23b29252eb17e4fab29f661536cf09a5
 	//std::cout << "Start!" << std::endl;
+=======
+	std::cout << "Start!" << std::endl;
+>>>>>>> f7bb712cf114907716fb4a37da67a2037ecfc345
 	startTimePoint = std::chrono::system_clock::now();
 
 	while (timeDifference < timeoutACK) 
