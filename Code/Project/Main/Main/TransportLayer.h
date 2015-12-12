@@ -17,11 +17,20 @@ class TransportLayer
 {
 public:
 	TransportLayer();
+	void calculateIndex(unsigned int payloadSize);
+	vector<bool> extractPayload(unsigned int index);
+	void setStatus(bool SR);
+	void send(vector<bool>& bVector);
+
+	int returnMaxIndex() const;
 
 	~TransportLayer();
 
-private:
-	DataLinkTransmit transmitter;
-	DataLinkReceive receiver;
-	sf::Mutex mutex;
+protected:
+	DataLinkTransmit dataLinkT;
+	vector<bool> input;						//user input
+	bool SR;								//status sender eller modtager
+	int index;								//Framenummer
+	int maxIndex;
+	const unsigned int BITS_IN_FRAME = 160 * 8;
 };
