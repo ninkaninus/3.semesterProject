@@ -8,6 +8,8 @@
 #include <chrono>
 #include <thread>
 #include "DataLinkTransmit.h"
+#include "DataLinkReceive.h"
+#include <SFML\System\Mutex.hpp>
 
 using namespace std;
 
@@ -18,7 +20,8 @@ public:
 
 	~TransportLayer();
 
-protected:
-	
+private:
+	DataLinkTransmit transmitter;
+	DataLinkReceive receiver;
+	sf::Mutex mutex;
 };
-
