@@ -67,7 +67,7 @@ void DataLinkReceive::makeMessage()
 			// CRC og validering
 			if (validFrame(frame))
 			{
-				std::cout << "valid frame " << std::endl;
+				//std::cout << "valid frame " << std::endl;
 				fail = 0;
 				// extract payload
 				newFrame.payload = getPayload(frame);
@@ -84,8 +84,8 @@ void DataLinkReceive::makeMessage()
 			else
 			{
 				fail++;
-				std::cout << "defekt frame" << std::endl;
-				std::cout << "Number of fails: " << fail << std::endl;
+				//std::cout << "defekt frame" << std::endl;
+				//std::cout << "Number of fails: " << fail << std::endl;
 			}
 		}
 	}

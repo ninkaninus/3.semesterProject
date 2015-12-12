@@ -10,6 +10,7 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
 	setSyncMode(true);
 	isRunning = false;
+	logging = false;
 }
 
 void PhysicalReceive::startRecording()
@@ -29,7 +30,8 @@ void PhysicalReceive::searchBuffer()
 	char firstDTMF = DTMF_analyzer.syncToFirstDTMF();
 	if (firstDTMF != '?')
 	{
-		//charsReceived.push_back(firstDTMF);
+		if(logging)
+			charsReceived.push_back(firstDTMF);
 
 			//std::cout << count << ". detected char: " << firstDTMF << std::endl;
 			count++;
@@ -49,11 +51,11 @@ void PhysicalReceive::nextCharacter()
 		char detectedChar = DTMF_analyzer.findNextDTMF();
 		if (detectedChar != '?')
 		{
-			if (!preambleExpected)
-			{
+			if(logging)
 				charsReceived.push_back(detectedChar);
+
+			if (!preambleExpected)
 				addNibble(charToNibble(detectedChar));
-			}
 
 			checkThreshold(detectedChar);
 
@@ -69,6 +71,8 @@ void PhysicalReceive::nextCharacter()
 			charStringBroken = true;
 			preambleExpected = true;
 			//std::cout << "No more characters" << std::endl;
+			if(logging)
+				charsToFile("CharsReceived.txt");
 			break;
 		}
 	}
@@ -334,6 +338,27 @@ void PhysicalReceive::vectorToFile(std::string aTitle, std::vector<int> aVector)
 	outFile.close();
 
 	std::cout << "Stopped Writing " << aTitle << std::endl;
+}
+
+void PhysicalReceive::charsToFile(std::string aTitle)
+{
+	std::ofstream outFile(aTitle);
+
+	std::cout << "Started Writing " << aTitle << std::endl;
+
+	for (std::size_t i = 0; i < charsReceived.size(); i++)
+	{
+		outFile << charsReceived[i] << '\n';
+	}
+
+	outFile.close();
+
+	std::cout << "Stopped Writing " << aTitle << std::endl;
+}
+
+void PhysicalReceive::setLogging(bool b)
+{
+	logging = b;
 }
 
 

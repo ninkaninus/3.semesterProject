@@ -31,6 +31,8 @@ public:
 	void printMagnitude(char aChar);
 	void printMagnitudes();
 	void vectorToFile(std::string aTitle, std::vector<int> aVector);
+	void charsToFile(std::string aTitle);
+	void setLogging(bool b);
 
 	~PhysicalReceive();
 protected:
@@ -43,6 +45,7 @@ protected:
 	bool breakAnalysis;
 	bool charStringBroken;
 	bool preambleExpected;
+	bool logging;
 
 	std::map<int, bool> thresholdUpToDate;
 	bool syncMode;

@@ -180,50 +180,13 @@ char Analyzer::syncToFirstDTMF()
 		detectedChar = findNextDTMF();
 		if (detectedChar != '?')
 		{
-
-			/*
-			//-----------------EXPORT MAGNITUDES FOR FIRST CHAR-----------------
-			std::ofstream outFile2("Fon.txt");
-
-			std::cout << "Started Writing" << std::endl;
-
-			for (int i = 0; i < 2000; i++)
-			{
-				outFile2 << myGoertzel.algorithm(activeBuffer, sampleWindow, i) << '\n';
-
-			}
-
-			outFile2.close();
-			std::cout << "Stopped Writing" << std::endl;
-			//-------------------------------------------------------------------
-			*/
-
 			std::vector<int> magnitudeArray;
-
-
 
 			for (std::size_t i = 0; i < sampleWindow*2; i++)
 			{
 					int currentMagnitude = getMagnitudeHi(i, detectedChar);
 					magnitudeArray.push_back(currentMagnitude);
 			}
-
-			/*
-			//---------------EXPORT MAGNITUDES-------------------
-			std::ofstream outFile("TestH.txt");
-
-			std::cout << "Started Writing" << std::endl;
-
-			for (std::size_t i = 0; i < magnitudeArray.size(); i++)
-			{
-				outFile << magnitudeArray[i] << '\n';
-			}
-
-			outFile.close();
-
-			std::cout << "Stopped Writing" << std::endl;
-			//----------------------------------------------------
-			*/
 
 			std::vector<int> tempArray = magnitudeArray;
 			std::sort(tempArray.begin(), tempArray.end());
