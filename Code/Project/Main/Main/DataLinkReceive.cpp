@@ -71,15 +71,24 @@ void DataLinkReceive::makeMessage()
 				fail = 0;
 
 				// Bestem frame typen
-
+				switch (getInfo(frame, 0, 3)) {
+				case 0:
+					// Dette er en frame
+					// Extract information fra frame
+					newFrame.payload = getPayload(frame);
+					newFrame.index = getInfo(frame, 7, 11);
+					newFrame.type = getInfo(frame, 0, 3);
+					newFrame.adress = getInfo(frame, 3, 7);
+					break;
+				case 1:
+					// Dette er en ACK
+					// Extract information fra frame
+					newFrame.index = getInfo(frame, 7, 11);
+					newFrame.type = getInfo(frame, 0, 3);
+					newFrame.adress = getInfo(frame, 3, 7);
+					break;
+				}
 				
-				
-				// extract payload
-				newFrame.payload = getPayload(frame);
-
-				// extract index
-				newFrame.index = getIndex(frame);
-
 				// gem frame information i toTrans
 				toTrans.push_back(newFrame);
 
@@ -135,12 +144,26 @@ DataLinkReceive::~DataLinkReceive()
 {
 }
 
-// to do
-unsigned int DataLinkReceive::getIndex(vector<bool>& bVector)
-{
-	return 0;
-}
 
+unsigned int DataLinkReceive::getInfo(vector<bool>& bVector, int start, int stop)
+{
+	vector<bool> temp;
+	for (unsigned int i = 0; i < bVector.size(); i++) 
+	{
+		if (i <= start && i >= stop) 
+		{
+			temp.push_back(bVector[i]);
+		}
+	}
+
+	unsigned int num = 0;
+	for (unsigned int i = 0; i < temp.size(); i++)
+	{
+		num += temp[i] * pow(2, temp.size() - 1 - i);
+	}
+	cout << num << endl;
+	return num;
+}
 
 vector<bool> DataLinkReceive::getPayload(vector<bool>& bVector)
 {

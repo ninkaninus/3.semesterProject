@@ -30,7 +30,7 @@ public:
 
 protected:
 	// funktioner 
-	unsigned int getIndex(vector<bool>& bVector);
+	unsigned int getInfo(vector<bool>& bVector, int start, int stop);
 	vector<bool> getPayload(vector<bool>& bVector);
 	
 	bool ChekCRC(vector<bool>& bVector);
