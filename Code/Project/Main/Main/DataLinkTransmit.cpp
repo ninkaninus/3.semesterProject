@@ -15,11 +15,12 @@ DataLinkTransmit::~DataLinkTransmit()
 
 void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 {
-	
+	// Separat vector til data som skal bitstuffes
 	payload.clear();	
-	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
+	vector<bool> bitStuffVector;									
 
-	//Start flag in binary
+
+	//  =======================  Start flag =======================  
 	payload.push_back(0);
 	payload.push_back(1);
 	payload.push_back(1);
@@ -28,35 +29,57 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 	payload.push_back(1);
 	payload.push_back(1);
 	payload.push_back(0);
-								
+					
+	//  =======================   Typen tilføjes i binær  =======================  
 	for (int j = 3; j >= 0; j--)
 	{
-		bitset<8> indexBits(frame.index);								// Index tilføjes i binær
+		bitset<8> indexBits(frame.type);
+		bitStuffVector.push_back(indexBits[j]);
+	}
+
+
+	// =======================  Adressen tilføjes i binær  =======================  
+	for (int j = 3; j >= 0; j--)
+	{
+		bitset<8> indexBits(frame.adress);
+		bitStuffVector.push_back(indexBits[j]);
+	}
+
+
+	//  =======================  Index tilføjes i binær =======================  
+	for (int j = 3; j >= 0; j--)
+	{
+		bitset<8> indexBits(frame.index);								
 		bitStuffVector.push_back(indexBits[j]);
 	}
 	
 
-	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
+	//  =======================  Payload tilføjes  =======================  
+	for (int i = 0; i < frame.payload.size(); i++)						
 		bitStuffVector.push_back(frame.payload[i]);
-
-	generateCRC(bitStuffVector);										// CRC og bitstuffing
+	
+	//  =======================  CRC og bitstuffing =======================  
+	generateCRC(bitStuffVector);										
 	bitStuffing(bitStuffVector);
-
-	for (bool i : bitStuffVector)										// Alt smides til bage i framen
+	
+	//  =======================  Alt smides til bage i framen =======================  
+	for (bool i : bitStuffVector)										
 		payload.push_back(i);
 
 	bitStuffVector.clear();
 
+	//  =======================  Stop flag =======================  
 	payload.push_back(0);
 	payload.push_back(1);
 	payload.push_back(1);
 	payload.push_back(1);
 	payload.push_back(1);
-	payload.push_back(1);											// Stop flag
+	payload.push_back(1);											
 	payload.push_back(1);
 	payload.push_back(0);
 	
-	while (payload.size() % 4 != 0)									// Der tilføjes 0'er til antallet af bits går op i 4
+	// Der tilføjes 0'er til antallet af bits går op i 4
+	while (payload.size() % 4 != 0)									
 	{
 		payload.push_back(0);
 	}
