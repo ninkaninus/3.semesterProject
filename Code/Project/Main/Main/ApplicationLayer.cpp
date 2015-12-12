@@ -92,7 +92,7 @@ vector<bool> ApplicationLayer::dataToBoolean(string aString) // konverterer indk
 	return data;
 }
 
-string ApplicationLayer::BooleanTodata(vector<bool>& bVector)
+string ApplicationLayer::booleanTodata(vector<bool>& bVector)
 {
 
 	//Sæt værdierne fra vectoren ind i en stringstream
@@ -130,10 +130,10 @@ void ApplicationLayer::newMessage()
 {
 	mutex.lock();
 	
-	if (!messageBuffer.empty())
+	if (!messageOutBuffer.empty())
 	{
-		std::vector<bool> temp = dataToBoolean(messageBuffer[0]);
-		messageBuffer.pop_front();
+		std::vector<bool> temp = dataToBoolean(messageOutBuffer[0]);
+		messageOutBuffer.pop_front();
 		int length = temp.size();
 		std::vector<bool>* boolPtr;
 		boolPtr = new std::vector<bool>;
@@ -196,7 +196,37 @@ void ApplicationLayer::handleReceive()
 {
 	std::vector<bool>* tempChunk = objT.getPacketFromQueue();
 
-	if(tempChunk != nullptr)
+	while (tempChunk != nullptr)
+	{
+		if (messageComplete)
+		{
+			// find ny længde + chars
+			messageComplete = false;
+
+			for (int i = 31; i >= 0; i--)
+			{
+				lengthOfMessage |= tempChunk->at(i) << i;
+			}
+
+			tempChunk->erase(tempChunk->begin(), tempChunk->begin() + 32);
+
+			messageIn += booleanTodata(*tempChunk);
+		}
+		else
+		{
+			messageIn += booleanTodata(*tempChunk);
+			if (messageIn.length() == lengthOfMessage / 8)
+			{
+				messageComplete = true;
+				lengthOfMessage = 0;
+				mutex.lock();
+				messageInBuffer.push_back(messageIn);
+				mutex.unlock();
+			}
+		}
+
+		tempChunk = objT.getPacketFromQueue();
+	}
 }
 
 void ApplicationLayer::loop()
@@ -211,7 +241,7 @@ void ApplicationLayer::loop()
 void ApplicationLayer::send(string message)	//sender input
 {
 	mutex.lock();
-	messageBuffer.push_back(message);
+	messageOutBuffer.push_back(message);
 	mutex.unlock();
 }
 

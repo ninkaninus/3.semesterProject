@@ -20,7 +20,7 @@ public:
 	void send(string message);							// sender input
 
 	vector<bool> dataToBoolean(string aString);			// konverterer indkommen data til bool
-	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
+	string booleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
 
 	void newMessage();
 	void handleTransmit();
@@ -36,7 +36,11 @@ public:
 protected:
 	TransportLayer objT;
 	bool sendStatus;									// Er beskeden nået frem og klar til at sende igen
-	deque<std::string> messageBuffer;
+	bool messageComplete;
+	int lengthOfMessage;
+	std::string messageIn;
+	deque<std::string> messageInBuffer;
+	deque<std::string> messageOutBuffer;
 	deque<std::vector<bool>*> currentBuffer;
 	const unsigned int BITS_IN_FRAME = 160 * 8;
 	sf::Mutex mutex;
