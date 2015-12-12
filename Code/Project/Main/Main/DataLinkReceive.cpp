@@ -69,16 +69,21 @@ void DataLinkReceive::makeMessage()
 			{
 				//std::cout << "valid frame " << std::endl;
 				fail = 0;
+
+				// Bestem frame typen
+
+				
+				
 				// extract payload
 				newFrame.payload = getPayload(frame);
 
 				// extract index
 				newFrame.index = getIndex(frame);
 
-				// extract maxIndex
-				newFrame.maxIndex = getMaxIndex(frame);
-
+				// gem frame information i toTrans
 				toTrans.push_back(newFrame);
+
+				// til debugging plot tekst
 				std::cout << BooleanTodata(newFrame.payload) << std::endl;
 			}
 			else
@@ -126,22 +131,16 @@ void DataLinkReceive::stopAnalysis()
 	objR.stopAnalysis();
 }
 
-
 DataLinkReceive::~DataLinkReceive()
 {
 }
+
 // to do
 unsigned int DataLinkReceive::getIndex(vector<bool>& bVector)
 {
 	return 0;
 }
 
-// to do
-unsigned int DataLinkReceive::getMaxIndex(vector<bool>& bVector)
-{
-
-	return 0;
-}
 
 vector<bool> DataLinkReceive::getPayload(vector<bool>& bVector)
 {
