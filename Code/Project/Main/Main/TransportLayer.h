@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <random>
 #include <bitset>
 #include <chrono>
@@ -14,8 +15,9 @@
 class TransportLayer
 {
 	enum State {
-		sending,
-		receiving,
+		sendingData,
+		receivingData,
+		receivingACK,
 		unInitialized
 	};
 
@@ -26,11 +28,17 @@ public:
 
 	void loop();
 
-	void sending();
+	void sendData();
 
-	void receiving();
+	void sendACK();
+
+	void receiveData();
+
+	void receiveACK();
 
 	void setPacket(vector<bool>*);
+
+	vector<bool>* getPacketFromQueue();
 
 	bool checkPacketBuffer();
 
@@ -40,10 +48,11 @@ private:
 
 	void setState(State);
 	State getState();
-
+	unsigned int timoutACK = 2000;
 	vector<bool>* currPacket;
+	deque<vector<bool>*> receiveQueue;
 	bool looping = true;
-	State state = State::sending;
+	State state = State::receivingData;
 	DataLinkTransmit transmitter;
 	DataLinkReceive receiver;
 	sf::Mutex mutex;

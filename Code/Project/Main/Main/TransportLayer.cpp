@@ -25,7 +25,7 @@ void TransportLayer::setPacket(vector<bool>* newPacket) {
 
 	currPacket = newPacket;
 
-	setState(State::sending);
+	setState(State::sendingData);
 
 	mutex.unlock();
 }
@@ -44,30 +44,61 @@ bool TransportLayer::checkPacketBuffer() {
 	return rBool;
 }
 
+vector<bool>* TransportLayer::getPacketFromQueue() {
+	
+	vector<bool>* ptr;
+	
+	mutex.lock();
+
+	if (!receiveQueue.empty()) {
+		ptr = receiveQueue[0];
+		receiveQueue.pop_front();
+	}
+	else {
+		ptr = nullptr;
+	}
+
+	mutex.unlock();
+
+	return ptr;
+}
+
 void TransportLayer::init() {
 	loop();
 }
 
 void TransportLayer::loop() {
 	while (looping) {
-		if (getState() == State::sending) {
-			sending();
+		if (getState() == State::sendingData) {
+			sendData();
 		}
 
-		if (getState() == State::receiving) {
-			receiving();
+		if (getState() == State::receivingData) {
+			receiveData();
 		}
 	}
 }
 
-void TransportLayer::sending() {
+void TransportLayer::sendData() {
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
 	transmitter.transmitFrame(frame);
-	setState(State::receiving);
+	setState(State::receivingACK);
+	receiveACK();
 }
 
-void TransportLayer::receiving() {
+void TransportLayer::sendACK() {
+	DTMF::Frame frame;
+	frame.type = 1;
+	transmitter.transmitFrame(frame);
+}
+
+void TransportLayer::receiveACK() {
+	//start noget timer gøjl her
+
+}
+
+void TransportLayer::receiveData() {
 
 }
 
