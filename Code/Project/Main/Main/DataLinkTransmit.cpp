@@ -36,7 +36,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 	}
 	
 
-	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
+	for (unsigned int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(frame.payload[i]);
 
 	generateCRC(bitStuffVector);										// CRC og bitstuffing
@@ -115,7 +115,7 @@ void DataLinkTransmit::aCKFrame(DTMF::Frame frame)
 	}
 
 
-	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
+	for (unsigned int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(frame.payload[i]);
 
 

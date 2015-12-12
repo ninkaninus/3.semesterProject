@@ -200,13 +200,13 @@ void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
 
 	//smid resultatet tilbage i bVector
 	bVector.clear();
-	for (int i = 0; i < stuff.size();i++)
+	for (unsigned int i = 0; i < stuff.size();i++)
 		bVector.push_back(stuff[i]);
 }
 
 bool DataLinkReceive::ChekCRC(vector<bool>& bVector) {
 
-	int n = DTMF::CRCnr;
+	unsigned int n = DTMF::CRCnr;
 	//Valg af generatorpolynomium
 	double GENERATOR = 0;
 

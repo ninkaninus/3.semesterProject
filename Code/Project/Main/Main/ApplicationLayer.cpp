@@ -166,7 +166,7 @@ void ApplicationLayer::newMessage()
 			while (temp.size() > BITS_IN_FRAME)
 			{
 				boolPtr = new std::vector<bool>;
-				for (int i = 0; i < BITS_IN_FRAME; i++)
+				for (unsigned int i = 0; i < BITS_IN_FRAME; i++)
 				{
 					boolPtr->push_back(temp[i]);
 				}
@@ -177,7 +177,7 @@ void ApplicationLayer::newMessage()
 			}
 
 			boolPtr = new std::vector<bool>;
-			for (int i = 0; i < temp.size(); i++)
+			for (unsigned int i = 0; i < temp.size(); i++)
 			{
 				boolPtr->push_back(temp[i]);
 			}
