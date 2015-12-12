@@ -2,8 +2,7 @@
 #include <iostream>
 
 
-DataLinkReceive::DataLinkReceive()
-{
+DataLinkReceive::DataLinkReceive() {
 
 }
 
