@@ -3,12 +3,13 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 
 namespace DTMF 
 {
 	Transmitter::Transmitter()
 	{
-		setToneDuration(25.0/1000);
+		setToneDuration(10/1000);
 		setVolume(15000);
 	}
 
@@ -17,8 +18,17 @@ namespace DTMF
 		delete buffer;
 	}
 
-	void Transmitter::transmit() {
+	void Transmitter::setLogging(bool b) {
+		logging = b;
+	}
 
+	bool Transmitter::getLogging() const {
+		return logging;
+	}
+
+	void Transmitter::transmit(std::vector<DTMF::Tone>& tones) {
+		buffer = toneGenerator.generate(tones);
+		playBuffer();
 	}
 
 	void Transmitter::transmit(std::vector<bool>& bitVector) {
@@ -41,10 +51,14 @@ namespace DTMF
 			}
 		}
 
-		for (int i = 0; i < tones.size(); i++) {
-			std::cout << "Nr: " << i + 1 << " : " << DTMFToChar(tones[i]) << std::endl;
+		if (logging == true) {
+			std::ofstream myFile;
+			myFile.open(logFile);
+			for (DTMF::Tone tone : tones) {
+				myFile << DTMFToChar(tone);
+			}
+			myFile.close();
 		}
-		std::cout << std::endl;
 
 		buffer = toneGenerator.generate(tones);
 		playBuffer();
@@ -105,7 +119,7 @@ namespace DTMF
 
 		}
 
-		Sleep(400);
+		Sleep(1000);
 	}
 
 	DTMF::Tone Transmitter::nibbleToDTMF(unsigned char c) {

@@ -35,4 +35,11 @@ namespace DTMF {
 		unsigned int maxIndex;
 	};
 
+	enum transition {
+		snap,
+		triangle,
+		steep,
+		smooth
+	};
+
 }

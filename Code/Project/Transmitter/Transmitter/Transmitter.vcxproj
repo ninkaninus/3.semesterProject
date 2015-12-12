@@ -152,7 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Constants.h" />
+    <ClInclude Include="..\..\Constants.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Transmitter.h" />
   </ItemGroup>

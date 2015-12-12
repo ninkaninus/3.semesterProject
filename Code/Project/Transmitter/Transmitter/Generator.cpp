@@ -1,6 +1,7 @@
 #include "Generator.h"
 #include <iostream>
 #include <stdlib.h>
+#include <Constants.h>
 
 namespace DTMF {
 
@@ -46,44 +47,141 @@ namespace DTMF {
 		return volumeSmoothing;
 	}
 
+	/*
 	sf::SoundBuffer* Generator::generate(std::vector<bool> binarySequence)
 	{
 		std::vector<DTMF::Tone> tones;
 
 		return generate(tones);
 	}
+	*/
 
-	sf::SoundBuffer* Generator::generate(std::vector<DTMF::Tone> toneBuffer) 
+	sf::SoundBuffer* Generator::generate(std::vector<DTMF::Tone>& toneBuffer) 
 	{
 		unsigned int bufferSize = static_cast<unsigned int>((toneBuffer.size() * sampleRate) * duration);
+
 		sf::SoundBuffer* SBpoint = new sf::SoundBuffer();
+
+		sf::Int16* outputBuffer = nullptr;
+
+		switch (trans)
+		{
+		case DTMF::snap:
+			outputBuffer = transitionSnap(toneBuffer, bufferSize);
+			break;
+		case DTMF::triangle:
+			outputBuffer = transitionTriangle(toneBuffer, bufferSize);
+			break;
+		case DTMF::steep:
+			outputBuffer = transitionSteep(toneBuffer, bufferSize, STEEP_PERCENT);
+			break;
+		case DTMF::smooth:
+			outputBuffer = transitionSmooth(toneBuffer, bufferSize);
+			break;
+		default:
+			break;
+		}
+
+		SBpoint->loadFromSamples(&outputBuffer[0], bufferSize, 1, sampleRate);
+		//SBpoint->saveToFile("Test_Generator_Steep_10.ogg");
+
+		return SBpoint;
+	}
+
+	sf::Int16* Generator::transitionSmooth(std::vector<DTMF::Tone>& toneBuffer, unsigned int bufferSize) {
+
 		sf::Int16* outputBuffer = new sf::Int16[bufferSize];
 
 		int samplesPerTone = bufferSize / toneBuffer.size();
 
+		//Declarations
 		double phase1 = 0;
 		double phase2 = 0;
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
-		double volume = volumeMax;
-		double volumeAdj = double(volumeMax) / (samplesPerTone/2);
-		bool volumeRising = false;
-	
-		for (int i = 0; i < toneBuffer.size(); i++) 
+
+		for (int i = 0; i < toneBuffer.size(); i++)
 		{
-			phase1 = 0;
-			phase2 = 0;
-			if (volumeSmoothing == true) {
-				volume = 0.0;
-				volumeRising = true;
-			}
-
 			ToneFreq freq = getFreq(toneBuffer[i]);
-
 			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
 			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
 
-			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++) 
+			if (i == 0) {
+				phase1 = 0;
+				phase2 = 0;
+			}
+			else {
+				bool foundPhase = false;
+				int numb = 0;
+				if (outputBuffer[(i * samplesPerTone) - 1] < 0) {
+					while (!foundPhase) {
+						numb = volumeMax * (std::sin(phase1) + std::sin(phase2));
+						if (numb > outputBuffer[(i * samplesPerTone) - 1]) {
+							phase1 -= phaseAdj1;
+							phase2 -= phaseAdj2;
+						}
+						else {
+							foundPhase = true;
+						}
+					}
+				} else {
+					while (!foundPhase) {
+						numb = volumeMax * (std::sin(phase1) + std::sin(phase2));
+						if (numb < outputBuffer[(i * samplesPerTone) - 1]) {
+							phase1 += phaseAdj1;
+							phase2 += phaseAdj2;
+						}
+						else {
+							foundPhase = true;
+						}
+					}
+				}
+			}
+			
+			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
+			{
+
+				outputBuffer[j] = static_cast<sf::Int16>(volumeMax * (std::sin(phase1) + std::sin(phase2)));
+
+				phase1 += phaseAdj1;
+				phase2 += phaseAdj2;
+
+				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
+				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
+			}
+		}
+
+		return outputBuffer;
+	}
+
+	sf::Int16* Generator::transitionSteep(std::vector<DTMF::Tone>& toneBuffer, unsigned int bufferSize, double percentToMax) {
+		sf::Int16* outputBuffer = new sf::Int16[bufferSize];
+
+		int samplesPerTone = bufferSize / toneBuffer.size();
+
+		//Declarations
+		double phase1 = 0;
+		double phase2 = 0;
+		double phaseAdj1 = 0;
+		double phaseAdj2 = 0;
+		double volume = 0;
+		int transitionToneAmount = int((samplesPerTone / 100.0) * percentToMax);
+		double volumeAdj = double(volumeMax) / transitionToneAmount;
+		bool volumeRising = true;
+
+		for (int i = 0; i < toneBuffer.size(); i++)
+		{
+			//The values to be set every tone
+			phase1 = 0;
+			phase2 = 0;
+			volume = 0.0;
+			volumeRising = true;
+			ToneFreq freq = getFreq(toneBuffer[i]);
+			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
+			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
+			unsigned int endTransition = ((i + 1) * samplesPerTone) - transitionToneAmount;
+
+			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
 			{
 
 				outputBuffer[j] = static_cast<sf::Int16>(volume * (std::sin(phase1) + std::sin(phase2)));
@@ -93,26 +191,68 @@ namespace DTMF {
 
 				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
 				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
-				
-				if (!volumeSmoothing) continue;
-
-				if (volume >= volumeMax) {
-					volumeRising = false;
-				}
 
 				if (volumeRising) {
 					volume += volumeAdj;
 				}
+				else if(!volumeRising && j <  endTransition){
+					volume = volumeMax;
+				}
+
 				else {
 					volume -= volumeAdj;
 				}
+
+				if (volume > volumeMax) {
+					volume -= volumeAdj;
+					volumeRising = false;
+				}
+
 			}
 		}
 
-		SBpoint->loadFromSamples(&outputBuffer[0], bufferSize, 1, sampleRate);
-		SBpoint->saveToFile("test.ogg");
+		return outputBuffer;
+	}
 
-		return SBpoint;
+	sf::Int16* Generator::transitionTriangle(std::vector<DTMF::Tone>& toneBuffer, unsigned int bufferSize) {
+		return transitionSteep(toneBuffer, bufferSize, 50);
+	}
+
+	sf::Int16* Generator::transitionSnap(std::vector<DTMF::Tone>& toneBuffer, unsigned int bufferSize) {
+
+		sf::Int16* outputBuffer = new sf::Int16[bufferSize];
+
+		int samplesPerTone = bufferSize / toneBuffer.size();
+
+		//Declarations
+		double phase1 = 0;
+		double phase2 = 0;
+		double phaseAdj1 = 0;
+		double phaseAdj2 = 0;
+
+		for (int i = 0; i < toneBuffer.size(); i++)
+		{
+			//The values to be set every tone
+			phase1 = 0;
+			phase2 = 0;
+			ToneFreq freq = getFreq(toneBuffer[i]);
+			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
+			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
+
+			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
+			{
+
+				outputBuffer[j] = static_cast<sf::Int16>(volumeMax * (std::sin(phase1) + std::sin(phase2)));
+
+				phase1 += phaseAdj1;
+				phase2 += phaseAdj2;
+
+				if (phase1 >= TWO_PI) phase1 -= TWO_PI;
+				if (phase2 >= TWO_PI) phase2 -= TWO_PI;
+			}
+		}
+
+		return outputBuffer;
 	}
 
 	DTMF::ToneFreq Generator::getFreq(DTMF::Tone tone) 
