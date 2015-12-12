@@ -35,6 +35,7 @@ namespace DTMF {
 		std::vector<bool> payload;
 		unsigned int index;
 		unsigned int maxIndex;
+		unsigned int adress;
 		unsigned int type;
 	};
 
