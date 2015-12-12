@@ -1,9 +1,9 @@
 #include <iostream>
 #include "Transmitter\Transmitter\Transmitter.h"
-#include "Main\Main\ApplikationsLayer.h"
-#include "Main\Main\DataLinkRecive.h"
+#include "Main\Main\ApplicationLayer.h"
+#include "Main\Main\DataLinkReceive.h"
 #include "Main\Main\DataLinkTransmit.h"
-#include "Main\Main\PhysicalRecive.h"
+#include "Main\Main\PhysicalReceive.h"
 #include "Main\Main\PhysicalTransmit.h"
 #include "Main\Main\TransportLayer.h"
 
@@ -30,7 +30,7 @@ public:
 	void on_textEdit_returnPressed();
 
 private:
-	ApplikationsLayer AppObj;
+	ApplicationLayer AppObj;
 	TransportLayer transObj;
 	DataLinkTransmit DLTransmit;
 	DTMF::Transmitter transmit;

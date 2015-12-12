@@ -76,10 +76,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Main\Main\ApplikationsLayer.cpp" />
-    <ClCompile Include="..\..\Main\Main\DataLinkRecive.cpp" />
+    <ClCompile Include="..\..\Main\Main\Analyzer.cpp" />
+    <ClCompile Include="..\..\Main\Main\ApplicationLayer.cpp" />
+    <ClCompile Include="..\..\Main\Main\DataLinkReceive.cpp" />
     <ClCompile Include="..\..\Main\Main\DataLinkTransmit.cpp" />
-    <ClCompile Include="..\..\Main\Main\PhysicalRecive.cpp" />
+    <ClCompile Include="..\..\Main\Main\Goertzel.cpp" />
+    <ClCompile Include="..\..\Main\Main\MyRecorder.cpp" />
+    <ClCompile Include="..\..\Main\Main\PhysicalReceive.cpp" />
     <ClCompile Include="..\..\Main\Main\PhysicalTransmit.cpp" />
     <ClCompile Include="..\..\Main\Main\TransportLayer.cpp" />
     <ClCompile Include="..\..\Transmitter\Transmitter\Generator.cpp" />
@@ -124,6 +127,15 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Main\Main\Analyzer.h" />
+    <ClInclude Include="..\..\Main\Main\ApplicationLayer.h" />
+    <ClInclude Include="..\..\Main\Main\DataLinkReceive.h" />
+    <ClInclude Include="..\..\Main\Main\DataLinkTransmit.h" />
+    <ClInclude Include="..\..\Main\Main\Goertzel.h" />
+    <ClInclude Include="..\..\Main\Main\MyRecorder.h" />
+    <ClInclude Include="..\..\Main\Main\PhysicalReceive.h" />
+    <ClInclude Include="..\..\Main\Main\PhysicalTransmit.h" />
+    <ClInclude Include="..\..\Main\Main\TransportLayer.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />
   </ItemGroup>
   <ItemGroup>

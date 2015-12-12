@@ -4037,8 +4037,8 @@
 		<row><td>_76FE83C30EB042548F92EA5F42FE00AD.exe</td><td/><td>C:\Users\ChrisM\Desktop\Smartgit\Code\Project\DTMF User Interface\Win32\Debug\DTMF User Interface.exe</td><td>0</td></row>
 		<row><td>_8FDAF594EDE149E392893DFA9BB37433.exe</td><td/><td>C:\Users\ChrisM\Desktop\Smartgit\Code\Project\DTMF User Interface\Win32\Debug\DTMF User Interface.exe</td><td>0</td></row>
 		<row><td>_9CA49DBF5D144E5B814FC59FB34F3935.exe</td><td/><td>C:\Users\ChrisM\Desktop\Smartgit\Code\Project\DTMF User Interface\Win32\Debug\DTMF User Interface.exe</td><td>0</td></row>
-		<row><td>_Built1_D9A9F4D2635944D2B717D0FBFB8B80D8.exe</td><td/><td>C:\Users\ChrisM\Desktop\Music_13-512.ico</td><td>0</td></row>
-		<row><td>_Built_CE8B29779B134B91A8EED1D35555E40C.exe</td><td/><td>C:\Users\ChrisM\Desktop\Music_13-512.ico</td><td>0</td></row>
+		<row><td>_Built1_B1DE64A3796E403C839458DC897913D5.exe</td><td/><td>C:\Users\ChrisM\Desktop\Sine_wave.ico</td><td>0</td></row>
+		<row><td>_Built_9ABF3BF900FA43C7902243BEAE86FBFE.exe</td><td/><td>C:\Users\ChrisM\Desktop\Sine_wave.ico</td><td>0</td></row>
 		<row><td>_CAEC57E32C2447B9BDDA389FA4D676B6.exe</td><td/><td>C:\Users\ChrisM\Desktop\Smartgit\Code\Project\DTMF User Interface\Win32\Debug\DTMF User Interface.exe</td><td>0</td></row>
 		<row><td>_EC999B78176643C9B74226F1AC6947E8.exe</td><td/><td>C:\Users\ChrisM\Desktop\Smartgit\Code\Project\DTMF User Interface\Win32\Debug\DTMF User Interface.exe</td><td>0</td></row>
 	</table>
@@ -4710,8 +4710,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>_Built</td><td>dtmfch_1_dtmf_chatprotocol</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>DTMF_User_Interface.Primary_Output</td><td>AlwaysInstall</td><td/><td/><td/><td>_Built_CE8B29779B134B91A8EED1D35555E40C.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>DTMF_User_Interface.Primary_Output</td><td>AlwaysInstall</td><td/><td/><td/><td>_Built1_D9A9F4D2635944D2B717D0FBFB8B80D8.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>dtmfch_1_dtmf_chatprotocol</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>DTMF_User_Interface.Primary_Output</td><td>AlwaysInstall</td><td/><td/><td/><td>_Built_9ABF3BF900FA43C7902243BEAE86FBFE.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>DTMF_User_Interface.Primary_Output</td><td>AlwaysInstall</td><td/><td/><td/><td>_Built1_B1DE64A3796E403C839458DC897913D5.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

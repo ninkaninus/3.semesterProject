@@ -13,17 +13,17 @@ void Gui::stringToQString()
 
 void Gui::transmitInfo()
 {
-	AppObj.dataToBoolean(data);
+	//AppObj.dataToBoolean(data);
 
-	transObj.newInput(AppObj.returnData());
+	//transObj.newInput(AppObj.returnData());
 
-	transObj.getPayload(0);
-	DLTransmit.assembleFrame(transObj.returnPayload(), 0, transObj.returnMaxIndex());
-	transmit.transmit(DLTransmit.returnPayload());
+	//transObj.getPayload(0);
+	//DLTransmit.assembleFrame(transObj.returnPayload(), 0, transObj.returnMaxIndex());
+	//transmit.transmit(DLTransmit.returnPayload());
 
-	transObj.getPayload(1);
-	DLTransmit.assembleFrame(transObj.returnPayload(), 1, 16);
-	transmit.transmit(DLTransmit.returnPayload());
+	//transObj.getPayload(1);
+	//DLTransmit.assembleFrame(transObj.returnPayload(), 1, 16);
+	//transmit.transmit(DLTransmit.returnPayload());
 }
 
 void Gui::showOnGui()
@@ -33,19 +33,11 @@ void Gui::showOnGui()
 		ui.textVindue->insertPlainText(qsData);
 		ui.textVindue->insertPlainText("\n");
 		ui.textEdit->clear();
-		AppObj.dataToBoolean(data);
 }
 
 void Gui::commands()
 {
 	stringToQString();
-	string nick = "/nick";
-	int index(0);
-	if (data.find(nick) != string::npos)
-	{
-		ui.textVindue->insertPlainText("nick works!");
-		ui.textVindue->insertPlainText("\n");
-	}
 }
 
 
