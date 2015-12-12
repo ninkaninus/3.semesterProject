@@ -94,6 +94,11 @@ void DataLinkReceive::makeMessage()
 
 				// til debugging plot tekst
 				std::cout << BooleanTodata(newFrame.payload) << std::endl;
+				
+				cout << "Type:    " << newFrame.type << endl;
+				cout << "Adresse: " << newFrame.adress << endl;
+				cout << "Index:   " << newFrame.index << endl;
+
 			}
 			else
 			{

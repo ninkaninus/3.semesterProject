@@ -16,8 +16,14 @@ using namespace std;
 int main()
 {
 	ApplicationLayer objA;
+	DataLinkReceive objD;
 
-	objA.send("Penis");
+	//objA.send("Penis");
+	objD.init(8000,25);
+	while (true) {
+		objD.makeMessage();
+	}
+	
 
 	return 0;
 }
