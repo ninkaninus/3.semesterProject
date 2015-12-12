@@ -9,7 +9,7 @@ namespace DTMF
 {
 	Transmitter::Transmitter()
 	{
-		setToneDuration(10/1000);
+		setToneDuration(25.0/1000);
 		setVolume(15000);
 	}
 
