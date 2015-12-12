@@ -45,9 +45,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(frame.payload[i]);
 
-
-	int crcType = 32;												// CRC og bitstuffing
-	generateCRC(bitStuffVector, crcType);
+	generateCRC(bitStuffVector);						// CRC og bitstuffing
 	bitStuffing(bitStuffVector);
 
 	for (bool i : bitStuffVector)									// Alt smides til bage i framen
@@ -133,8 +131,8 @@ void DataLinkTransmit::aCKFrame(vector<bool>& aPayload, int anOption, int anAddr
 		bitStuffVector.push_back(aPayload[i]);
 
 
-	int crcType = 32;												// CRC og bitstuffing
-	generateCRC(bitStuffVector, crcType);
+												
+	generateCRC(bitStuffVector);						// CRC og bitstuffing
 	bitStuffing(bitStuffVector);
 
 	for (bool i : bitStuffVector)									// Alt smides til bage i framen
@@ -255,10 +253,11 @@ void DataLinkTransmit::aCKFrame(vector<bool>& aAddress, int anIndex, int maxInde
 
 
 
-void DataLinkTransmit::generateCRC(vector<bool>& bVector, int& n)
+void DataLinkTransmit::generateCRC(vector<bool>& bVector)
 {
 	//Valg af generatorpolynomium
 	double GENERATOR = 0;
+	int n = DTMF::CRCnr;
 
 	switch (n)
 	{
