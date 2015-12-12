@@ -5,7 +5,7 @@ namespace DTMF {
 
 	static const double TWO_PI = 6.283185307179586476925286766559;
 
-	static const int CRCnr = 32;
+	static const int CRCnr = 16;
 
 	enum Tone {
 		ZERO,

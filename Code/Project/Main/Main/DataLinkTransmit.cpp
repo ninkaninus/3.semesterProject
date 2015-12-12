@@ -29,26 +29,20 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 	payload.push_back(1);
 	payload.push_back(0);
 								
-	for (int j = 7; j >= 0; j--)
+	for (int j = 3; j >= 0; j--)
 	{
 		bitset<8> indexBits(frame.index);								// Index tilføjes i binær
 		bitStuffVector.push_back(indexBits[j]);
 	}
-
-
-	for (int j = 7; j >= 0; j--)
-	{
-		bitset<8> maxIndexBits(frame.maxIndex);							// MaxIndex tilføjes i binær
-		bitStuffVector.push_back(maxIndexBits[j]);
-	}
+	
 
 	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(frame.payload[i]);
 
-	generateCRC(bitStuffVector);						// CRC og bitstuffing
+	generateCRC(bitStuffVector);										// CRC og bitstuffing
 	bitStuffing(bitStuffVector);
 
-	for (bool i : bitStuffVector)									// Alt smides til bage i framen
+	for (bool i : bitStuffVector)										// Alt smides til bage i framen
 		payload.push_back(i);
 
 	bitStuffVector.clear();
@@ -120,12 +114,6 @@ void DataLinkTransmit::aCKFrame(DTMF::Frame frame)
 		bitStuffVector.push_back(indexBits[j]);
 	}
 
-
-	for (int j = 7; j >= 0; j--)
-	{
-		bitset<8> maxIndexBits(frame.maxIndex);							// MaxIndex tilføjes i binær
-		bitStuffVector.push_back(maxIndexBits[j]);
-	}
 
 	for (int i = 0; i < frame.payload.size(); i++)						// Payload tilføjes
 		bitStuffVector.push_back(frame.payload[i]);
