@@ -9,7 +9,7 @@ DataLinkReceive::DataLinkReceive() {
 void DataLinkReceive::makeMessage()
 {
 	// Opsætning 
-	Frame newFrame;
+	DTMF::Frame newFrame;
 	vector<bool> frame = objR.extractBoolVector();
 
 	//print(frame, "frame før");
@@ -91,9 +91,9 @@ void DataLinkReceive::makeMessage()
 	}
 }
 
-Frame DataLinkReceive::getFrame()
+DTMF::Frame DataLinkReceive::getFrame()
 {
-	Frame temp = toTrans[0];
+	DTMF::Frame temp = toTrans[0];
 	toTrans.pop_front();
 	return temp;
 }
@@ -204,7 +204,9 @@ void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
 		bVector.push_back(stuff[i]);
 }
 
-bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
+bool DataLinkReceive::ChekCRC(vector<bool>& bVector) {
+
+	int n = DTMF::CRCnr;
 	//Valg af generatorpolynomium
 	double GENERATOR = 0;
 
@@ -272,9 +274,7 @@ bool DataLinkReceive::ChekCRC(vector<bool>& bVector, int& n) {
 
 bool DataLinkReceive::validFrame(vector<bool>& bVector)
 {
-	int n = 32;
-
-	return ChekCRC(bVector, n);
+	return ChekCRC(bVector);
 }
 
 string DataLinkReceive::BooleanTodata(vector<bool>& bVector)

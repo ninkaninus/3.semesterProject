@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <bitset>
+#include "Constants.h"
 #include "Transmitter\Transmitter\Transmitter.h"
 
 //"Transmitter/Transmitter/Transmitter.h"
@@ -14,12 +15,12 @@ class DataLinkTransmit
 {
 public:
 	DataLinkTransmit();
-	void generateCRC(vector<bool>&, int& n);
+	void generateCRC(vector<bool>&);
 	void bitStuffing(vector<bool>& iVector);
 
 	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
 	void transmitFrame(DTMF::Frame frame);
-	void aCKFrame(vector<bool>& aPayload, int anOption, int anAddress, int index, int maxIndex);
+	void aCKFrame(DTMF::Frame frame);
 
 	~DataLinkTransmit();
 

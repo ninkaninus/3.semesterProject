@@ -5,6 +5,8 @@ namespace DTMF {
 
 	static const double TWO_PI = 6.283185307179586476925286766559;
 
+	static const int CRCnr = 32;
+
 	enum Tone {
 		ZERO,
 		ONE,
@@ -33,6 +35,8 @@ namespace DTMF {
 		std::vector<bool> payload;
 		unsigned int index;
 		unsigned int maxIndex;
+		unsigned int adress;
+		unsigned int type;
 	};
 
 	enum transition {

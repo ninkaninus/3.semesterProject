@@ -6,26 +6,19 @@
 #include <random>
 #include <bitset>
 #include <deque>
+#include "Constants.h"
 #include "PhysicalReceive.h"
 #include <sstream>
 #include <thread>
  
 using namespace std;
 
-struct Frame
-{
-	vector<bool> payload;
-	unsigned int index;
-	unsigned int maxIndex;
-	unsigned int type;
-};
-
 
 class DataLinkReceive
 {
 public:
 	DataLinkReceive();
-	Frame getFrame();
+	DTMF::Frame getFrame();
 	void makeMessage();
 
 	unsigned int numberOfFrames();
@@ -41,7 +34,7 @@ protected:
 	unsigned int getMaxIndex(vector<bool>& bVector);
 	vector<bool> getPayload(vector<bool>& bVector);
 	
-	bool ChekCRC(vector<bool>& bVector, int& n);
+	bool ChekCRC(vector<bool>& bVector);
 	bool validFrame(vector<bool>& bVector);
 	void antiBitStuffing(vector<bool>& bVector);
 
@@ -52,7 +45,7 @@ protected:
 	// Atributter
 	PhysicalReceive objR;
 	vector<bool> data;
-	deque<Frame> toTrans;
+	deque<DTMF::Frame> toTrans;
 	int fail;
 
 };
