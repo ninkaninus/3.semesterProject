@@ -15,10 +15,15 @@ using namespace std;
 
 int main()
 {
+
 	ApplicationLayer objA;
 
 	objA.send("Penis");
 
+	while (true) {
+		
+
+	}
 	return 0;
 }
 	

@@ -6,7 +6,6 @@
 #include <deque>
 #include <random>
 #include <bitset>
-#include <chrono>
 #include <thread>
 #include "DataLinkTransmit.h"
 #include "DataLinkReceive.h"
@@ -14,12 +13,14 @@
 
 class TransportLayer
 {
+	/*
 	enum State {
 		sendingData,
-		receivingData,
+		receive,
 		receivingACK,
 		unInitialized
 	};
+	*/
 
 public:
 	TransportLayer();
@@ -46,13 +47,14 @@ public:
 
 private:
 
-	void setState(State);
-	State getState();
-	unsigned int timoutACK = 2000;
+	void setPacketAvailable(bool);
+	bool getPacketAvailable();
+	bool packetAvailable = false;
+	unsigned int timeoutACK = 2;
 	vector<bool>* currPacket;
 	deque<vector<bool>*> receiveQueue;
 	bool looping = true;
-	State state = State::receivingData;
+	//State state = State::receive;
 	DataLinkTransmit transmitter;
 	DataLinkReceive receiver;
 	sf::Mutex mutex;

@@ -1,31 +1,37 @@
 #include "TransportLayer.h"
 #include <Constants.h>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
 TransportLayer::TransportLayer()
 {
-
+	std::thread launch(&TransportLayer::init, this);
+	launch.detach();
 }
 
-void TransportLayer::setState(State s) {
+
+void TransportLayer::setPacketAvailable(bool b) {
 	mutex.lock();
-	state = s;
+	packetAvailable = b;
 	mutex.unlock();
 }
 
-TransportLayer::State TransportLayer::getState() {
-	State s;
+bool TransportLayer::getPacketAvailable() {
+	bool b;
 	mutex.lock();
-	s = state;
+	b = packetAvailable;
 	mutex.unlock();
-	return s;
+	return b;
 }
+
 
 void TransportLayer::setPacket(vector<bool>* newPacket) {
 	mutex.lock();
 
 	currPacket = newPacket;
 
-	setState(State::sendingData);
+	setPacketAvailable(true);
 
 	mutex.unlock();
 }
@@ -64,16 +70,16 @@ vector<bool>* TransportLayer::getPacketFromQueue() {
 }
 
 void TransportLayer::init() {
+	receiveACK();
 	loop();
 }
 
 void TransportLayer::loop() {
 	while (looping) {
-		if (getState() == State::sendingData) {
+		if (getPacketAvailable()) {
 			sendData();
 		}
-
-		if (getState() == State::receivingData) {
+		else {
 			receiveData();
 		}
 	}
@@ -83,7 +89,6 @@ void TransportLayer::sendData() {
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
 	transmitter.transmitFrame(frame);
-	setState(State::receivingACK);
 	receiveACK();
 }
 
@@ -94,12 +99,24 @@ void TransportLayer::sendACK() {
 }
 
 void TransportLayer::receiveACK() {
-	//start noget timer gøjl her
+	auto endTimePoint = std::chrono::system_clock::now();
+	auto startTimePoint = std::chrono::system_clock::now();
+	std::chrono::duration<float> diffTimePoint;
+	float timeDifference = 0;
 
+	//start timer
+	startTimePoint = std::chrono::system_clock::now();
+
+	while (timeDifference < timeoutACK) {
+		endTimePoint = std::chrono::system_clock::now();
+		diffTimePoint = endTimePoint - startTimePoint;
+		timeDifference = diffTimePoint.count();
+	}
+	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
 }
 
 void TransportLayer::receiveData() {
-
+	//Check if there is data in the datalinkreceiver buffer
 }
 
 TransportLayer::~TransportLayer()
