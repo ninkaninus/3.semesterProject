@@ -4,7 +4,8 @@
 
 ApplicationLayer::ApplicationLayer()
 {
-
+	std::thread appLoop(&ApplicationLayer::loop, this);
+	appLoop.detach();
 }
 
 /*
@@ -231,8 +232,9 @@ void ApplicationLayer::handleReceive()
 
 void ApplicationLayer::loop()
 {
-	while (true);
+	while (true)
 	{
+		Sleep(500);
 		handleTransmit();
 		handleReceive();
 	}
@@ -242,6 +244,7 @@ void ApplicationLayer::send(string message)	//sender input
 {
 	mutex.lock();
 	messageOutBuffer.push_back(message);
+
 	mutex.unlock();
 }
 

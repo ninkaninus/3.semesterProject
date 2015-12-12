@@ -20,10 +20,11 @@ int main()
 
 	objA.send("Penis");
 
-	while (true) {
-		
-
+	while (true)
+	{
+		1 + 2;
 	}
+
 	return 0;
 }
 	
