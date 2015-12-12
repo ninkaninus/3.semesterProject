@@ -68,6 +68,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 		payload.push_back(0);
 	}
 
+
 	/*
 	//Debugging code to output the binary format of a data package
 	ofstream out;
@@ -83,6 +84,175 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 
 	transmitter.transmit(payload);
 }
+
+void DataLinkTransmit::aCKFrame(vector<bool>& aPayload, int anOption, int anAddress, int anIndex, int maxIndex)
+{
+	payload.clear();
+	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
+
+																	//Start flag in binary
+	payload.push_back(0);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(0);
+
+
+	for (int q = 7; q >= 0; q--)
+	{
+		bitset<8> optionBits(anOption);								// Options tilføjes i binær
+		bitStuffVector.push_back(optionBits[q]);
+	}
+	
+
+	for (int u = 7; u >= 0; u--)
+	{
+		bitset<8> addressBits(anAddress);							// Address tilføjes i binær
+		bitStuffVector.push_back(addressBits[u]);
+	}
+
+	
+	for (int j = 7; j >= 0; j--)
+	{
+		bitset<8> indexBits(anIndex);								// Index tilføjes i binær
+		bitStuffVector.push_back(indexBits[j]);
+	}
+
+
+	for (int j = 7; j >= 0; j--)
+	{
+		bitset<8> maxIndexBits(maxIndex);							// MaxIndex tilføjes i binær
+		bitStuffVector.push_back(maxIndexBits[j]);
+	}
+
+	for (int i = 0; i < aPayload.size(); i++)						// Payload tilføjes
+		bitStuffVector.push_back(aPayload[i]);
+
+
+	int crcType = 32;												// CRC og bitstuffing
+	generateCRC(bitStuffVector, crcType);
+	bitStuffing(bitStuffVector);
+
+	for (bool i : bitStuffVector)									// Alt smides til bage i framen
+		payload.push_back(i);
+
+	bitStuffVector.clear();
+
+	payload.push_back(0);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);											// Stop flag
+	payload.push_back(1);
+	payload.push_back(0);
+
+	while (payload.size() % 4 != 0)									// Der tilføjes 0'er til antallet af bits går op i 4
+	{
+		payload.push_back(0);
+	}
+
+
+	/*
+	//Debugging code to output the binary format of a data package
+	ofstream out;
+
+	out.open("test.txt");
+
+	out << "1, 0, 1, 0, 0, 1, 1, 0, ";
+
+	for (bool b : payload) out << b << ", ";
+
+	out.close();
+	*/
+
+	transmitter.transmit(payload);
+}
+
+/*
+void DataLinkTransmit::aCKFrame(vector<bool>& aAddress, int anIndex, int maxIndex)
+{
+	payload.clear();
+	vector<bool> bitStuffVector;									// Separat vector til data som skal bitstuffes
+
+																	//Start flag in binary
+	payload.push_back(0);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(0);
+
+	for (int j = 7; j >= 0; j--)
+	{
+		bitset<8> indexBits(anIndex);								// Index tilføjes i binær
+		bitStuffVector.push_back(indexBits[j]);
+	}
+
+
+	for (int j = 7; j >= 0; j--)
+	{
+		bitset<8> maxIndexBits(maxIndex);							// MaxIndex tilføjes i binær
+		bitStuffVector.push_back(maxIndexBits[j]);
+	}
+
+
+	for (int i = 0; i < aAddress.size(); i++)						// Payload tilføjes
+		bitStuffVector.push_back(aAddress[i]);
+
+
+	int crcType = 32;												// CRC og bitstuffing
+	generateCRC(bitStuffVector, crcType);
+	bitStuffing(bitStuffVector);
+
+	for (bool i : bitStuffVector)									// Alt smides til bage i framen
+		payload.push_back(i);
+
+	bitStuffVector.clear();
+
+	payload.push_back(0);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);
+	payload.push_back(1);											// Stop flag
+	payload.push_back(1);
+	payload.push_back(0);
+
+	while (payload.size() % 4 != 0)									// Der tilføjes 0'er til antallet af bits går op i 4
+	{
+		payload.push_back(0);
+	}
+
+
+
+
+	//
+	//Debugging code to output the binary format of a data package
+	ofstream out;
+
+	out.open("test.txt");
+
+	out << "1, 0, 1, 0, 0, 1, 1, 0, ";
+
+	for (bool b : payload) out << b << ", ";
+
+	out.close();
+	
+
+	transmitter.transmit(payload);
+}	//
+*/
+//void DataLinkTransmit::transmitFrame(vector<bool>& aPayload, int anIndex, int maxIndex)
+//void DataLinkTransmit::transmitFrame(vector<bool>& aPayload, int anIndex, int maxIndex)
+
+
+
 
 void DataLinkTransmit::generateCRC(vector<bool>& bVector, int& n)
 {

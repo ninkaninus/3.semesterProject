@@ -4,7 +4,9 @@
 #include <vector>
 #include <random>
 #include <bitset>
-#include "Transmitter/Transmitter/Transmitter.h"
+#include "Transmitter.h"
+
+//"Transmitter/Transmitter/Transmitter.h"
 
 using namespace std;
 
@@ -16,11 +18,12 @@ public:
 	void bitStuffing(vector<bool>& iVector);
 
 	//void bitStuffing(vector<int>& iVector, vector<int>& stuffVector);
-	void transmitFrame(DTMF::Frame frame);
-	
+	void transmitFrame(vector<bool>& aPayload, int index, int maxIndex);
+	void aCKFrame(vector<bool>& aPayload, int anOption, int anAddress, int index, int maxIndex);
+
 	~DataLinkTransmit();
 
-	void print(vector<bool>& aVector, string aName); 
+	void print(vector<bool>& aVector, string aName);
 	void printFrames(); //hjælpemetode til at printe under test
 
 private:
@@ -29,7 +32,8 @@ private:
 	int max;
 	int GENERATOR;
 	int CHARS_IN_FRAME;
+	int address;
+	bool options;
 	vector<bool> payload;
 	vector<bool> stuffed;
-
 };
