@@ -11,13 +11,15 @@ TransportLayer::TransportLayer()
 }
 
 
-void TransportLayer::setPacketAvailable(bool b) {
+void TransportLayer::setPacketAvailable(bool b) 
+{
 	mutex.lock();
 	packetAvailable = b;
 	mutex.unlock();
 }
 
-bool TransportLayer::getPacketAvailable() {
+bool TransportLayer::getPacketAvailable() 
+{
 	bool b;
 	mutex.lock();
 	b = packetAvailable;
@@ -26,7 +28,8 @@ bool TransportLayer::getPacketAvailable() {
 }
 
 
-void TransportLayer::setPacket(vector<bool>* newPacket) {
+void TransportLayer::setPacket(vector<bool>* newPacket) 
+{
 	mutex.lock();
 
 	currPacket = newPacket;
@@ -36,7 +39,8 @@ void TransportLayer::setPacket(vector<bool>* newPacket) {
 	mutex.unlock();
 }
 
-bool TransportLayer::checkPacketBuffer() {
+bool TransportLayer::checkPacketBuffer() 
+{
 
 	bool rBool;
 
@@ -50,17 +54,19 @@ bool TransportLayer::checkPacketBuffer() {
 	return rBool;
 }
 
-vector<bool>* TransportLayer::getPacketFromQueue() {
-	
+vector<bool>* TransportLayer::getPacketFromQueue() 
+{
 	vector<bool>* ptr;
 	
 	mutex.lock();
 
-	if (!receiveQueue.empty()) {
+	if (!receiveQueue.empty()) 
+	{
 		ptr = receiveQueue[0];
 		receiveQueue.pop_front();
 	}
-	else {
+	else 
+	{
 		ptr = nullptr;
 	}
 
@@ -69,23 +75,29 @@ vector<bool>* TransportLayer::getPacketFromQueue() {
 	return ptr;
 }
 
-void TransportLayer::init() {
+void TransportLayer::init() 
+{
 	//receiveACK();
 	loop();
 }
 
-void TransportLayer::loop() {
-	while (looping) {
-		if (getPacketAvailable()) {
+void TransportLayer::loop() 
+{
+	while (looping) 
+	{
+		if (getPacketAvailable()) 
+		{
 			sendData();
 		}
-		else {
+		else 
+		{
 			receiveData();
 		}
 	}
 }
 
-void TransportLayer::sendData() {
+void TransportLayer::sendData() 
+{
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
 	delete currPacket;
@@ -97,13 +109,15 @@ void TransportLayer::sendData() {
 
 }
 
-void TransportLayer::sendACK() {
+void TransportLayer::sendACK() 
+{
 	DTMF::Frame frame;
 	frame.type = 1;
 	transmitter.transmitFrame(frame);
 }
 
-void TransportLayer::receiveACK() {
+void TransportLayer::receiveACK() 
+{
 	auto endTimePoint = std::chrono::system_clock::now();
 	auto startTimePoint = std::chrono::system_clock::now();
 	std::chrono::duration<float> diffTimePoint;
@@ -113,7 +127,8 @@ void TransportLayer::receiveACK() {
 	std::cout << "Start!" << std::endl;
 	startTimePoint = std::chrono::system_clock::now();
 
-	while (timeDifference < timeoutACK) {
+	while (timeDifference < timeoutACK) 
+	{
 		endTimePoint = std::chrono::system_clock::now();
 		diffTimePoint = endTimePoint - startTimePoint;
 		timeDifference = diffTimePoint.count();
@@ -125,7 +140,8 @@ void TransportLayer::receiveACK() {
 
 }
 
-void TransportLayer::receiveData() {
+void TransportLayer::receiveData() 
+{
 	//Check if there is data in the datalinkreceiver buffer
 }
 
