@@ -90,6 +90,8 @@ void TransportLayer::sendData() {
 	frame.payload = *currPacket;
 	delete currPacket;
 	currPacket = nullptr;
+	setPacketAvailable(false);
+	std::cout << "Sending Frame" << std::endl;
 	transmitter.transmitFrame(frame);
 	receiveACK();
 
