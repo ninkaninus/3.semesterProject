@@ -80,7 +80,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 
 	out.close();
 	*/
-
+	print(payload, "payload");
 	transmitter.transmit(payload);
 }
 
@@ -168,7 +168,9 @@ void DataLinkTransmit::aCKFrame(DTMF::Frame frame)
 	out.close();
 	*/
 
+	//print(payload, "payload");
 	transmitter.transmit(payload);
+
 }
 
 void DataLinkTransmit::generateCRC(vector<bool>& bVector)
