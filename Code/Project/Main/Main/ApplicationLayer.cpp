@@ -145,12 +145,19 @@ void ApplicationLayer::newMessage()
 			boolPtr->push_back(bits[j]);
 		}
 
-		for (int i = 0; i < BITS_IN_FRAME - 32; i++)
+		int charCount;
+	
+		if (temp.size() < BITS_IN_FRAME - 32)
+			charCount = temp.size();
+		else
+			charCount = BITS_IN_FRAME - 32;
+
+		for (int i = 0; i < charCount; i++)
 		{
 			boolPtr->push_back(temp[i]);
 		}
 
-		temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+		temp.erase(temp.begin(), temp.begin() + charCount);
 
 		currentBuffer.push_back(boolPtr);
 
@@ -184,8 +191,11 @@ void ApplicationLayer::handleTransmit()
 {
 	if (objT.checkPacketBuffer())
 	{
-		objT.setPacket(currentBuffer[0]);
-		currentBuffer.pop_front();
+		if (!currentBuffer.empty())
+		{
+			objT.setPacket(currentBuffer[0]);
+			currentBuffer.pop_front();
+		}
 	}
 	if (currentBuffer.empty())
 	{

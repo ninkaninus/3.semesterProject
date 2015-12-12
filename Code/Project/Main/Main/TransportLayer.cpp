@@ -70,7 +70,7 @@ vector<bool>* TransportLayer::getPacketFromQueue() {
 }
 
 void TransportLayer::init() {
-	receiveACK();
+	//receiveACK();
 	loop();
 }
 
