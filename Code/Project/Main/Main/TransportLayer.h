@@ -11,16 +11,39 @@
 #include "DataLinkReceive.h"
 #include <SFML\System\Mutex.hpp>
 
-using namespace std;
-
 class TransportLayer
 {
+	enum State {
+		sending,
+		receiving,
+		unInitialized
+	};
+
 public:
 	TransportLayer();
+
+	void init();
+
+	void loop();
+
+	void sending();
+
+	void receiving();
+
+	void setPacket(vector<bool>*);
+
+	bool checkPacketBuffer();
 
 	~TransportLayer();
 
 private:
+
+	void setState(State);
+	State getState();
+
+	vector<bool>* currPacket;
+	bool looping = true;
+	State state = State::sending;
 	DataLinkTransmit transmitter;
 	DataLinkReceive receiver;
 	sf::Mutex mutex;
