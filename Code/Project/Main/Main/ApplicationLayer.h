@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <random>
 #include <bitset>
 #include "TransportLayer.h"
@@ -19,8 +20,9 @@ public:
 	void send(string message);							// sender input
 
 	vector<bool> dataToBoolean(string aString);			// konverterer indkommen data til bool
-
 	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
+
+	void newMessage();
 
 	//hjælpefunktioner
 	void print(vector<bool>& aVector, string aName);	// viser bits
@@ -30,7 +32,10 @@ public:
 protected:
 	TransportLayer objT;
 	bool sendStatus;									// Er beskeden nået frem og klar til at sende igen
-	
+	deque<std::string> messageBuffer;
+	deque<std::vector<bool>*> currentBuffer;
+	const unsigned int BITS_IN_FRAME = 160 * 8;
+	sf::Mutex mutex;
 };
 
 /*
@@ -51,5 +56,5 @@ protected:
 	bool SR;								//status sender eller modtager
 	int index;								//Framenummer
 	int maxIndex;
-	const unsigned int BITS_IN_FRAME = 160 * 8;
+
 */

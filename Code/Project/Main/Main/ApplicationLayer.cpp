@@ -126,9 +126,59 @@ string ApplicationLayer::BooleanTodata(vector<bool>& bVector)
 	return ud;
 }
 
+void ApplicationLayer::newMessage()
+{
+	mutex.lock();
+	messageBuffer.pop_front();
+
+	std::vector<bool> temp = dataToBoolean(messageBuffer[0]);
+	int length = temp.size();
+	std::vector<bool>* boolPtr;
+	boolPtr = new std::vector<bool>;
+	
+	for (int j = 31; j >= 0; j--)
+	{
+		bitset<32> bits(length);
+		boolPtr->push_back(bits[j]);
+	}
+	
+	for (int i = 0; i < BITS_IN_FRAME - 32; i++)
+	{
+		boolPtr->push_back(temp[i]);				
+	}
+
+	temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+	
+	currentBuffer.push_back(boolPtr);
+
+	while (temp.size() > BITS_IN_FRAME)
+	{
+		boolPtr = new std::vector<bool>;
+		for (int i = 0; i < BITS_IN_FRAME; i++)
+		{
+			boolPtr->push_back(temp[i]);
+		}
+
+		currentBuffer.push_back(boolPtr);
+
+		temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+
+	}
+
+	boolPtr = new std::vector<bool>;
+	for (int i = 0; i < temp.size(); i++)
+	{
+		boolPtr->push_back(temp[i]);
+	}
+
+	currentBuffer.push_back(boolPtr);
+
+	mutex.unlock();
+}
+
 void ApplicationLayer::send(string message)	//sender input
 {
-	objT.send(dataToBoolean(message));
+	//objT.send(dataToBoolean(message));
 }
 
 
