@@ -11,7 +11,7 @@ DataLinkTransmit::DataLinkTransmit()
 
 DataLinkTransmit::~DataLinkTransmit()
 {
-}
+} 
 
 void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 {
