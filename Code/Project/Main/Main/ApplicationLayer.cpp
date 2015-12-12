@@ -161,27 +161,30 @@ void ApplicationLayer::newMessage()
 
 		currentBuffer.push_back(boolPtr);
 
-		while (temp.size() > BITS_IN_FRAME)
+		if (temp.size() > BITS_IN_FRAME)
 		{
+			while (temp.size() > BITS_IN_FRAME)
+			{
+				boolPtr = new std::vector<bool>;
+				for (int i = 0; i < BITS_IN_FRAME; i++)
+				{
+					boolPtr->push_back(temp[i]);
+				}
+
+				currentBuffer.push_back(boolPtr);
+
+				temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
+			}
+
 			boolPtr = new std::vector<bool>;
-			for (int i = 0; i < BITS_IN_FRAME; i++)
+			for (int i = 0; i < temp.size(); i++)
 			{
 				boolPtr->push_back(temp[i]);
 			}
 
 			currentBuffer.push_back(boolPtr);
-
-			temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
-
 		}
 
-		boolPtr = new std::vector<bool>;
-		for (int i = 0; i < temp.size(); i++)
-		{
-			boolPtr->push_back(temp[i]);
-		}
-
-		currentBuffer.push_back(boolPtr);
 	}
 
 	mutex.unlock();
@@ -222,6 +225,7 @@ void ApplicationLayer::handleReceive()
 			tempChunk->erase(tempChunk->begin(), tempChunk->begin() + 32);
 
 			messageIn += booleanTodata(*tempChunk);
+			delete tempChunk;
 		}
 		else
 		{
@@ -233,6 +237,7 @@ void ApplicationLayer::handleReceive()
 				mutex.lock();
 				messageInBuffer.push_back(messageIn);
 				mutex.unlock();
+				delete tempChunk;
 			}
 		}
 
