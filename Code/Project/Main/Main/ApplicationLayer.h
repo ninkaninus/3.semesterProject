@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <random>
 #include <bitset>
 #include "TransportLayer.h"
@@ -30,7 +31,8 @@ public:
 protected:
 	TransportLayer objT;
 	bool sendStatus;									// Er beskeden nået frem og klar til at sende igen
-	
+	std::deque<std::string> messageBuffer;
+	std::deque<std::vector<bool>> currentBuffer;
 };
 
 /*
