@@ -1,0 +1,25 @@
+\section{Fysisk Lag}
+
+\subsection{Receiver}
+
+\subsubsection{Goertzel}
+
+\subsubsection{Recorder}
+
+Recorderen kommer fra SFML-biblioteket. En af fordelene ved at bruge SFML, er at det ikke er nødvendigt at programmere interaktionen med mikrofoner og højtalere på et lavt niveau. SFML har indbyggede funktioner, der sørger for at oprette og vedligeholde forbindelse med eksterne enheder. Man har mulighed for at designe sin egen recorder-klasse, ved at arve fra en af de indbyggede klasse og så overloade tre funktioner der returnerer bools. Funktionerne bruges til at fortælle superklasserne om de kan fortsætte med at udføre bestemte handlinger, man sætter igang med andre funktioner. Hvis de returnerer false stoppes handlingen og omvendt hvis de returnerer true.
+
+\begin{itemize}
+
+\item \textbf{onStart():} Bliver kørt når man beder om at starte en optagelse. Her kan man indsætte forskellige tests der afgør om det er smart at fortsætte med at starte optagelsen. Det kunne eksempelvis testes, om der overhovedet kan skabes kontakt til en mikrofon.
+
+\item \textbf{onProcessSamples():} Funktionen får givet en pointer til samples og antallet af dem som parametre. Det er så muligt at flytte dem til sin egen buffer til videre behandling. Den bliver kørt med jævne mellemrum, når en optagelse er startet, og mellemrummet kan defineres med funktionen setProcessingInterval(). 
+
+\item \textbf{onStop():} Bliver kørt når man beder om at stoppe en optagelse.
+
+\end{itemize}
+
+Der er sådan set en fungerende optagerklasse inkluderet i SFML-biblioteket fra starten af, men den er lidt mindre fleksibel, og nærmere tiltænkt brug som en slags plug-and-play optager. Det er ikke muligt løbende at trække samples ud fra bufferen, hvis man er interesseret i at processere dem i real-time. Derfor er en custom recorder at foretrække i vores tilfælde. \\
+Recorderen kører i sin egen tråd, parallelt med alt andet, så derfor skal man huske at låse delte ressourcer med en mutex, for at forhindre data race situationer - det er nødvendigt når man læser fra eller skriver til bufferen. SFML har også sin egen mutex-klasse som vi bruger flere steder.
+
+\subsubsection{Analyzer}
+

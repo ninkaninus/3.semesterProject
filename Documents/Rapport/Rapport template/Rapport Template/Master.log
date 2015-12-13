@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.7)  12 DEC 2015 12:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  13 DEC 2015 19:48
 entering extended mode
 **Master.tex
 (Master.tex
@@ -240,10 +240,10 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\setspace\setspace.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\setspace\setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tocloft\tocloft.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\tocloft\tocloft.sty
 Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
 Package tocloft Info: The document has section divisions on input line 44.
 \cftparskip=\skip43
@@ -409,10 +409,10 @@ Package graphics Info: Driver file: pdftex.def on input line 94.
 \Gin@req@height=\dimen120
 \Gin@req@width=\dimen121
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lastpage\lastpage.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\lastpage\lastpage.sty
 Package: lastpage 2015/03/29 v1.2m Refers to last page's name (HMM; JPG)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\fancyhdr\fancyhdr.sty
 \fancy@headwidth=\skip77
 \f@ncyO@elh=\skip78
 \f@ncyO@erh=\skip79
@@ -498,7 +498,7 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
 \c@Hy@tempcnt=\count108
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -535,17 +535,19 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip86
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\textgreek\textgreek.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\textgreek\textgreek.sty
 Package: textgreek 2011/10/09 v0.7 Greek symbols in text
 Package textgreek Info: Loading the definitions for the Greek fontencoding. on 
 input line 39.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\greek-fontenc\lgrenc.def"
-File: lgrenc.def 2015/08/08 v0.13 LGR Greek font encoding definitions
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\greek-fontenc\lgrenc.de
+f
+File: lgrenc.def 2015/12/07 v0.13.1 LGR Greek font encoding definitions
 Now handling font encoding LGR ...
 ... processing UTF-8 mapping file for font encoding LGR
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\greek-inputenc\lgrenc.dfu"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\greek-inputenc\lgrenc.d
+fu
 File: lgrenc.dfu 2015/08/05 1.6 UTF-8 support for Greek
    defining Unicode char U+00A8 (decimal 168)
    defining Unicode char U+00AB (decimal 171)
@@ -902,13 +904,15 @@ File: lgrenc.dfu 2015/08/05 1.6 UTF-8 support for Greek
    defining Unicode char U+10146 (decimal 65862)
    defining Unicode char U+10147 (decimal 65863)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\greek-fontenc\greek-fontenc.def"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\greek-fontenc\greek-fon
+tenc.def
 File: greek-fontenc.def 2015/08/04 v0.13 Common Greek font encoding definitions
 
 ))
 Package textgreek Info: Loaded fontmap: {phv/*/*}{U/psy/*/*} {*/bx/n}{U/eur/b/n
 } {*/b/n}{U/eur/b/n} {*/*/n}{U/eur/m/n} {*/*/it}{OML/*/*/*}. on input line 69.
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty"
+)
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
 \lst@mode=\count115
 \lst@gtempboxa=\box28
 \lst@token=\toks23
@@ -922,22 +926,24 @@ Package textgreek Info: Loaded fontmap: {phv/*/*}{U/psy/*/*} {*/bx/n}{U/eur/b/n
 \lst@lineno=\count120
 \lst@maxwidth=\dimen129
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 \c@lstnumber=\count121
 \lst@skipnumbers=\count122
 \lst@framebox=\box29
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\frankenstein\newclude.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\frankenstein\newclude.s
+ty
 Package: newclude 1999/11/02 v2 A new system for including files (Frankenstein'
 s backbone)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\frankenstein\moredefs.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\frankenstein\moredefs.s
+ty
 Package: moredefs 2001/08/31 v1.8 more defining commands (Frankenstein's brain)
 
 \sc@toks@a=\toks24
@@ -946,11 +952,11 @@ Package: moredefs 2001/08/31 v1.8 more defining commands (Frankenstein's brain)
 \nc@toks@a=\toks26
 \c@IncludeDepth=\count123
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\frankenstein\tag.sto")
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\frankenstein\tag.sto)
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
 Package: caption 2015/09/17 v3.3-111 Customizing captions (AR)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption3.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.sty
 Package: caption3 2015/09/20 v1.7-115 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen130
@@ -965,12 +971,11 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption.sty
 Package: subcaption 2015/09/15 v1.1-100 Sub-captions (AR)
 \c@subfigure=\count125
 \c@subtable=\count126
-)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\textcomp.sty"
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\textcomp.sty"
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -1126,7 +1131,7 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\wrapfig\wrapfig.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\wrapfig\wrapfig.sty
 \wrapoverhang=\dimen137
 \WF@size=\dimen138
 \c@WF@wrappedlines=\count127
@@ -1140,7 +1145,7 @@ Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \AP@partial=\box31
 \AP@footins=\box32
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\enumitem\enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \labelindent=\skip87
 \enit@outerparindent=\dimen139
@@ -1148,7 +1153,7 @@ Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enit@inbox=\box33
 \enitdp@description=\count128
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\titlesec\titlesec.sty
 Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \ttl@box=\box34
 \beforetitleunit=\skip88
@@ -1159,8 +1164,7 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \titlewidth=\dimen142
 \titlewidthlast=\dimen143
 \titlewidthfirst=\dimen144
-))
-(Master.aux)
+)) (Master.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
@@ -1177,13 +1181,15 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 2.
 LaTeX Font Info:    Try loading font information for LGR+cmr on input line 2.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\cbfonts-fd\lgrcmr.fd"
+
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\latex\cbfonts-fd\lgrcmr.fd
 File: lgrcmr.fd 2013/09/01 v1.0 Greek European Computer Regular
 )
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 2.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 2.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 2.
@@ -1226,7 +1232,7 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+(C:\Users\Kristian\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count129
 \scratchdimen=\dimen145
@@ -1273,7 +1279,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 19.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 20.
- <Billeder/SDU-logo.pdf, id=39, 597.23125pt x 592.8559pt>
+ <Billeder/SDU-logo.pdf, id=59, 597.23125pt x 592.8559pt>
 File: Billeder/SDU-logo.pdf Graphic file (type pdf)
 
 <use Billeder/SDU-logo.pdf>
@@ -1317,7 +1323,7 @@ Package pdftex.def Info: Billeder/SDU-logo.pdf used on input line 47.
 
 
 
-{C:/Users/ChrisM/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{C:/Users/Kristian/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1336,10 +1342,10 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 16.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [4])
-(Sections/GUI.tex <Billeder/GUI.PNG, id=84, 974.89218pt x 481.8pt>
+(Sections/Physical.tex [5]) (Sections/GUI.tex [6]
+<Billeder/GUI.PNG, id=119, 974.89218pt x 481.8pt>
 File: Billeder/GUI.PNG Graphic file (type png)
-
-<use Billeder/GUI.PNG>
+ <use Billeder/GUI.PNG>
 Package pdftex.def Info: Billeder/GUI.PNG used on input line 17.
 (pdftex.def)             Requested size: 487.4449pt x 240.8994pt.
 
@@ -1347,10 +1353,7 @@ Overfull \hbox (60.65355pt too wide) in paragraph at lines 17--18
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (Sections/Konklusion.tex [5]) [6 <./Billeder/GUI.PNG>]
+) (Sections/Konklusion.tex) [7 <./Billeder/GUI.PNG>]
 No file Sections/Ekstra.tex.
 ) 
 AED: lastpage setting LastPage
@@ -1360,17 +1363,17 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 5.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 5.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 5.
 Package rerunfilecheck Info: File `Master.out' has not changed.
-(rerunfilecheck)             Checksum: D6894285771D52AF913C55D2FC5A88F1;526.
+(rerunfilecheck)             Checksum: 0847D39D6306571F510D931B2E97AA82;839.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5.
  ) 
 Here is how much of TeX's memory you used:
- 11551 strings out of 493673
- 171609 string characters out of 3141527
- 263195 words of memory out of 3000000
- 14683 multiletter control sequences out of 15000+200000
+ 11573 strings out of 493673
+ 172647 string characters out of 3141521
+ 263209 words of memory out of 3000000
+ 14696 multiletter control sequences out of 15000+200000
  26031 words of font info for 53 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 40i,12n,45p,462b,426s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,11n,45p,738b,442s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
@@ -1382,9 +1385,9 @@ TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/u
 rw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/ut
 mr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Master.pdf (6 pages, 184653 bytes).
+Output written on Master.pdf (7 pages, 192734 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 172 PDF objects out of 1000 (max. 8388607)
+ 25 named destinations out of 1000 (max. 500000)
+ 123 words of extra memory for PDF output out of 10000 (max. 10000000)
 
