@@ -3,7 +3,7 @@
 
 
 DataLinkReceive::DataLinkReceive() {
-
+	init(8000, 25);
 }
 
 void DataLinkReceive::makeMessage()
