@@ -17,18 +17,15 @@ int main()
 {
 
 	ApplicationLayer objA;
-	DataLinkReceive objD;
 
-	//objA.send("Penis");
-	objD.init(8000,25);
-	while (true) {
-		objD.makeMessage();
-	}
+	std::string hej;
 	
+
+		//getline(cin, hej);
+		objA.send("Penis");
 
 	while (true)
 	{
-		1 + 2;
 	}
 
 	return 0;
