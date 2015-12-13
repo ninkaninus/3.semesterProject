@@ -36,7 +36,7 @@ void Analyzer::stopRecording()
 	//isRecording = false;
 }
 
-std::deque<signed short> Analyzer::getActiveBuffer()
+std::vector<signed short> Analyzer::getActiveBuffer()
 {
 	return activeBuffer;
 }
@@ -59,7 +59,7 @@ void Analyzer::addToBuffer()
 float Analyzer::getMagnitudeLo(int anOffset, char aChar)
 {
 	float magnitude;
-	std::deque<signed short> tempSamples;
+	std::vector<signed short> tempSamples;
 
 	for (std::size_t i = anOffset; i < sampleWindow + anOffset; i++)
 	{
@@ -74,7 +74,7 @@ float Analyzer::getMagnitudeLo(int anOffset, char aChar)
 float Analyzer::getMagnitudeHi(int anOffset, char aChar)
 {
 	float magnitude;
-	std::deque<signed short> tempSamples;
+	std::vector<signed short> tempSamples;
 
 	for (std::size_t i = anOffset; i < sampleWindow + anOffset; i++)
 	{
@@ -204,11 +204,7 @@ char Analyzer::syncToFirstDTMF()
 			}
 
 
-			//activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + offset + sampleWindow);
-			for (unsigned int i = 0; i < offset + sampleWindow; i++) {
-				activeBuffer.pop_front();
-			}
-
+			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + offset + sampleWindow);
 			return detectedChar;
 			// lav et array med magnitudes til den fundne karakter og sæt offset til der hvor magnitude er højest.
 			// Slet alle samples før offset + sampleWindow.
@@ -216,10 +212,7 @@ char Analyzer::syncToFirstDTMF()
 		else
 		{
 			// slet sampleWindow/4 samples fra activeBuffer og start forfra -> syncToFirstDTMF()
-			//activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + int(sampleWindow/4));
-			for (unsigned int i = 0; i < int(sampleWindow/4); i++) {
-				activeBuffer.pop_front();
-			}
+			activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + int(sampleWindow/4));
 		}
 	}
 	return detectedChar;
@@ -269,10 +262,7 @@ char Analyzer::findNextDTMF()
 }
 void Analyzer::erasePreviousSamples()
 {
-	//activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + sampleWindow);
-	for (unsigned int i = 0; i < sampleWindow; i++) {
-		activeBuffer.pop_front();
-	}
+	activeBuffer.erase(activeBuffer.begin(), activeBuffer.begin() + sampleWindow);
 }
 
 Analyzer::~Analyzer()

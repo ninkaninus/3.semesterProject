@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <deque>
 #include <map>
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -10,7 +9,7 @@ public:
 	Goertzel();
 	Goertzel(std::vector<int> tFreqArray);
 	void init(int aSampleWindow, int aSampleRate);
-	float algorithm(std::deque<signed short> someSamples, int aSampleWindow, int aTargetFreq);
+	float algorithm(std::vector<signed short> someSamples, int aSampleWindow, int aTargetFreq);
 	~Goertzel();
 protected:
 	std::map<int,float> sineTerms;

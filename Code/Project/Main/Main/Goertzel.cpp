@@ -1,6 +1,7 @@
 #include "Goertzel.h"
 
 
+
 Goertzel::Goertzel()
 {
 	targetFrequencies = std::vector<int>{ 697,770,852,941,1209,1336,1477,1633 };
@@ -61,7 +62,7 @@ void Goertzel::init(int aSampleWindow, int aSampleRate)
 	}
 }
 
-float Goertzel::algorithm(std::deque<signed short> someSamples, int aSampleWindow, int aTargetFreq)
+float Goertzel::algorithm(std::vector<signed short> someSamples, int aSampleWindow, int aTargetFreq)
 {
 	float	coeff, q0, q1, q2, magnitude, real, imag;
 
@@ -69,6 +70,14 @@ float Goertzel::algorithm(std::deque<signed short> someSamples, int aSampleWindo
 	q0 = 0;
 	q1 = 0;
 	q2 = 0;
+
+	std::vector<signed short> temp;
+
+	//for (int i = 0; i < aSampleWindow; i++)
+	//{
+	//	temp.push_back(someSamples[i]);
+	//	temp[i] *= hannWindow[i];
+	//}
 
 	for (int i = 0; i<aSampleWindow; i++)
 	{
