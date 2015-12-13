@@ -18,11 +18,14 @@ int main()
 
 	ApplicationLayer objA;
 
-	objA.send("Penis");
+	std::string hej;
+	
+
+		//getline(cin, hej);
+		objA.send("Penis");
 
 	while (true)
 	{
-		1 + 2;
 	}
 
 	return 0;
