@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  13 DEC 2015 19:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.9)  13 DEC 2015 20:57
 entering extended mode
 **Master.tex
 (Master.tex
@@ -1342,7 +1342,7 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 16.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [4])
-(Sections/Physical.tex [5]) (Sections/GUI.tex [6]
+(Sections/Physical.tex [5]) [6] (Sections/GUI.tex
 <Billeder/GUI.PNG, id=119, 974.89218pt x 481.8pt>
 File: Billeder/GUI.PNG Graphic file (type png)
  <use Billeder/GUI.PNG>
@@ -1353,7 +1353,10 @@ Overfull \hbox (60.65355pt too wide) in paragraph at lines 17--18
  [][] 
  []
 
-) (Sections/Konklusion.tex) [7 <./Billeder/GUI.PNG>]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (Sections/Konklusion.tex) [7] [8 <./Billeder/GUI.PNG>]
 No file Sections/Ekstra.tex.
 ) 
 AED: lastpage setting LastPage
@@ -1367,13 +1370,13 @@ Package rerunfilecheck Info: File `Master.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 5.
  ) 
 Here is how much of TeX's memory you used:
- 11573 strings out of 493673
- 172647 string characters out of 3141521
- 263209 words of memory out of 3000000
- 14696 multiletter control sequences out of 15000+200000
- 26031 words of font info for 53 fonts, out of 3000000 for 9000
+ 11577 strings out of 493673
+ 172683 string characters out of 3141521
+ 264209 words of memory out of 3000000
+ 14698 multiletter control sequences out of 15000+200000
+ 27715 words of font info for 55 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 40i,11n,45p,738b,442s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,11n,45p,981b,442s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
@@ -1385,9 +1388,9 @@ TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/urw/times/utmbi8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/u
 rw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/ut
 mr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Master.pdf (7 pages, 192734 bytes).
+Output written on Master.pdf (8 pages, 197211 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
+ 177 PDF objects out of 1000 (max. 8388607)
+ 26 named destinations out of 1000 (max. 500000)
  123 words of extra memory for PDF output out of 10000 (max. 10000000)
 
