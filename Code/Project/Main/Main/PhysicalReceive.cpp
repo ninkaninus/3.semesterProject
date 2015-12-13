@@ -33,7 +33,7 @@ void PhysicalReceive::searchBuffer()
 		if(logging)
 			charsReceived.push_back(firstDTMF);
 
-			//std::cout << count << ". detected char: " << firstDTMF << std::endl;
+			std::cout << count << ". detected char: " << firstDTMF << std::endl;
 			count++;
 
 		charStringBroken = false;
@@ -61,7 +61,7 @@ void PhysicalReceive::nextCharacter()
 
 			DTMF_analyzer.erasePreviousSamples();
 
-			//std::cout << count << ". detected char: " << detectedChar << std::endl;
+			std::cout << count << ". detected char: " << detectedChar << std::endl;
 			count++;
 
 			preambleExpected = false; // sat her for at hverken første eller anden karakter bliver pushed back i vektoren

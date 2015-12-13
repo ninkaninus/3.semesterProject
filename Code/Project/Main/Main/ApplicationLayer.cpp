@@ -81,7 +81,7 @@ vector<bool> ApplicationLayer::dataToBoolean(string aString) // konverterer indk
 {
 	vector<bool> data;
 
-	for (unsigned int i = 0; i < aString.size(); i++)
+	for (int i = 0; i < aString.size(); i++)
 	{
 		for (int j = 7; j >= 0 ; j--)
 		{
@@ -139,15 +139,11 @@ void ApplicationLayer::newMessage()
 		std::vector<bool>* boolPtr;
 		boolPtr = new std::vector<bool>;
 
-		// Længden af beskeden i bools, smides ind i de 32 første bits i en ny besked..
-
 		for (int j = 31; j >= 0; j--)
 		{
 			bitset<32> bits(length);
 			boolPtr->push_back(bits[j]);
 		}
-
-		// Pakken fyldes op med data fra beskeden indtil størrelsen af den når BITS_IN_FRAME, eller til hele beskeden er gemt i en pakke.
 
 		int charCount;
 	
@@ -156,7 +152,7 @@ void ApplicationLayer::newMessage()
 		else
 			charCount = BITS_IN_FRAME - 32;
 
-		for (int i = 0; i < charCount; i++)
+		for (unsigned int i = 0; i < charCount; i++)
 		{
 			boolPtr->push_back(temp[i]);
 		}
@@ -165,25 +161,21 @@ void ApplicationLayer::newMessage()
 
 		currentBuffer.push_back(boolPtr);
 
-		// Beskeden deles ind i pakker af størrelsen BITS_IN_FRAME, indtil der ikke kan laves flere af den størrelse
-
-		while (temp.size() > BITS_IN_FRAME)
+		if (temp.size() > BITS_IN_FRAME)
 		{
-			boolPtr = new std::vector<bool>;
-			for (unsigned int i = 0; i < BITS_IN_FRAME; i++)
+			while (temp.size() > BITS_IN_FRAME)
 			{
-				boolPtr->push_back(temp[i]);
+				boolPtr = new std::vector<bool>;
+				for (unsigned int i = 0; i < BITS_IN_FRAME; i++)
+				{
+					boolPtr->push_back(temp[i]);
+				}
+
+				currentBuffer.push_back(boolPtr);
+
+				temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
 			}
 
-			currentBuffer.push_back(boolPtr);
-
-			temp.erase(temp.begin(), temp.begin() + BITS_IN_FRAME);
-		}
-
-		// Hvis der er noget resterende her, smides det ind i en mindre pakke
-
-		if (temp.size() != 0)
-		{
 			boolPtr = new std::vector<bool>;
 			for (unsigned int i = 0; i < temp.size(); i++)
 			{
@@ -192,6 +184,7 @@ void ApplicationLayer::newMessage()
 
 			currentBuffer.push_back(boolPtr);
 		}
+
 	}
 
 	mutex.unlock();
@@ -241,11 +234,9 @@ void ApplicationLayer::handleReceive()
 			{
 				messageComplete = true;
 				lengthOfMessage = 0;
-
 				mutex.lock();
 				messageInBuffer.push_back(messageIn);
 				mutex.unlock();
-
 				delete tempChunk;
 			}
 		}
@@ -268,6 +259,7 @@ void ApplicationLayer::send(string message)	//sender input
 {
 	mutex.lock();
 	messageOutBuffer.push_back(message);
+
 	mutex.unlock();
 }
 

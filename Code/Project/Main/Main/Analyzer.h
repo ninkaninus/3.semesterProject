@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <fstream>
 #include <Windows.h>
-#include <deque>
 #include "Goertzel.h"
 #include "MyRecorder.h"
 
@@ -16,7 +15,7 @@ public:
 	void startRecording();
 	void stopRecording();
 
-	std::deque<signed short> getActiveBuffer();
+	std::vector<signed short> getActiveBuffer();
 	int getSampleWindow();
 	void addToBuffer();
 
@@ -45,7 +44,7 @@ protected:
 	std::size_t sampleWindow;
 	int sampleRate;
 
-	std::deque<signed short> activeBuffer;
+	std::vector<signed short> activeBuffer;
 
 	MyRecorder recorder;
 	Goertzel myGoertzel;
