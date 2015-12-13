@@ -16,7 +16,7 @@ vector<bool> ApplicationLayer::dataToBoolean(string aString) // konverterer indk
 {
 	vector<bool> data;
 
-	for (int i = 0; i < aString.size(); i++)
+	for (unsigned int i = 0; i < aString.size(); i++)
 	{
 		for (int j = 7; j >= 0 ; j--)
 		{
@@ -91,7 +91,7 @@ void ApplicationLayer::newMessage()
 		else
 			charCount = BITS_IN_FRAME - 32;
 
-		for (unsigned int i = 0; i < charCount; i++)
+		for (int i = 0; i < charCount; i++)
 		{
 			boolPtr->push_back(temp[i]);
 		}
