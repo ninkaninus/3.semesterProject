@@ -21,11 +21,11 @@ int main()
 	std::string hej;
 	
 
-		//getline(cin, hej);
-		objA.send("Penis");
 
 	while (true)
 	{
+		getline(cin, hej);
+		objA.send(hej);
 	}
 
 	return 0;
