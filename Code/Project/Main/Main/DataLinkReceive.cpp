@@ -63,7 +63,6 @@ void DataLinkReceive::makeMessage()
 			data.erase(data.begin(), data.begin()+length - 8);
 			antiBitStuffing(frame);			
 
-
 			// CRC og validering
 			if (validFrame(frame))
 			{
@@ -71,21 +70,20 @@ void DataLinkReceive::makeMessage()
 				fail = 0;
 
 				// Bestem frame typen
-				switch (getInfo(frame, 0, 3)) {
+				newFrame.type = getInfo(frame, 0, 4);
+				switch (newFrame.type) {
 				case 0:
 					// Dette er en frame
 					// Extract information fra frame
-					newFrame.payload = getPayload(frame);
-					newFrame.index = getInfo(frame, 7, 11);
-					newFrame.type = getInfo(frame, 0, 3);
-					newFrame.adress = getInfo(frame, 3, 7);
+					newFrame.payload = vector<bool>(frame.begin() + 12, frame.end());
+					newFrame.index = getInfo(frame, 8, 12);
+					newFrame.adress = getInfo(frame, 4, 8);
 					break;
 				case 1:
 					// Dette er en ACK
 					// Extract information fra frame
-					newFrame.index = getInfo(frame, 7, 11);
-					newFrame.type = getInfo(frame, 0, 3);
-					newFrame.adress = getInfo(frame, 3, 7);
+					newFrame.index = getInfo(frame, 8, 12);
+					newFrame.adress = getInfo(frame, 4, 8);
 					break;
 				}
 				
@@ -103,8 +101,8 @@ void DataLinkReceive::makeMessage()
 			else
 			{
 				fail++;
-				//std::cout << "defekt frame" << std::endl;
-				//std::cout << "Number of fails: " << fail << std::endl;
+				std::cout << "defekt frame" << std::endl;
+				std::cout << "Number of fails: " << fail << std::endl;
 			}
 		}
 	}
@@ -152,34 +150,16 @@ DataLinkReceive::~DataLinkReceive()
 
 unsigned int DataLinkReceive::getInfo(vector<bool>& bVector, int start, int stop)
 {
-	vector<bool> temp;
-	for (unsigned int i = 0; i < bVector.size(); i++) 
-	{
-		if (i <= start && i >= stop) 
-		{
-			temp.push_back(bVector[i]);
-		}
-	}
+	vector<bool> temp(bVector.begin() + start, bVector.begin() + stop);
+	//print(temp, "Dette er temp");
 
 	unsigned int num = 0;
 	for (unsigned int i = 0; i < temp.size(); i++)
 	{
-		num += temp[i] * pow(2, temp.size() - 1 - i);
+		num |= temp[i] << temp.size() - i - 1;
 	}
-	cout << num << endl;
+	//cout << num << endl;
 	return num;
-}
-
-vector<bool> DataLinkReceive::getPayload(vector<bool>& bVector)
-{
-	vector<bool> temp;
-	for (unsigned int i = 0; i < bVector.size(); i++) {
-		if (i >= 16) {
-			temp.push_back(bVector[i]);
-		}
-	}
-
-	return temp;
 }
 
 void DataLinkReceive::print(vector<bool>& aVector, string aName)
