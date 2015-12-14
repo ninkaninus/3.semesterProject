@@ -158,15 +158,29 @@ void ApplicationLayer::handleReceive()
 		{
 			// find ny længde + chars
 			messageComplete = false;
+			lengthOfMessage = 0;
 
-			for (int i = 31; i >= 0; i--)
+			for (unsigned int i = 0; i < 32; i++)
 			{
-				lengthOfMessage |= tempChunk->at(i) << i;
+				lengthOfMessage |= tempChunk->at(i) << 32 - i - 1;
 			}
 
 			tempChunk->erase(tempChunk->begin(), tempChunk->begin() + 32);
 
 			messageIn += booleanTodata(*tempChunk);
+
+			if (messageIn.length() - 1 == lengthOfMessage / 8)
+			{
+				messageComplete = true;
+				lengthOfMessage = 0;
+
+				mutex.lock();
+				messageInBuffer.push_back(messageIn);
+				mutex.unlock();
+				
+				cout << "Jonas siger: " << messageIn << endl;
+				messageIn = "";
+			}
 			delete tempChunk;
 		}
 		else
@@ -181,10 +195,12 @@ void ApplicationLayer::handleReceive()
 				messageInBuffer.push_back(messageIn);
 				mutex.unlock();
 
-				cout << "Incoming!! " << messageIn << endl;
 
-				delete tempChunk;
+				cout << "Incoming!! " << messageIn << endl;
+				messageIn = "";
+
 			}
+				delete tempChunk;
 		}
 
 		tempChunk = objT.getPacketFromQueue();
