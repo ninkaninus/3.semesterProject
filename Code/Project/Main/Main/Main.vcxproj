@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Constants.h" />
+    <ClInclude Include="..\..\Transmitter\Transmitter\Transmitter.h" />
     <ClInclude Include="Analyzer.h" />
     <ClInclude Include="ApplicationLayer.h" />
     <ClInclude Include="DataLinkReceive.h" />

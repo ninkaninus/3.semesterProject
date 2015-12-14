@@ -11,7 +11,6 @@ namespace DTMF
 	{
 		setToneDuration(25.0/1000);
 		setVolume(15000);
-		setLogging(true);
 	}
 
 	Transmitter::~Transmitter()

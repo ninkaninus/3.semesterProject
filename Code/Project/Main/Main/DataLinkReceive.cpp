@@ -1,9 +1,19 @@
 #include "DataLinkReceive.h"
 #include <iostream>
+#include <thread>
 
 
 DataLinkReceive::DataLinkReceive() {
+	init(sampleRate, processingTime);
+	std::thread launch(&DataLinkReceive::run, this);
+	launch.detach();
+}
 
+void DataLinkReceive::run() {
+	while (true)
+	{
+		makeMessage();
+	}
 }
 
 void DataLinkReceive::makeMessage()

@@ -10,7 +10,7 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
 	setSyncMode(true);
 	isRunning = false;
-	logging = true;
+	logging = false;
 }
 
 void PhysicalReceive::startRecording()
@@ -33,7 +33,7 @@ void PhysicalReceive::searchBuffer()
 		if(logging)
 			charsReceived.push_back(firstDTMF);
 
-			std::cout << count << ". detected char: " << firstDTMF << std::endl;
+			//std::cout << count << ". detected char: " << firstDTMF << std::endl;
 			count++;
 
 		charStringBroken = false;
@@ -61,7 +61,7 @@ void PhysicalReceive::nextCharacter()
 
 			DTMF_analyzer.erasePreviousSamples();
 
-			std::cout << count << ". detected char: " << detectedChar << std::endl;
+			//std::cout << count << ". detected char: " << detectedChar << std::endl;
 			count++;
 
 			preambleExpected = false; // sat her for at hverken første eller anden karakter bliver pushed back i vektoren
@@ -70,7 +70,7 @@ void PhysicalReceive::nextCharacter()
 		{
 			charStringBroken = true;
 			preambleExpected = true;
-			std::cout << "No more characters" << std::endl;
+			//std::cout << "No more characters" << std::endl;
 			if (logging)
 			{
 				charsToFile("CharsReceived.txt");

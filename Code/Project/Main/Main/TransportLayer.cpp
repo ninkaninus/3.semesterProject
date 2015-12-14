@@ -126,7 +126,6 @@ void TransportLayer::receiveACK()
 	//start timer
 
 	//std::cout << "Start!" << std::endl;
-	std::cout << "Start!" << std::endl;
 	startTimePoint = std::chrono::system_clock::now();
 
 	while (timeDifference < timeoutACK) 
@@ -135,7 +134,7 @@ void TransportLayer::receiveACK()
 		diffTimePoint = endTimePoint - startTimePoint;
 		timeDifference = diffTimePoint.count();
 	}
-	//std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
+	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
 
 	//We assume ack was received here, untill it is implemented
 

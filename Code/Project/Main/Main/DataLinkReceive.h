@@ -29,6 +29,9 @@ public:
 	~DataLinkReceive();
 
 protected:
+
+	void run();
+
 	// funktioner 
 	unsigned int getInfo(vector<bool>& bVector, int start, int stop);
 	
@@ -45,6 +48,8 @@ protected:
 	vector<bool> data;
 	deque<DTMF::Frame> toTrans;
 	int fail;
+	unsigned int sampleRate = 8000;
+	unsigned int processingTime = 25;
 
 };
 
