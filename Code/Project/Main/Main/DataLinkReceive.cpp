@@ -101,20 +101,20 @@ void DataLinkReceive::makeMessage()
 				setFrame(newFrame);
 
 				// til debugging plot tekst
-				std::cout << BooleanTodata(newFrame->payload) << std::endl;
-				print(newFrame->payload, "Data: ");
+				//std::cout << BooleanTodata(newFrame->payload) << std::endl;
+				//print(newFrame->payload, "Data: ");
 
 
-				cout << "Type:    " << newFrame->type << endl;
-				cout << "Adresse: " << newFrame->address << endl;
-				cout << "Index:   " << newFrame->index << endl;
+				//cout << "Type:    " << newFrame->type << endl;
+				//cout << "Adresse: " << newFrame->address << endl;
+				//cout << "Index:   " << newFrame->index << endl;
 
 			}
 			else
 			{
 				fail++;
-				std::cout << "defekt frame" << std::endl;
-				std::cout << "Number of fails: " << fail << std::endl;
+				//std::cout << "defekt frame" << std::endl;
+				//std::cout << "Number of fails: " << fail << std::endl;
 			}
 		}
 	}
