@@ -74,7 +74,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 
 	out.close();
 	*/
-	print(payload, "payload");
+	//print(payload, "payload");
 	transmitter.transmit(payload);
 }
 

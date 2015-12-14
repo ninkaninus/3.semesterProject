@@ -10,7 +10,7 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
 	setSyncMode(true);
 	isRunning = false;
-	logging = false;
+	logging = true;
 }
 
 void PhysicalReceive::startRecording()
@@ -70,9 +70,12 @@ void PhysicalReceive::nextCharacter()
 		{
 			charStringBroken = true;
 			preambleExpected = true;
-			//std::cout << "No more characters" << std::endl;
-			if(logging)
+			std::cout << "No more characters" << std::endl;
+			if (logging)
+			{
 				charsToFile("CharsReceived.txt");
+				charsReceived.clear();
+			}
 			break;
 		}
 	}
@@ -97,7 +100,7 @@ void PhysicalReceive::continuousAnalysis()
 				if (charStringBroken)
 				{
 					searchBuffer();
-					setSyncMode(true);
+					//setSyncMode(true);
 				}
 				else
 				{
@@ -138,7 +141,7 @@ void PhysicalReceive::checkThreshold(char aChar)
 		int loFreq = DTMF_analyzer.findTargetFreqLo(aChar);
 		int hiFreq = DTMF_analyzer.findTargetFreqHi(aChar);
 
-		if (!thresholdUpToDate[loFreq] && !thresholdUpToDate[hiFreq])
+		if (!thresholdUpToDate[loFreq] || !thresholdUpToDate[hiFreq])
 		{
 			DTMF_analyzer.updateThreshold(aChar);
 
@@ -348,7 +351,7 @@ void PhysicalReceive::charsToFile(std::string aTitle)
 
 	for (std::size_t i = 0; i < charsReceived.size(); i++)
 	{
-		outFile << charsReceived[i] << '\n';
+		outFile << charsReceived[i];
 	}
 
 	outFile.close();

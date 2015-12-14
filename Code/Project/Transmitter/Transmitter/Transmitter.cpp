@@ -11,6 +11,7 @@ namespace DTMF
 	{
 		setToneDuration(25.0/1000);
 		setVolume(15000);
+		setLogging(true);
 	}
 
 	Transmitter::~Transmitter()
@@ -57,6 +58,7 @@ namespace DTMF
 			for (DTMF::Tone tone : tones) {
 				myFile << DTMFToChar(tone);
 			}
+			
 			myFile.close();
 		}
 
