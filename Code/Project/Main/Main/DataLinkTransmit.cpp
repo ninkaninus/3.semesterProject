@@ -41,7 +41,7 @@ void DataLinkTransmit::transmitFrame(DTMF::Frame frame)
 	// =======================  Adressen tilføjes i binær  =======================  
 	for (int j = 3; j >= 0; j--)
 	{
-		bitset<8> indexBits(frame.adress);
+		bitset<8> indexBits(frame.address);
 		bitStuffVector.push_back(indexBits[j]);
 	}
 
@@ -130,7 +130,7 @@ void DataLinkTransmit::aCKFrame(DTMF::Frame frame)
 	// =======================  Adressen tilføjes i binær  =======================  
 	for (int j = 3; j >= 0; j--)
 	{
-		bitset<8> indexBits(frame.adress);
+		bitset<8> indexBits(frame.address);
 		bitStuffVector.push_back(indexBits[j]);
 	}
 

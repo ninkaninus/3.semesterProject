@@ -19,7 +19,7 @@ void DataLinkReceive::run() {
 void DataLinkReceive::makeMessage()
 {
 	// Opsætning 
-	DTMF::Frame newFrame;
+	DTMF::Frame* newFrame = new DTMF::Frame;
 	vector<bool> frame = objR.extractBoolVector();
 
 	//print(frame, "frame før");
@@ -80,32 +80,34 @@ void DataLinkReceive::makeMessage()
 				fail = 0;
 
 				// Bestem frame typen
-				newFrame.type = getInfo(frame, 0, 4);
-				switch (newFrame.type) {
-				case 0:
+				newFrame->type = static_cast<DTMF::Type>(getInfo(frame, 0, 4));
+				switch (newFrame->type) {
+				case DTMF::Type::Data:
 					// Dette er en frame
 					// Extract information fra frame
-					newFrame.payload = vector<bool>(frame.begin() + 12, frame.end());
-					newFrame.index = getInfo(frame, 8, 12);
-					newFrame.adress = getInfo(frame, 4, 8);
+					newFrame->payload = vector<bool>(frame.begin() + 12, frame.end());
+					newFrame->index = getInfo(frame, 8, 12);
+					newFrame->address = getInfo(frame, 4, 8);
 					break;
-				case 1:
+				case DTMF::Type::ACK:
 					// Dette er en ACK
 					// Extract information fra frame
-					newFrame.index = getInfo(frame, 8, 12);
-					newFrame.adress = getInfo(frame, 4, 8);
+					newFrame->index = getInfo(frame, 8, 12);
+					newFrame->address = getInfo(frame, 4, 8);
 					break;
 				}
 				
 				// gem frame information i toTrans
-				toTrans.push_back(newFrame);
+				setFrame(newFrame);
 
 				// til debugging plot tekst
-				std::cout << BooleanTodata(newFrame.payload) << std::endl;
-				
-				cout << "Type:    " << newFrame.type << endl;
-				cout << "Adresse: " << newFrame.adress << endl;
-				cout << "Index:   " << newFrame.index << endl;
+				std::cout << BooleanTodata(newFrame->payload) << std::endl;
+				print(newFrame->payload, "Data: ");
+
+
+				cout << "Type:    " << newFrame->type << endl;
+				cout << "Adresse: " << newFrame->address << endl;
+				cout << "Index:   " << newFrame->index << endl;
 
 			}
 			else
@@ -118,16 +120,20 @@ void DataLinkReceive::makeMessage()
 	}
 }
 
-DTMF::Frame DataLinkReceive::getFrame()
+DTMF::Frame* DataLinkReceive::getFrame()
 {
-	DTMF::Frame temp = toTrans[0];
+	DTMF::Frame* temp;
+	mutex.lock();
+	temp = toTrans[0];
 	toTrans.pop_front();
+	mutex.unlock();
 	return temp;
 }
 
-unsigned int DataLinkReceive::numberOfFrames()
-{
-	return toTrans.size();
+void DataLinkReceive::setFrame(DTMF::Frame* f) {
+	mutex.lock();
+	toTrans.push_back(f);
+	mutex.unlock();
 }
 
 void DataLinkReceive::init(int aSampleRate, int aProcessingTime)

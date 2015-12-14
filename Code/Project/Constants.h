@@ -31,12 +31,16 @@ namespace DTMF {
 		unsigned int frequency2;
 	};
 
+	enum Type {
+		Data,
+		ACK
+	};
+
 	struct Frame {
 		std::vector<bool> payload;
 		unsigned int index;
-		unsigned int maxIndex;
-		unsigned int adress;
-		unsigned int type;
+		unsigned int address;
+		Type type;
 	};
 
 	enum transition {

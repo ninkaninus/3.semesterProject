@@ -115,7 +115,7 @@ void TransportLayer::sendData()
 void TransportLayer::sendACK() 
 {
 	DTMF::Frame frame;
-	frame.type = 1;
+	frame.type = DTMF::Type::ACK;
 	transmitter.transmitFrame(frame);
 }
 
