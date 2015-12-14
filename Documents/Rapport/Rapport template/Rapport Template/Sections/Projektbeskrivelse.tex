@@ -1,0 +1,82 @@
+\section{Projektbeskrivelse}
+
+\subsection{Problemformulering}
+
+Projektet omhandler kommunikation mellem bærbare computere ved udveksling af lyd. Der skal anvendes DTMF-toner og designes en kommunikationsprotokol. Hertil skal udvikles en distribueret applikation i C++, samt anvendes en lagdelt softwarearkitektur.
+
+\subsection{Arbejds- og fagområder}
+
+I forbindelse med dette projekt er der udarbejdet nedenstående arbejds- og fagområder.
+
+\subsubsection{Software}
+
+\begin{itemize}
+  \item DSP
+  \begin{itemize}
+    \item Filtrering af signalet for optimal transmission
+    \item Problematikker i overgangsfasen mellem DTMF-toner
+  \end{itemize}
+  \item Datakommunikation
+  \begin{itemize}
+    \item Protokoller
+    \item Flow- og fejlkontrol
+    \item Adressering i forbindelse med flere modtagere
+    \item Kollision af datapakker skal undgås
+  \end{itemize}
+  \item C++
+    \begin{itemize}
+    \item Mulighed for overvågning af transmissionen i forbindelse med debugging
+    \item Objekt-orienteret programmering
+    \item Dynamisk tilpasning af signal ift. afstand og vinkel
+    \item Udvikling af brugerinterface til chat-klient
+  \end{itemize}
+\end{itemize}
+
+Projektet kommer til at have ekstraordinært fokus på project management, i form af modellen Scrum. Arbejdet vil blandt andet finde sted i mindre ”sprints” \& gruppen vil arbejde tæt sammen med en høj grad af vidensdeling.
+
+\subsubsection{Hardware}
+
+\begin{itemize}
+  \item Signalstyrkens påvirkning på datatransmission.
+  \item SNR (tolerancen, målinger og beregninger)
+  \begin{itemize}
+  \item Hvordan opnås en hurtig og effektiv transmission.
+  \item Overvejelser omkring båndbredde.
+  \end{itemize}
+  \item Genklangs inflydelse på transmissionen
+  \item Vinkling og afstand
+  \begin{itemize}
+  \item Dynamisk og statisk placering af hardware
+  \end{itemize}
+  \item Ændring af transportmedie, eksempelvis ved forhindringer mellem sender og modtager.
+\end{itemize}
+
+\subsection{Kravspecifikation}
+
+Ovennævnte fokusområder tilfører projektet en vis værdi, dog har nogle opgaver højere prioritering end andre. Opgaverne vil derfor blive inddelt i primære og sekundære opgaver.
+
+\subsubsection{Primære opgaver}
+
+\begin{itemize}
+  \item At afsende og modtage DTMF toner i stille rum ved lav afstand
+  \item Udvikling af en 1-til-1 chat-klient, der benytter sig af DTMF-datatransmission.
+  \item Systemet skal være funktionelt ved negligérbar støj
+  \item Et passende protokol til datatransmissionen skal udarbejdes
+  \begin{itemize}
+    \item Der skal udvikles en form for fejlkontrol, eksempelvis et CRC
+    \item Data skal opdeles i frames af en fornuftig længde.
+  \end{itemize}
+  \item Signalet skal filtreres af modtager
+  \item Korrupt data må ikke nå applikationslaget
+\end{itemize}
+
+\subsubsection{Sekundære opgaver}
+
+\begin{itemize}
+\item Systemet kan udbygges til at tage højde for vinkling og afstand mellem afsender og modtager, ved dynamisk og statisk placering
+\item Undersøgelse af genklangs indflydelse på signalet
+\item Der kan arbejdes med flere datatyper, eksempelvis lyd eller billeder
+\item I tilfælde af en videreudvikling der tillader flere modtagere, skal der arbejdes med adressering i protokollen
+\item Optimering af transmissionshastighed
+\item Der kan laves beregninger på systemets SNR (tolerancen, målinger og beregninger)
+\end{itemize}
