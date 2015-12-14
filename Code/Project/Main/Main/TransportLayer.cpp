@@ -100,6 +100,9 @@ void TransportLayer::sendData()
 {
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
+	frame.adress = 4;
+	frame.index = 0;
+	frame.type = 0;
 	delete currPacket;
 	currPacket = nullptr;
 	setPacketAvailable(false);
