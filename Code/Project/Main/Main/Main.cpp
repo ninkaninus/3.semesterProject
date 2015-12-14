@@ -16,14 +16,14 @@ using namespace std;
 int main()
 {
 
-	ApplicationLayer objA;
+	DataLinkReceive objA;
 
 	string hej;
 
 	while (true)
 	{
 		getline(cin, hej);
-		objA.send(hej);
+		//objA.send(hej);
 	}
 
 	return 0;

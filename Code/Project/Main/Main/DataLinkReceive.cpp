@@ -118,6 +118,7 @@ void DataLinkReceive::makeMessage()
 			}
 		}
 	}
+	else delete newFrame;
 }
 
 DTMF::Frame* DataLinkReceive::getFrame()

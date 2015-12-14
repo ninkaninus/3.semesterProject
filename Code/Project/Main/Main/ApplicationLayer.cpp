@@ -181,12 +181,15 @@ void ApplicationLayer::handleReceive()
 				messageInBuffer.push_back(messageIn);
 				mutex.unlock();
 
+				cout << "Incoming!! " << messageIn << endl;
+
 				delete tempChunk;
 			}
 		}
 
 		tempChunk = objT.getPacketFromQueue();
 	}
+	delete tempChunk;
 }
 
 void ApplicationLayer::loop()
@@ -205,8 +208,6 @@ void ApplicationLayer::send(string message)	//sender input
 	messageOutBuffer.push_back(message);
 	mutex.unlock();
 }
-
-
 
 void ApplicationLayer::print(vector<bool>& aVector, string aName)
 {
