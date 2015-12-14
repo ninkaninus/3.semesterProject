@@ -14,11 +14,11 @@ void Analyzer::init(int aSampleRate, int aProcessingTime)
 //---------------------------DEFAULT THRESHOLDS----------------------------------
 
 	std::vector<float> thresholds{ 1000,1000,1000,1000,1000,1000,1000,1000 }; 
-	float ratio = 0.6;
+	float ratio = 2.0;
 
 	for (int i = 0; i < 4; i++)
 	{
-		thresholdMap[FREQ_LO[i]] = thresholds[i] * ratio; 
+		thresholdMap[FREQ_LO[i]] = thresholds[i] * ratio;
 		thresholdMap[FREQ_HI[i]] = thresholds[i + 4] * ratio;
 	}
 }

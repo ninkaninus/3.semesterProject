@@ -23,7 +23,7 @@ namespace DTMF
 		virtual ~Transmitter();
 	private:
 		bool logging = false;
-		std::string logFile = "DTMFTest.txt";
+		std::string logFile = "CharsSent.txt";
 		void playBuffer();
 		char DTMFToChar(DTMF::Tone);
 		DTMF::Tone nibbleToDTMF(unsigned char c);

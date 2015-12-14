@@ -10,7 +10,7 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 	DTMF_analyzer.init(aSampleRate, aProcessingTime);
 	setSyncMode(true);
 	isRunning = false;
-	logging = false;
+	logging = true;
 }
 
 void PhysicalReceive::startRecording()
@@ -71,8 +71,11 @@ void PhysicalReceive::nextCharacter()
 			charStringBroken = true;
 			preambleExpected = true;
 			//std::cout << "No more characters" << std::endl;
-			if(logging)
+			if (logging)
+			{
 				charsToFile("CharsReceived.txt");
+				charsReceived.clear();
+			}
 			break;
 		}
 	}
@@ -348,7 +351,7 @@ void PhysicalReceive::charsToFile(std::string aTitle)
 
 	for (std::size_t i = 0; i < charsReceived.size(); i++)
 	{
-		outFile << charsReceived[i] << '\n';
+		outFile << charsReceived[i];
 	}
 
 	outFile.close();
