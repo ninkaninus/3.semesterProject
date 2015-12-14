@@ -9,6 +9,16 @@ DataLinkReceive::DataLinkReceive() {
 	launch.detach();
 }
 
+bool DataLinkReceive::checkFrame()
+{
+	bool b = false;
+	mutex.lock();
+	if (!toTrans.empty())
+		b = true;
+	mutex.unlock();
+	return b;
+}
+
 void DataLinkReceive::run() {
 	while (true)
 	{
@@ -19,7 +29,7 @@ void DataLinkReceive::run() {
 void DataLinkReceive::makeMessage()
 {
 	// Opsætning 
-	DTMF::Frame* newFrame = new DTMF::Frame;
+	DTMF::Frame newFrame;
 	vector<bool> frame = objR.extractBoolVector();
 
 	//print(frame, "frame før");
@@ -80,20 +90,20 @@ void DataLinkReceive::makeMessage()
 				fail = 0;
 
 				// Bestem frame typen
-				newFrame->type = static_cast<DTMF::Type>(getInfo(frame, 0, 4));
-				switch (newFrame->type) {
+				newFrame.type = static_cast<DTMF::Type>(getInfo(frame, 0, 4));
+				switch (newFrame.type) {
 				case DTMF::Type::Data:
 					// Dette er en frame
 					// Extract information fra frame
-					newFrame->payload = vector<bool>(frame.begin() + 12, frame.end());
-					newFrame->index = getInfo(frame, 8, 12);
-					newFrame->address = getInfo(frame, 4, 8);
+					newFrame.payload = vector<bool>(frame.begin() + 12, frame.end());
+					newFrame.index = getInfo(frame, 8, 12);
+					newFrame.address = getInfo(frame, 4, 8);
 					break;
 				case DTMF::Type::ACK:
 					// Dette er en ACK
 					// Extract information fra frame
-					newFrame->index = getInfo(frame, 8, 12);
-					newFrame->address = getInfo(frame, 4, 8);
+					newFrame.index = getInfo(frame, 8, 12);
+					newFrame.address = getInfo(frame, 4, 8);
 					break;
 				}
 				
@@ -118,23 +128,19 @@ void DataLinkReceive::makeMessage()
 			}
 		}
 	}
-	else delete newFrame;
 }
 
-DTMF::Frame* DataLinkReceive::getFrame()
+DTMF::Frame DataLinkReceive::getFrame()
 {
-	DTMF::Frame* temp = nullptr;
+	DTMF::Frame temp;
 	mutex.lock();
-	if (!toTrans.empty()) 
-	{
 		temp = toTrans[0];
 		toTrans.pop_front();
-	}
 	mutex.unlock();
 	return temp;
 }
 
-void DataLinkReceive::setFrame(DTMF::Frame* f) {
+void DataLinkReceive::setFrame(DTMF::Frame f) {
 	mutex.lock();
 	toTrans.push_back(f);
 	mutex.unlock();

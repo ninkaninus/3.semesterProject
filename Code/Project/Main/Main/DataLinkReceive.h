@@ -20,7 +20,8 @@ class DataLinkReceive
 {
 public:
 	DataLinkReceive();
-	DTMF::Frame* getFrame();
+	bool checkFrame();
+	DTMF::Frame getFrame();
 	void makeMessage();
 	
 	~DataLinkReceive();
@@ -32,7 +33,7 @@ protected:
 
 	void init(int aSampleRate, int aProcessingTime);
 
-	void setFrame(DTMF::Frame* f);
+	void setFrame(DTMF::Frame f);
 
 	void run();
 
@@ -50,7 +51,7 @@ protected:
 	// Atributter
 	PhysicalReceive objR;
 	vector<bool> data;
-	deque<DTMF::Frame*> toTrans;
+	deque<DTMF::Frame> toTrans;
 	int fail;
 	unsigned int sampleRate = 8000;
 	unsigned int processingTime = 25;

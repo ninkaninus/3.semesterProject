@@ -59,5 +59,5 @@ private:
 	DataLinkTransmit transmitter;
 	DataLinkReceive receiver;
 	sf::Mutex mutex;
-	unsigned const int address = 124;
+	unsigned const int address = 2;
 };

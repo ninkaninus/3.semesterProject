@@ -125,13 +125,16 @@ bool TransportLayer::receiveACK()
 		diffTimePoint = endTimePoint - startTimePoint;
 		timeDifference = diffTimePoint.count();
 
-		DTMF::Frame* fPoint = receiver.getFrame();
-
-		if (fPoint != nullptr && fPoint->type == DTMF::Type::ACK && fPoint->index == currIndex)
+		if (receiver.checkFrame())
 		{
-			if (currIndex == 0) currIndex = 1;
-			else currIndex = 0;
-			return true;
+			DTMF::Frame fPoint = receiver.getFrame();
+
+			if (fPoint.type == DTMF::Type::ACK && fPoint.index == currIndex)
+			{
+				if (currIndex == 0) currIndex = 1;
+				else currIndex = 0;
+				return true;
+			}
 		}
 	}
 
@@ -142,21 +145,20 @@ bool TransportLayer::receiveACK()
 
 void TransportLayer::receiveData() 
 {
-	DTMF::Frame* fPoint = receiver.getFrame();
-	if (fPoint != nullptr && fPoint->type == DTMF::Type::Data)
+	if (receiver.checkFrame())
 	{
-		sendACK(fPoint->index);
-		if (fPoint->index == expectedNext)
+		DTMF::Frame fPoint = receiver.getFrame();
+		if (fPoint.type == DTMF::Type::Data)
 		{
-			if (expectedNext == 0) expectedNext = 1;
-			else expectedNext = 0;
-			vector<bool>* point = new vector<bool>;
-			*point = fPoint->payload;
-			addPacketToQueue(point);
-		}
-		else
-		{
-			delete fPoint;
+			sendACK(fPoint.index);
+			if (fPoint.index == expectedNext)
+			{
+				if (expectedNext == 0) expectedNext = 1;
+				else expectedNext = 0;
+				vector<bool>* point = new vector<bool>;
+				*point = fPoint.payload;
+				addPacketToQueue(point);
+			}
 		}
 	}
 }
