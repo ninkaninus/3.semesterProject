@@ -122,10 +122,13 @@ void DataLinkReceive::makeMessage()
 
 DTMF::Frame* DataLinkReceive::getFrame()
 {
-	DTMF::Frame* temp;
+	DTMF::Frame* temp = nullptr;
 	mutex.lock();
-	temp = toTrans[0];
-	toTrans.pop_front();
+	if (!toTrans.empty()) 
+	{
+		temp = toTrans[0];
+		toTrans.pop_front();
+	}
 	mutex.unlock();
 	return temp;
 }

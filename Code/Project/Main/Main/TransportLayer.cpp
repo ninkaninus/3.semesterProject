@@ -10,23 +10,14 @@ TransportLayer::TransportLayer()
 	launch.detach();
 }
 
-
-void TransportLayer::setPacketAvailable(bool b) 
-{
-	mutex.lock();
-	packetAvailable = b;
-	mutex.unlock();
-}
-
 bool TransportLayer::getPacketAvailable() 
 {
-	bool b;
+	bool b = false;
 	mutex.lock();
-	b = packetAvailable;
+	if (currPacket) b = true;
 	mutex.unlock();
 	return b;
 }
-
 
 void TransportLayer::setPacket(vector<bool>* newPacket) 
 {
@@ -34,14 +25,11 @@ void TransportLayer::setPacket(vector<bool>* newPacket)
 
 	currPacket = newPacket;
 
-	setPacketAvailable(true);
-
 	mutex.unlock();
 }
 
 bool TransportLayer::checkPacketBuffer() 
 {
-
 	bool rBool;
 
 	mutex.lock();
@@ -53,6 +41,7 @@ bool TransportLayer::checkPacketBuffer()
 
 	return rBool;
 }
+
 
 vector<bool>* TransportLayer::getPacketFromQueue() 
 {
@@ -75,6 +64,14 @@ vector<bool>* TransportLayer::getPacketFromQueue()
 	return ptr;
 }
 
+void TransportLayer::addPacketToQueue(vector<bool>* b)
+{
+	mutex.lock();
+		receiveQueue.push_back(b);
+	mutex.unlock();
+}
+
+
 void TransportLayer::init() 
 {
 	//receiveACK();
@@ -89,10 +86,8 @@ void TransportLayer::loop()
 		{
 			sendData();
 		}
-		else 
-		{
-			receiveData();
-		}
+
+		receiveData();
 	}
 }
 
@@ -100,26 +95,19 @@ void TransportLayer::sendData()
 {
 	DTMF::Frame frame;
 	frame.payload = *currPacket;
-	frame.address = 4;
-	frame.index = 0;
+	frame.address = address;
+	frame.index = currIndex;
 	frame.type = DTMF::Type::Data;
 	delete currPacket;
 	currPacket = nullptr;
-	setPacketAvailable(false);
-	std::cout << "Sending Frame" << std::endl;
+	//std::cout << "Sending Frame" << std::endl;
 	transmitter.transmitFrame(frame);
-	receiveACK();
-
+	while(!receiveACK()) {
+		transmitter.transmitFrame(frame);
+	}
 }
 
-void TransportLayer::sendACK() 
-{
-	DTMF::Frame frame;
-	frame.type = DTMF::Type::ACK;
-	transmitter.transmitFrame(frame);
-}
-
-void TransportLayer::receiveACK() 
+bool TransportLayer::receiveACK() 
 {
 	auto endTimePoint = std::chrono::system_clock::now();
 	auto startTimePoint = std::chrono::system_clock::now();
@@ -136,17 +124,49 @@ void TransportLayer::receiveACK()
 		endTimePoint = std::chrono::system_clock::now();
 		diffTimePoint = endTimePoint - startTimePoint;
 		timeDifference = diffTimePoint.count();
+
+		DTMF::Frame* fPoint = receiver.getFrame();
+
+		if (fPoint != nullptr && fPoint->type == DTMF::Type::ACK && fPoint->index == currIndex)
+		{
+			if (currIndex == 0) currIndex = 1;
+			else currIndex = 0;
+			return true;
+		}
 	}
+
 	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
-
 	//We assume ack was received here, untill it is implemented
-
-
+	return false;
 }
 
 void TransportLayer::receiveData() 
 {
-	//Check if there is data in the datalinkreceiver buffer
+	DTMF::Frame* fPoint = receiver.getFrame();
+	if (fPoint != nullptr && fPoint->type == DTMF::Type::Data)
+	{
+		sendACK(fPoint->index);
+		if (fPoint->index == expectedNext)
+		{
+			if (expectedNext == 0) expectedNext = 1;
+			else expectedNext = 0;
+			vector<bool>* point = new vector<bool>;
+			*point = fPoint->payload;
+			addPacketToQueue(point);
+		}
+		else
+		{
+			delete fPoint;
+		}
+	}
+}
+
+void TransportLayer::sendACK(unsigned int ackNo)
+{
+	DTMF::Frame frame;
+	frame.type = DTMF::Type::ACK;
+	frame.index = ackNo;
+	transmitter.transmitFrame(frame);
 }
 
 TransportLayer::~TransportLayer()

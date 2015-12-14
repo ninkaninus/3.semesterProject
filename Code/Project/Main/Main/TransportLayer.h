@@ -31,26 +31,27 @@ public:
 
 	void sendData();
 
-	void sendACK();
+	void sendACK(unsigned int ackNo);
 
 	void receiveData();
 
-	void receiveACK();
+	bool receiveACK();
 
 	void setPacket(vector<bool>*);
 
 	vector<bool>* getPacketFromQueue();
+
+	void addPacketToQueue(vector<bool>*);
 
 	bool checkPacketBuffer();
 
 	~TransportLayer();
 
 private:
-
-	void setPacketAvailable(bool);
 	bool getPacketAvailable();
-	bool packetAvailable = false;
-	unsigned int timeoutACK = 2;
+	unsigned int timeoutACK = 5;
+	unsigned int currIndex = 0;
+	unsigned int expectedNext = 0;
 	vector<bool>* currPacket;
 	deque<vector<bool>*> receiveQueue;
 	bool looping = true;
@@ -58,4 +59,5 @@ private:
 	DataLinkTransmit transmitter;
 	DataLinkReceive receiver;
 	sf::Mutex mutex;
+	unsigned const int address = 124;
 };
