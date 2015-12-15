@@ -33,9 +33,15 @@ public:
 
 	void sendACK(unsigned int ackNo);
 
+	void setSendAllowed(bool);
+
+	bool getSendAllowed();
+
 	void receiveData();
 
 	bool receiveACK();
+
+	void sendAgainTimer();
 
 	void setPacket(vector<bool>*);
 
@@ -48,6 +54,7 @@ public:
 	~TransportLayer();
 
 private:
+	bool sendAllowed = true;
 	bool getPacketAvailable();
 	unsigned int timeoutACK = 5;
 	unsigned int currIndex = 0;
