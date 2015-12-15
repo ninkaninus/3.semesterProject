@@ -3,11 +3,26 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <random>
 
 TransportLayer::TransportLayer()
 {
 	std::thread launch(&TransportLayer::init, this);
 	launch.detach();
+}
+
+void TransportLayer::setSendAllowed(bool b) {
+	mutex.lock();
+	sendAllowed = b;
+	mutex.unlock();
+}
+
+bool TransportLayer::getSendAllowed() {
+	bool b;
+	mutex.lock();
+	b = sendAllowed;
+	mutex.unlock();
+	return b;
 }
 
 bool TransportLayer::getPacketAvailable() 
@@ -82,7 +97,7 @@ void TransportLayer::loop()
 {
 	while (looping) 
 	{
-		if (getPacketAvailable()) 
+		if (getPacketAvailable() && getSendAllowed()) 
 		{
 			sendData();
 		}
@@ -98,13 +113,25 @@ void TransportLayer::sendData()
 	frame.address = address;
 	frame.index = currIndex;
 	frame.type = DTMF::Type::Data;
-	delete currPacket;
-	currPacket = nullptr;
-	//std::cout << "Sending Frame" << std::endl;
-	transmitter.transmitFrame(frame);
-	while(!receiveACK()) {
+	unsigned int numberOfACKTries = 0;
+	
+	while (numberOfACKTries < DTMF::ACKTimeoutCount) {
 		transmitter.transmitFrame(frame);
+		cout << "ACK Try: " << numberOfACKTries + 1 << endl;
+		if (!receiveACK()) {
+			numberOfACKTries++;
+		}
+		else {
+			delete currPacket;
+			currPacket = nullptr;
+			return;
+		}
 	}
+
+	cout << "Ran out of ACK tries" << endl;
+	setSendAllowed(false);
+	std::thread sendAgainTimer(&TransportLayer::sendAgainTimer, this);
+	sendAgainTimer.detach();
 }
 
 bool TransportLayer::receiveACK() 
@@ -119,7 +146,7 @@ bool TransportLayer::receiveACK()
 	//std::cout << "Start!" << std::endl;
 	startTimePoint = std::chrono::system_clock::now();
 
-	while (timeDifference < timeoutACK) 
+	while (timeDifference < DTMF::ACKTimeout) 
 	{
 		endTimePoint = std::chrono::system_clock::now();
 		diffTimePoint = endTimePoint - startTimePoint;
@@ -137,10 +164,34 @@ bool TransportLayer::receiveACK()
 			}
 		}
 	}
-
-	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
+	//std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
 	//We assume ack was received here, untill it is implemented
 	return false;
+}
+
+void TransportLayer::sendAgainTimer() {
+	auto endTimePoint = std::chrono::system_clock::now();
+	auto startTimePoint = std::chrono::system_clock::now();
+	std::chrono::duration<float> diffTimePoint;
+	startTimePoint = std::chrono::system_clock::now();
+	float timeDifference = 0;
+
+	auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+	std::tr1::mt19937 eng(seed);
+	std::tr1::uniform_real<float> unif(0,DTMF::ACKResendMaxWait);
+
+	float timeOut = unif(eng);
+
+	cerr << "Starting a random wait time of: " << timeOut << endl;
+
+	while (timeDifference < timeOut)
+	{
+		endTimePoint = std::chrono::system_clock::now();
+		diffTimePoint = endTimePoint - startTimePoint;
+		timeDifference = diffTimePoint.count();
+	}
+	cerr << "Waited enough time now, ready to resend!" << endl;
+	setSendAllowed(true);
 }
 
 void TransportLayer::receiveData() 
@@ -150,7 +201,6 @@ void TransportLayer::receiveData()
 		DTMF::Frame fPoint = receiver.getFrame();
 		if (fPoint.type == DTMF::Type::Data)
 		{
-			sendACK(fPoint.index);
 			if (fPoint.index == expectedNext)
 			{
 				if (expectedNext == 0) expectedNext = 1;
@@ -159,6 +209,7 @@ void TransportLayer::receiveData()
 				*point = fPoint.payload;
 				addPacketToQueue(point);
 			}
+			sendACK(fPoint.index);
 		}
 	}
 }

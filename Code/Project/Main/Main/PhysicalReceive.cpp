@@ -111,7 +111,7 @@ void PhysicalReceive::continuousAnalysis()
 			{
 				//std::cout << " !";
 				DTMF_analyzer.addToBuffer();
-				Sleep(1000);
+				//Sleep(1000);
 			}
 		}
 

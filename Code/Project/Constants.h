@@ -7,6 +7,10 @@ namespace DTMF {
 
 	static const int CRCnr = 16;
 
+	static const int ACKTimeout = 2;
+	static const int ACKTimeoutCount = 1;
+	static const float ACKResendMaxWait = 10.0;
+
 	enum Tone {
 		ZERO,
 		ONE,
