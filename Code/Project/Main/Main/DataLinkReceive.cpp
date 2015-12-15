@@ -1,9 +1,29 @@
 #include "DataLinkReceive.h"
 #include <iostream>
+#include <thread>
 
 
 DataLinkReceive::DataLinkReceive() {
+	init(sampleRate, processingTime);
+	std::thread launch(&DataLinkReceive::run, this);
+	launch.detach();
+}
 
+bool DataLinkReceive::checkFrame()
+{
+	bool b = false;
+	mutex.lock();
+	if (!toTrans.empty())
+		b = true;
+	mutex.unlock();
+	return b;
+}
+
+void DataLinkReceive::run() {
+	while (true)
+	{
+		makeMessage();
+	}
 }
 
 void DataLinkReceive::makeMessage()
@@ -70,39 +90,41 @@ void DataLinkReceive::makeMessage()
 				fail = 0;
 
 				// Bestem frame typen
-				newFrame.type = getInfo(frame, 0, 4);
+				newFrame.type = static_cast<DTMF::Type>(getInfo(frame, 0, 4));
 				switch (newFrame.type) {
-				case 0:
+				case DTMF::Type::Data:
 					// Dette er en frame
 					// Extract information fra frame
 					newFrame.payload = vector<bool>(frame.begin() + 12, frame.end());
 					newFrame.index = getInfo(frame, 8, 12);
-					newFrame.adress = getInfo(frame, 4, 8);
+					newFrame.address = getInfo(frame, 4, 8);
 					break;
-				case 1:
+				case DTMF::Type::ACK:
 					// Dette er en ACK
 					// Extract information fra frame
 					newFrame.index = getInfo(frame, 8, 12);
-					newFrame.adress = getInfo(frame, 4, 8);
+					newFrame.address = getInfo(frame, 4, 8);
 					break;
 				}
 				
 				// gem frame information i toTrans
-				toTrans.push_back(newFrame);
+				setFrame(newFrame);
 
 				// til debugging plot tekst
-				std::cout << BooleanTodata(newFrame.payload) << std::endl;
-				
-				cout << "Type:    " << newFrame.type << endl;
-				cout << "Adresse: " << newFrame.adress << endl;
-				cout << "Index:   " << newFrame.index << endl;
+				//std::cout << BooleanTodata(newFrame->payload) << std::endl;
+				//print(newFrame->payload, "Data: ");
+
+
+				//cout << "Type:    " << newFrame->type << endl;
+				//cout << "Adresse: " << newFrame->address << endl;
+				//cout << "Index:   " << newFrame->index << endl;
 
 			}
 			else
 			{
 				fail++;
-				std::cout << "defekt frame" << std::endl;
-				std::cout << "Number of fails: " << fail << std::endl;
+				//std::cout << "defekt frame" << std::endl;
+				//std::cout << "Number of fails: " << fail << std::endl;
 			}
 		}
 	}
@@ -110,14 +132,18 @@ void DataLinkReceive::makeMessage()
 
 DTMF::Frame DataLinkReceive::getFrame()
 {
-	DTMF::Frame temp = toTrans[0];
-	toTrans.pop_front();
+	DTMF::Frame temp;
+	mutex.lock();
+		temp = toTrans[0];
+		toTrans.pop_front();
+	mutex.unlock();
 	return temp;
 }
 
-unsigned int DataLinkReceive::numberOfFrames()
-{
-	return toTrans.size();
+void DataLinkReceive::setFrame(DTMF::Frame f) {
+	mutex.lock();
+	toTrans.push_back(f);
+	mutex.unlock();
 }
 
 void DataLinkReceive::init(int aSampleRate, int aProcessingTime)
@@ -207,13 +233,13 @@ void DataLinkReceive::antiBitStuffing(vector<bool>& bVector)
 
 	//smid resultatet tilbage i bVector
 	bVector.clear();
-	for (int i = 0; i < stuff.size();i++)
+	for (unsigned int i = 0; i < stuff.size();i++)
 		bVector.push_back(stuff[i]);
 }
 
 bool DataLinkReceive::ChekCRC(vector<bool>& bVector) {
 
-	int n = DTMF::CRCnr;
+	unsigned int n = DTMF::CRCnr;
 	//Valg af generatorpolynomium
 	double GENERATOR = 0;
 

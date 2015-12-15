@@ -1,76 +1,176 @@
 #include "TransportLayer.h"
 #include <Constants.h>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
 TransportLayer::TransportLayer()
-{}
-
-void TransportLayer::calculateIndex(unsigned int payloadSize)
 {
-	if (payloadSize <= BITS_IN_FRAME) {
-		maxIndex = 0;
-		return;
+	std::thread launch(&TransportLayer::init, this);
+	launch.detach();
+}
+
+bool TransportLayer::getPacketAvailable() 
+{
+	bool b = false;
+	mutex.lock();
+	if (currPacket) b = true;
+	mutex.unlock();
+	return b;
+}
+
+void TransportLayer::setPacket(vector<bool>* newPacket) 
+{
+	mutex.lock();
+
+	currPacket = newPacket;
+
+	mutex.unlock();
+}
+
+bool TransportLayer::checkPacketBuffer() 
+{
+	bool rBool;
+
+	mutex.lock();
+
+	if (currPacket == nullptr) rBool = true;
+	else rBool = false;
+
+	mutex.unlock();
+
+	return rBool;
+}
+
+
+vector<bool>* TransportLayer::getPacketFromQueue() 
+{
+	vector<bool>* ptr;
+	
+	mutex.lock();
+
+	if (!receiveQueue.empty()) 
+	{
+		ptr = receiveQueue[0];
+		receiveQueue.pop_front();
+	}
+	else 
+	{
+		ptr = nullptr;
 	}
 
-	if (payloadSize % BITS_IN_FRAME == 0) {
-		maxIndex = (payloadSize / BITS_IN_FRAME) - 1;
-	}
-	else {
-		maxIndex = int(payloadSize / BITS_IN_FRAME);
+	mutex.unlock();
+
+	return ptr;
+}
+
+void TransportLayer::addPacketToQueue(vector<bool>* b)
+{
+	mutex.lock();
+		receiveQueue.push_back(b);
+	mutex.unlock();
+}
+
+
+void TransportLayer::init() 
+{
+	//receiveACK();
+	loop();
+}
+
+void TransportLayer::loop() 
+{
+	while (looping) 
+	{
+		if (getPacketAvailable()) 
+		{
+			sendData();
+		}
+
+		receiveData();
 	}
 }
 
-vector<bool> TransportLayer::extractPayload(unsigned int anIndex)
+void TransportLayer::sendData() 
 {
-	vector<bool>::const_iterator first;
-	vector<bool>::const_iterator last;
-
-	if (anIndex < maxIndex) {
-		first = input.begin() + (anIndex * BITS_IN_FRAME);
-		last = input.begin() + ((anIndex * BITS_IN_FRAME) + BITS_IN_FRAME);
-	}
-	else {
-		first = input.begin() + (anIndex * BITS_IN_FRAME);
-		last = input.end();
-	}
-	vector<bool> pl(first, last);
-	return pl;
-}
-
-void TransportLayer::setStatus(bool SR)
-{}
-
-
-void TransportLayer::send(vector<bool>& bVector)
-{
-	index = 0;
-
-	input = bVector;
-
-	calculateIndex(bVector.size());
-
-	cout << "Max index: " << maxIndex << endl << endl;
-
 	DTMF::Frame frame;
-
-	for (int i = 0; i <= maxIndex; i++) {
-		cout << "Payload: " << i << endl;
-		frame.payload = extractPayload(i);
-		frame.index = i;
-		frame.maxIndex = returnMaxIndex();
-		dataLinkT.transmitFrame(frame);
-		cout << endl;
+	frame.payload = *currPacket;
+	frame.address = address;
+	frame.index = currIndex;
+	frame.type = DTMF::Type::Data;
+	delete currPacket;
+	currPacket = nullptr;
+	//std::cout << "Sending Frame" << std::endl;
+	transmitter.transmitFrame(frame);
+	while(!receiveACK()) {
+		transmitter.transmitFrame(frame);
 	}
 }
 
-int TransportLayer::returnMaxIndex() const
+bool TransportLayer::receiveACK() 
 {
-	return maxIndex;
+	auto endTimePoint = std::chrono::system_clock::now();
+	auto startTimePoint = std::chrono::system_clock::now();
+	std::chrono::duration<float> diffTimePoint;
+	float timeDifference = 0;
+
+	//start timer
+
+	//std::cout << "Start!" << std::endl;
+	startTimePoint = std::chrono::system_clock::now();
+
+	while (timeDifference < timeoutACK) 
+	{
+		endTimePoint = std::chrono::system_clock::now();
+		diffTimePoint = endTimePoint - startTimePoint;
+		timeDifference = diffTimePoint.count();
+
+		if (receiver.checkFrame())
+		{
+			DTMF::Frame fPoint = receiver.getFrame();
+
+			if (fPoint.type == DTMF::Type::ACK && fPoint.index == currIndex)
+			{
+				if (currIndex == 0) currIndex = 1;
+				else currIndex = 0;
+				return true;
+			}
+		}
+	}
+
+	std::cout << timeDifference << " seconds went by with no ACK!" << std::endl;
+	//We assume ack was received here, untill it is implemented
+	return false;
 }
 
+void TransportLayer::receiveData() 
+{
+	if (receiver.checkFrame())
+	{
+		DTMF::Frame fPoint = receiver.getFrame();
+		if (fPoint.type == DTMF::Type::Data)
+		{
+			sendACK(fPoint.index);
+			if (fPoint.index == expectedNext)
+			{
+				if (expectedNext == 0) expectedNext = 1;
+				else expectedNext = 0;
+				vector<bool>* point = new vector<bool>;
+				*point = fPoint.payload;
+				addPacketToQueue(point);
+			}
+		}
+	}
+}
 
+void TransportLayer::sendACK(unsigned int ackNo)
+{
+	DTMF::Frame frame;
+	frame.type = DTMF::Type::ACK;
+	frame.index = ackNo;
+	transmitter.transmitFrame(frame);
+}
 
 TransportLayer::~TransportLayer()
-{
-
-}
+{}
 

@@ -3,34 +3,61 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <random>
 #include <bitset>
-#include <chrono>
 #include <thread>
 #include "DataLinkTransmit.h"
 #include "DataLinkReceive.h"
 #include <SFML\System\Mutex.hpp>
 
-using namespace std;
-
 class TransportLayer
 {
+	/*
+	enum State {
+		sendingData,
+		receive,
+		receivingACK,
+		unInitialized
+	};
+	*/
+
 public:
 	TransportLayer();
-	void calculateIndex(unsigned int payloadSize);
-	vector<bool> extractPayload(unsigned int index);
-	void setStatus(bool SR);
-	void send(vector<bool>& bVector);
 
-	int returnMaxIndex() const;
+	void init();
+
+	void loop();
+
+	void sendData();
+
+	void sendACK(unsigned int ackNo);
+
+	void receiveData();
+
+	bool receiveACK();
+
+	void setPacket(vector<bool>*);
+
+	vector<bool>* getPacketFromQueue();
+
+	void addPacketToQueue(vector<bool>*);
+
+	bool checkPacketBuffer();
 
 	~TransportLayer();
 
-protected:
-	DataLinkTransmit dataLinkT;
-	vector<bool> input;						//user input
-	bool SR;								//status sender eller modtager
-	int index;								//Framenummer
-	int maxIndex;
-	const unsigned int BITS_IN_FRAME = 160 * 8;
+private:
+	bool getPacketAvailable();
+	unsigned int timeoutACK = 5;
+	unsigned int currIndex = 0;
+	unsigned int expectedNext = 0;
+	vector<bool>* currPacket;
+	deque<vector<bool>*> receiveQueue;
+	bool looping = true;
+	//State state = State::receive;
+	DataLinkTransmit transmitter;
+	DataLinkReceive receiver;
+	sf::Mutex mutex;
+	unsigned const int address = 2;
 };

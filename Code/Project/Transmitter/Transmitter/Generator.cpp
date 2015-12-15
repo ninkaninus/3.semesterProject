@@ -100,7 +100,7 @@ namespace DTMF {
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
 
-		for (int i = 0; i < toneBuffer.size(); i++)
+		for (unsigned int i = 0; i < toneBuffer.size(); i++)
 		{
 			ToneFreq freq = getFreq(toneBuffer[i]);
 			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
@@ -138,7 +138,7 @@ namespace DTMF {
 				}
 			}
 			
-			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
+			for (unsigned int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
 			{
 
 				outputBuffer[j] = static_cast<sf::Int16>(volumeMax * (std::sin(phase1) + std::sin(phase2)));
@@ -169,7 +169,7 @@ namespace DTMF {
 		double volumeAdj = double(volumeMax) / transitionToneAmount;
 		bool volumeRising = true;
 
-		for (int i = 0; i < toneBuffer.size(); i++)
+		for (unsigned int i = 0; i < toneBuffer.size(); i++)
 		{
 			//The values to be set every tone
 			phase1 = 0;
@@ -181,7 +181,7 @@ namespace DTMF {
 			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
 			unsigned int endTransition = ((i + 1) * samplesPerTone) - transitionToneAmount;
 
-			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
+			for (unsigned int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
 			{
 
 				outputBuffer[j] = static_cast<sf::Int16>(volume * (std::sin(phase1) + std::sin(phase2)));
@@ -230,7 +230,7 @@ namespace DTMF {
 		double phaseAdj1 = 0;
 		double phaseAdj2 = 0;
 
-		for (int i = 0; i < toneBuffer.size(); i++)
+		for (unsigned int i = 0; i < toneBuffer.size(); i++)
 		{
 			//The values to be set every tone
 			phase1 = 0;
@@ -239,7 +239,7 @@ namespace DTMF {
 			phaseAdj1 = (freq.frequency1 * (DTMF::TWO_PI) / (sampleRate));
 			phaseAdj2 = (freq.frequency2 * (DTMF::TWO_PI) / (sampleRate));
 
-			for (int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
+			for (unsigned int j = i * samplesPerTone; j < (i + 1) * samplesPerTone; j++)
 			{
 
 				outputBuffer[j] = static_cast<sf::Int16>(volumeMax * (std::sin(phase1) + std::sin(phase2)));

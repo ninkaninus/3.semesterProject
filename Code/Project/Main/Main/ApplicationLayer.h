@@ -7,7 +7,6 @@
 #include <random>
 #include <bitset>
 #include "TransportLayer.h"
-#include <sstream>
 
 using namespace std;
 
@@ -20,8 +19,13 @@ public:
 	void send(string message);							// sender input
 
 	vector<bool> dataToBoolean(string aString);			// konverterer indkommen data til bool
+	string booleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
 
-	string BooleanTodata(vector<bool>& bVector);		// konverterer indkommen data til bool
+	void newMessage();
+	void handleTransmit();
+	void handleReceive();
+
+	void loop();
 
 	//hjælpefunktioner
 	void print(vector<bool>& aVector, string aName);	// viser bits
@@ -31,27 +35,13 @@ public:
 protected:
 	TransportLayer objT;
 	bool sendStatus;									// Er beskeden nået frem og klar til at sende igen
-	std::deque<std::string> messageBuffer;
-	std::deque<std::vector<bool>> currentBuffer;
+	bool messageComplete = true;
+	int lengthOfMessage;
+	std::string messageIn;
+	deque<std::string> messageInBuffer;
+	deque<std::string> messageOutBuffer;
+	deque<std::vector<bool>*> currentBuffer;
+	const unsigned int BITS_IN_FRAME = 160 * 8;
+	sf::Mutex mutex;
 };
 
-/*
-public:
-	TransportLayer();
-	void calculateIndex(unsigned int payloadSize);
-	vector<bool> extractPayload(unsigned int index);
-	void setStatus(bool SR);
-	void send(vector<bool>& bVector);
-
-	int returnMaxIndex() const;
-
-	~TransportLayer();
-
-protected:
-	DataLinkTransmit dataLinkT;
-	vector<bool> input;						//user input
-	bool SR;								//status sender eller modtager
-	int index;								//Framenummer
-	int maxIndex;
-	const unsigned int BITS_IN_FRAME = 160 * 8;
-*/

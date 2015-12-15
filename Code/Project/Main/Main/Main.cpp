@@ -15,15 +15,16 @@ using namespace std;
 
 int main()
 {
-	ApplicationLayer objA;
-	DataLinkReceive objD;
 
-	//objA.send("Penis");
-	objD.init(8000,25);
-	while (true) {
-		objD.makeMessage();
+	ApplicationLayer objA;
+
+	string hej;
+
+	while (true)
+	{
+		getline(cin, hej);
+		objA.send(hej);
 	}
-	
 
 	return 0;
 }
