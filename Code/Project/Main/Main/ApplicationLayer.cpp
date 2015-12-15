@@ -30,36 +30,18 @@ vector<bool> ApplicationLayer::dataToBoolean(string aString) // konverterer indk
 
 string ApplicationLayer::booleanTodata(vector<bool>& bVector)
 {
-
-	//Sæt værdierne fra vectoren ind i en stringstream
-	stringstream bool_value;
-	for (unsigned int i = 0; i < bVector.size(); i++)
-		bool_value << bVector[i];
-
-
-	//Der oversættes til en string 
-	string w = bool_value.str();
-
-	//cout << w << endl;
-
-	//Tag stringen og læg værdierne ind i et bitset. Lav de bits om til int og derefter til chars.
-
-	string ind = w;
-	stringstream sstream(ind);
-	string ud;
-	while (sstream.good())
+	string s = "";
+	char c = 0;
+	for (int i = 0; i < bVector.size() / 8; i++) 
 	{
-		bitset<8> bits;
-		sstream >> bits;
-		char c = char(bits.to_ullong());
-		ud += c;
-		//	ud += "endl";
-		//	cout << ud;
+		char c = 0;
+		for (int j = 0; j < 8; j++) 
+		{
+			c |= bVector[j + (i * 8)] <<  7 - j;
+		}
+		s += c;
 	}
-
-	//cout << ud << endl; //print værdien af boolvectoren ud som ASCII
-
-	return ud;
+	return s;
 }
 
 void ApplicationLayer::newMessage()
@@ -162,14 +144,14 @@ void ApplicationLayer::handleReceive()
 
 			for (unsigned int i = 0; i < 32; i++)
 			{
-				lengthOfMessage |= tempChunk->at(i) << 32 - i - 1;
+				lengthOfMessage |= tempChunk->at(i) << 32 - 1 - i;
 			}
 
 			tempChunk->erase(tempChunk->begin(), tempChunk->begin() + 32);
 
 			messageIn += booleanTodata(*tempChunk);
 
-			if (messageIn.length() - 1 == lengthOfMessage / 8)
+			if (messageIn.length() == lengthOfMessage / 8)
 			{
 				messageComplete = true;
 				lengthOfMessage = 0;
