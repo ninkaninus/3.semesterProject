@@ -201,7 +201,6 @@ void TransportLayer::receiveData()
 		DTMF::Frame fPoint = receiver.getFrame();
 		if (fPoint.type == DTMF::Type::Data)
 		{
-			sendACK(fPoint.index);
 			if (fPoint.index == expectedNext)
 			{
 				if (expectedNext == 0) expectedNext = 1;
@@ -210,6 +209,7 @@ void TransportLayer::receiveData()
 				*point = fPoint.payload;
 				addPacketToQueue(point);
 			}
+			sendACK(fPoint.index);
 		}
 	}
 }
