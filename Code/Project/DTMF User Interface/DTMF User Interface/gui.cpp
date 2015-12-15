@@ -4,6 +4,7 @@ Gui::Gui(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	ui.textEdit->setFocus();
 }
 
 void Gui::stringToQString()
@@ -13,17 +14,7 @@ void Gui::stringToQString()
 
 void Gui::transmitInfo()
 {
-	//AppObj.dataToBoolean(data);
-
-	//transObj.newInput(AppObj.returnData());
-
-	//transObj.getPayload(0);
-	//DLTransmit.assembleFrame(transObj.returnPayload(), 0, transObj.returnMaxIndex());
-	//transmit.transmit(DLTransmit.returnPayload());
-
-	//transObj.getPayload(1);
-	//DLTransmit.assembleFrame(transObj.returnPayload(), 1, 16);
-	//transmit.transmit(DLTransmit.returnPayload());
+	AppObj.send(data);
 }
 
 void Gui::showOnGui()
@@ -40,8 +31,10 @@ void Gui::commands()
 	stringToQString();
 }
 
-
-
+void Gui::StartListening()
+{
+	RecivObj.init(8000, 25.0);
+}
 
 void Gui::on_textEdit_returnPressed()
 {
@@ -54,7 +47,7 @@ void Gui::on_sendButton_clicked()
 	if (ui.textEdit->text() != "")
 	{
 		showOnGui();
-		//transmitInfo();
+		transmitInfo();
 	}
 	ui.textEdit->setFocus();
 }

@@ -1,16 +1,11 @@
-#include <iostream>
-#include "Transmitter\Transmitter\Transmitter.h"
 #include "Main\Main\ApplicationLayer.h"
 #include "Main\Main\DataLinkReceive.h"
-#include "Main\Main\DataLinkTransmit.h"
-#include "Main\Main\PhysicalReceive.h"
-#include "Main\Main\PhysicalTransmit.h"
-#include "Main\Main\TransportLayer.h"
 
 #ifndef GUI_H
 #define GUI_H
 
 #include <QtWidgets>
+#include <QThread>
 #include "ui_gui.h"
 
 class Gui : public QMainWindow
@@ -23,6 +18,7 @@ public:
 	void transmitInfo();
 	void showOnGui();
 	void commands();
+	void StartListening();
 	~Gui();
 
 	private slots:
@@ -31,9 +27,7 @@ public:
 
 private:
 	ApplicationLayer AppObj;
-	TransportLayer transObj;
-	DataLinkTransmit DLTransmit;
-	DTMF::Transmitter transmit;
+	DataLinkReceive RecivObj;
 	QString qsData;
 	string data;
 	Ui::GuiClass ui;
