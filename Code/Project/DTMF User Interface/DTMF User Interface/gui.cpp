@@ -31,11 +31,6 @@ void Gui::commands()
 	stringToQString();
 }
 
-void Gui::StartListening()
-{
-	RecivObj.init(8000, 25.0);
-}
-
 void Gui::on_textEdit_returnPressed()
 {
 	on_sendButton_clicked();

@@ -18,7 +18,6 @@ public:
 	void transmitInfo();
 	void showOnGui();
 	void commands();
-	void StartListening();
 	~Gui();
 
 	private slots:
@@ -27,7 +26,6 @@ public:
 
 private:
 	ApplicationLayer AppObj;
-	DataLinkReceive RecivObj;
 	QString qsData;
 	string data;
 	Ui::GuiClass ui;
