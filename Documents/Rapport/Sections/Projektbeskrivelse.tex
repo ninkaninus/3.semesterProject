@@ -1,82 +1,10 @@
-\section{Projektbeskrivelse}
-
-\subsection{Problemformulering}
-
-Projektet omhandler kommunikation mellem bærbare computere ved udveksling af lyd. Der skal anvendes DTMF-toner og designes en kommunikationsprotokol. Hertil skal udvikles en distribueret applikation i C++, samt anvendes en lagdelt softwarearkitektur.
-
-\subsection{Arbejds- og fagområder}
-
-I forbindelse med dette projekt er der udarbejdet nedenstående arbejds- og fagområder.
-
-\subsubsection{Software}
-
-\begin{itemize}[noitemsep]
-  \item DSP
-  \begin{itemize}[noitemsep]
-    \item Filtrering af signalet for optimal transmission
-    \item Problematikker i overgangsfasen mellem DTMF-toner
-  \end{itemize}
-  \item Datakommunikation
-  \begin{itemize}[noitemsep]
-    \item Protokoller
-    \item Flow- og fejlkontrol
-    \item Adressering i forbindelse med flere modtagere
-    \item Kollision af datapakker skal undgås
-  \end{itemize}
-  \item C++
-    \begin{itemize}[noitemsep]
-    \item Mulighed for overvågning af transmissionen i forbindelse med debugging
-    \item Objekt-orienteret programmering
-    \item Dynamisk tilpasning af signal ift. afstand og vinkel
-    \item Udvikling af brugerinterface til chat-klient
-  \end{itemize}
-\end{itemize}
-
-Projektet kommer til at have ekstraordinært fokus på project management, i form af modellen Scrum. Arbejdet vil blandt andet finde sted i mindre ”sprints” \& gruppen vil arbejde tæt sammen med en høj grad af vidensdeling.
-
-\subsubsection{Hardware}
-
-\begin{itemize}[noitemsep]
-  \item Signalstyrkens påvirkning på datatransmission.
-  \item SNR (tolerancen, målinger og beregninger)
-  \begin{itemize}[noitemsep]
-  \item Hvordan opnås en hurtig og effektiv transmission.
-  \item Overvejelser omkring båndbredde.
-  \end{itemize}
-  \item Genklangs inflydelse på transmissionen
-  \item Vinkling og afstand
-  \begin{itemize}[noitemsep]
-  \item Dynamisk og statisk placering af hardware
-  \end{itemize}
-  \item Ændring af transportmedie, eksempelvis ved forhindringer mellem sender og modtager.
-\end{itemize}
-
-\subsection{Kravspecifikation}
-
-Ovennævnte fokusområder tilfører projektet en vis værdi, dog har nogle opgaver højere prioritering end andre. Opgaverne vil derfor blive inddelt i primære og sekundære opgaver.
-
-\subsubsection{Primære opgaver}
-
-\begin{itemize}[noitemsep]
-  \item At afsende og modtage DTMF toner i stille rum ved lav afstand
-  \item Udvikling af en 1-til-1 chat-klient, der benytter sig af DTMF-datatransmission.
-  \item Systemet skal være funktionelt ved negligérbar støj
-  \item Et passende protokol til datatransmissionen skal udarbejdes
-  \begin{itemize}[noitemsep]
-    \item Der skal udvikles en form for fejlkontrol, eksempelvis et CRC
-    \item Data skal opdeles i frames af en fornuftig længde.
-  \end{itemize}
-  \item Signalet skal filtreres af modtager
-  \item Korrupt data må ikke nå applikationslaget
-\end{itemize}
-
-\subsubsection{Sekundære opgaver}
-
-\begin{itemize}[noitemsep]
-\item Systemet kan udbygges til at tage højde for vinkling og afstand mellem afsender og modtager, ved dynamisk og statisk placering
-\item Undersøgelse af genklangs indflydelse på signalet
-\item Der kan arbejdes med flere datatyper, eksempelvis lyd eller billeder
-\item I tilfælde af en videreudvikling der tillader flere modtagere, skal der arbejdes med adressering i protokollen
-\item Optimering af transmissionshastighed
-\item Der kan laves beregninger på systemets SNR (tolerancen, målinger og beregninger)
-\end{itemize}
+\section (Projektbeskrivelse)
+Semesterprojektet har på mange måder en eksperimenterende tilgang, hvor det i høj grad er op til jer selv, hvorledes løsnignen skal skrues sammen.
+Følgende ting ligger dog fast:
+Bærbare computere skal kommunikere med hinanden, eller evt. et embedded system, ved udveksling af lyd.
+Der skal anvendes DTMF-toner, og der skal designes en kommunikationsprotokol.
+Hertil skal der udvikles en distribueret applikation i C++.
+Der skal anvendes en lagdelt softwarearkitektur.
+Arkitekturen kunne være client / server med f.eks. tykke klienter.
+Det forventes, at applikationen udfører et eller andet meningsfyldt, men denne del er i høj grad op til projektgruppen selv (det vil dog nok være en god idé at få løsningsforslaget godkendt af projektvejlederen). Et eksempel kunne være, at serveren kontrollerer en chat mellem to klienter. En anden mulighed kunne være, at serveren uddeler opgaver til klienterne (beregning, fremskaffelse af data) og resultaterne af disse opgaver kommunikeres tilbage til serveren, som gør et eller andet ved dem og præsenterer dem i en UI. Kommunikationen kunne også foregå med et embedded system, som styrer f.eks. en lille robotbil. Husk dog at det er en god idé, at jeres projekt har en fornuftig færdiggørelsesgrad i forhold til det I planlægger at gennemføre, og at jeres ambitionsniveau er realistisk.
+XXXX der skal tilføjes en fodnote Daniel
