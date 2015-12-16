@@ -6,8 +6,8 @@ For at finde ud af hvordan der kan bestemmes et fornuftigt threshold, skal der f
 
 \subsection{Vinduefunktioner}
 
-Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
-Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
+Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan blandt andet mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
+Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det - der skal helst ikke foretages for mange beregninger i goertzel-algoritmen, da den bliver brugt hele tiden. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
 
 \begin{figure}[h]
 \centering
@@ -30,11 +30,11 @@ Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast m�
 \label{fig:NoWindow}
 \end{figure}
 
-Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret lille - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Det kan ses at man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold. Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
+Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret smal - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold (se figur \ref{fig:NoWindow} ved sample 9000). Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
 
 \subsection{Hastighedstests} \label{sec:hastighedstest}
 
-For at afgøre hvilken indflydelse tonelængden har på, hvor svært det er at afkode de rigtige frekvenser, kigges der igen på magnitudes for det samme signal, men her ved forskellige tonelængder. En af effekterne ved at forkorte tonelængden er at alle frekvens-bins bliver bredere, fordi antallet af samples man kigger på ad gangen bliver mindre - det betyder at frekvensopløsningen også falder, og det kan have den effekt at frekvenser, der ligger tæt på hinanden kan komme til at ligge i samme bin. 
+For at afgøre hvilken indflydelse tonebredden har på, hvor svært det er at afkode de rigtige frekvenser, kigges der igen på magnitudes for det samme signal, men her ved forskellige tonebredder. En af effekterne ved at forkorte tonelængden er at alle frekvens-bins bliver bredere, fordi antallet af samples man kigger på ad gangen bliver mindre - det betyder at frekvensopløsningen også falder, og det kan have den effekt at frekvenser, der ligger tæt på hinanden kan komme til at ligge i samme bin eller meget tæt på hinanden. 
 
 \begin{figure}[h]
 \centering
@@ -71,9 +71,12 @@ For at afgøre hvilken indflydelse tonelængden har på, hvor svært det er at a
 \label{fig:50ms}
 \end{figure} 
 
-Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20ms, og selv ved 20 ms er margenen for placeringen af threshold ret smal.
-Zero-padding...
+Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20 ms, og selv ved 20 ms er margenen for placeringen af threshold ret smal. Ved de nuværende forhold er 25 ms, nok det mest stabile, men 20 ms kan også lade sig gøre, hvis man får lavet sig et fornuftigt threshold.
 
+Something something zero-padding... Det kan muligvis lade sig gøre at øge frekvensopløsning ved at zero-padde de samples, der bliver behandlet i goertzel-algoritmen.
+
+\pagebreak
 
 \subsection{DTMF-tone transition}
 
+Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen. Moduleringen betyder at man skærer en masse af et ellers fint signal fra. Hvis man modulerer lidt anderledes og 
