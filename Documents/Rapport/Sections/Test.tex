@@ -79,4 +79,34 @@ Something something zero-padding... Det kan muligvis lade sig gøre at øge frek
 
 \subsection{DTMF-tone transition}
 
-Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen. Moduleringen betyder at man skærer en masse af et ellers fint signal fra. Hvis man modulerer lidt anderledes og 
+Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen. Moduleringen betyder at man skærer en masse af et ellers fint signal fra. Derfor var det smart at teste om man kunne få bedre resultater ved at modulere lidt anderledes, og så holde det op imod et signal uden modulation. Der blev forsøgt med en funktion der modulerede en trapez ovenpå signalet, så signalet blev holdt på 100 \% amplitude i længere tid, og en funktion der tvinger fasen i 0 lidt blødere end, hvis der ikke havde været nogen modulation. 
+
+\begin{figure}[hp]
+\centering
+\includegraphics[scale=0.8]{Billeder/Snap.PNG}
+\caption{Her ses et signal uden modulation}
+\label{fig:snap}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Triangle.PNG}
+\caption{Her ses trekant-signalet}
+\label{fig:triangle}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Steep10.PNG}
+\caption{Her ses trapez-signalet}
+\label{fig:steep10}
+\end{figure} 
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Smooth.PNG}
+\caption{Her er signalet hvor fasen tvinges i 0}
+\label{fig:smooth}
+\end{figure} 
+
+Det kan ses at magnitude for de to nye moduleringer (se figur \ref{fig:steep10} og \ref{fig:smooth}) er større og til stede i længere tid. Men ingen af dem er mærkbart bedre eller værre, end hvis der ikke er nogen modulering. Magnitude er mindre på trekant-signalet, men alle peaks er bedre definerede og der er ikke så meget støj.
