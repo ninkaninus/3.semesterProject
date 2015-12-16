@@ -83,8 +83,22 @@ PhysicalReceive-klassen har til opgave at styre hvordan hele analyseringsprocess
 \item \textbf{Hvornår er bufferen ved at være tømt.} Når bufferen når under en størrelse af 4 samplewindows, må der ikke foretages mere, før der er fyldt nye samples i fra recorderen. På den måde bryder man ikke den synkronisering, der er lavet en gang, og det forhindrer også funktionen i at forsøge at indeksere uden for bufferen.
 \end{itemize}
 
-De to første toner i en hvilken som helst sammenhængende strøm bliver ignoreret, da det altid vil være en preamble. Preamblen er lavet for at gøre synkroniseringen nemmere. Vi valgte DTMF-tonerne 'A' og '6' da de ikke har nogen overlappende frekvenser - tests vi lavede viste, at magnitude for en frekvens, der fandtes i to toner lige ved siden af hinanden, ikke faldt ret meget imellem tonerne. Det havde den effekt at sampleWindow kunne stå forkert selv efter synkroniseringen. Problemet er sidenhen blevet gjort mindre af at gange et Hann-Window på samples i goertzel-algoritmen, men preamblen bliver stadig brugt. 
+De to første toner i en hvilken som helst sammenhængende strøm bliver ignoreret, da det altid vil være en preamble. Preamblen er lavet for at gøre synkroniseringen nemmere. Vi valgte DTMF-tonerne 'A' og '6' da de ikke har nogen overlappende frekvenser - tests vi lavede viste, at magnitude for en frekvens, der fandtes i to toner lige ved siden af hinanden, ikke faldt ret meget imellem tonerne. Det havde den effekt at sampleWindow kunne stå forkert selv efter synkroniseringen. Problemet er sidenhen blevet gjort mindre af at gange et Hann-Window på samples i goertzel-algoritmen, men preamblen bliver stadig brugt. Se reference her!!
 
-====== Evt. billeder med magnitude for frekvenser ved siden af hinanden - med og uden hann vindue her ======
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/NoWindow.PNG}
+\caption{Her ses magnitude på 697 Hz for et signal sendt med en tonelængde på 20 ms, uden en vinduefunktion på modtagersiden}
+\label{fig:NoWindow}
+\end{figure}
 
-Alle toner der ikke er en del af preamblen, bliver konverteret til bools og placeret i en vektor, \textit{boolsReceived}, der fungerer som bindeledet imellem det fysiske, og datalinklaget. I kraft af at de to lag kører i hver sin tråd er det nødvendigt at låse \textit{boolsReceived} med en mutex, for at forhindre data race situationer. Det gøres i praksis ved at låse funktionerne \textit{addNibble()} og \textit{extractBools()}, der henholdsvis skriver til og læser fra vektoren. Datalink-laget trækker selv bools fra det fysiske lag, når det er klart til det.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/HannWindow.PNG}
+\caption{Her ses magnitude på 697 Hz for samme signal sendt med en tonelængde på 20 ms, med et Hann-vindue på modtagersiden}
+\label{fig:NoWindow}
+\end{figure}
+
+
+Alle toner der ikke er en del af preamblen, bliver konverteret til bools og placeret i en vektor, \textit{boolsReceived}, der fungerer som bindeledet imellem det fysiske, og datalinklaget. I kraft af at de to lag kører i hver sin tråd er det nødvendigt at låse \textit{boolsReceived} med en mutex, for at forhindre data race situationer. Det gøres i praksis ved at låse funktionerne \textit{addNibble()} og \textit{extractBools()}, der henholdsvis skriver til og læser fra vektoren. Datalink-laget trækker selv bools fra det fysiske lag, når det er klart til det.\\
+
