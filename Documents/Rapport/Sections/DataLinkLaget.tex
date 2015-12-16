@@ -1,5 +1,9 @@
 \section{Data Link Lag}
+-Medium mellem payloads fra transportlaget og frames til det fysiske lag. \\
+-Indeholder teori og overvejelser vedr. opbyggelse af frames, CRC og bitstuffing.
 
 \subsection{Afsender}
+Opbyggelse af frames. Tilføjer flag, index, maxindex, CRC, bitstuffing.  Sender frame videre til det fysiske lag.
 
 \subsection{Modtager}
+Modtager en bitstreng fra det fysiske lag. Leder efter flag i bitstrengen, og sender frames op til transportlaget. 
