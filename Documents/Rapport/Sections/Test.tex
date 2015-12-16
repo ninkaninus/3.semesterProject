@@ -6,7 +6,8 @@ For at finde ud af hvordan der kan bestemmes et fornuftigt threshold, skal der f
 
 \subsection{Vinduefunktioner}
 
-Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample.
+Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
+Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
 
 \begin{figure}[h]
 \centering
@@ -14,9 +15,6 @@ Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af
 \caption{Her kan man se at der kommer uønskede frekvenser med i signalet, fordi N er valgt så samplingen stopper et stykke inde i 3. periode}
 \label{fig:Spectral}
 \end{figure} 
-
-Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
-Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
 
 \begin{figure}[h]
 \centering
@@ -32,10 +30,49 @@ Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast m�
 \label{fig:NoWindow}
 \end{figure}
 
-Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret lille - det er et problem der bliver værre jo kortere toner man sender. Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Det kan ses at man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold. Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
+Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret lille - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Det kan ses at man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold. Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
 
-\subsection{Hastighedstests}
+\subsection{Hastighedstests} \label{sec:hastighedstest}
 
+For at afgøre hvilken indflydelse tonelængden har på, hvor svært det er at afkode de rigtige frekvenser, kigges der igen på magnitudes for det samme signal, men her ved forskellige tonelængder. En af effekterne ved at forkorte tonelængden er at alle frekvens-bins bliver bredere, fordi antallet af samples man kigger på ad gangen bliver mindre - det betyder at frekvensopløsningen også falder, og det kan have den effekt at frekvenser, der ligger tæt på hinanden kan komme til at ligge i samme bin. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Speed10ms.PNG}
+\caption{770 Hz 10 ms}
+\label{fig:10ms}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Speed15ms.PNG}
+\caption{770 Hz 15 ms}
+\label{fig:15ms}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Speed20ms.PNG}
+\caption{770 Hz 20 ms}
+\label{fig:20ms}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Speed25ms.PNG}
+\caption{770 Hz 25 ms}
+\label{fig:25ms}
+\end{figure} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Billeder/Speed50ms.PNG}
+\caption{770 Hz 50 ms}
+\label{fig:50ms}
+\end{figure} 
+
+Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20ms, og selv ved 20 ms er margenen for placeringen af threshold ret smal.
+Zero-padding...
 
 
 \subsection{DTMF-tone transition}
