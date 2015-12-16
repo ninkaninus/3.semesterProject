@@ -1,6 +1,6 @@
 \section{GUI}
 
-\subsection{IndsætTitelHer}
+\subsection{Indledning}
 
 Den grafiske brugerflade blev udviklet ved hjælp af QT, et program som er bygget op om C++ syntax, QT er brugervenligt og let at lære at skrive, hvis C++ allerede er et kendt programmeringssprog.\\
 \subsection{Funktionalitet}
@@ -12,9 +12,18 @@ I den grafiske brugerflade er der 3 elementer.
 	\item Chat linje, dette er hvor input fra brugeren kommer til at stå, når der skrives noget, og trykkes enter / send, bliver beskeden afsendt.
 \end{itemize}
 
+Når der skrives noget i chat linjen, og der trykkes på enter, så kaldes en funktion fra applikationslaget som hedder send, som tager en streng som parameter, denne streng er så indput fra chat linjen.
+
+\subsection{Delkonklussion}
+Den grafiske brugerflade blev valgt til at være et helt standard chatvindue som set på figur \ref{fig:GUI}.
+Brugerfladen blev ikke implementeret da der var problemer med at holde en sideløbende tråd kørende samtidig med brugerfladen, dette blev opdaget for sent og der var ikke tid til at fejlfinde, derfor blev alternativet konsollen.
+
+
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{Billeder/GUI.PNG}
 \caption{Den Grafiske Brugerflade}
-\label{fig:tidsplan}
+\label{fig:GUI}
 \end{figure}
