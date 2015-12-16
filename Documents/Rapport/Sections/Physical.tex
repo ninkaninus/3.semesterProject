@@ -1,5 +1,18 @@
 \section{Fysisk Lag}
 
+\subsection{Mediet}
+Transmissionsmediet der bruges til at sende data over er lyd i form af DTMF toner. Der findes 16 forskellige DTMF toner. Ud fra emperiske målinger er den hurtigste sendetid fastlagt til at være 25ms per tone for at en tone bliver afkodet på modtagersiden.
+
+\subsection{SFML}
+Til at afsende og optage lyd bruges der et bibliotek kaldet Simple and Fast Multimedie Library forkortet SFML. Dette bibliotek er skrevet i c++ og indeholder funktioner til at interagerer med hardwaren uden at skulle rode med at initialiserer og opsætte hardwaren. Biblioteket er opdelt i forskellige underbiblioteker alt efter, hvilken del af computerens hardware der skal interageres med. Og der kan derfor nøjes med kun at inkluderer den funktionalitet der er ønsket i projektet. Biblioteket er veldokumenteret på deres hjemmeside, hvor der også findes adskille tutorials til, hvordan de forskellige funktioner bruges.
+
+\subsection{Transmitter}
+
+
+\subsubsection{Kodning}
+For at kunne sende data over mediet skal der vælges en linjekodning der fastsætter, hvor mange dataelementer der repræsenteres af et signalelement. Dataraten er det antal bits der kan sendes på et sekund og signalraten er det antal signalelementer der sendes på et sekund. Målet med linjekodningen er at øge dataraten og sænke signalraten. Da en øget datarate øger hastigheden af kommunikationen og en sænket signalrate sænker niveauet for båndbredde på mediet. Hvis en DTMF tone anses for at være et signalelement så vil der med et signalelement kunne opnås $16^{1}$ mulige kombinationer af signalelementer. 
+
+
 \subsection{Receiver}
 
 \subsubsection{Goertzel}
