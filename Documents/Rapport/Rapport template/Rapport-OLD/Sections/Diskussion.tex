@@ -1,0 +1,29 @@
+\section {Diskussion}
+
+Igennem projektet har vi været gennem forskellige løsninger til diverse udfordringer og problemer vi er stødt på. Oftest har de løsninger vi valgte været de rigtige, og været dem vi har beholdt til sidst. Dog har dette ikke altid været tilfældet.
+
+\subsection{Accelerometer eller tachometer}
+
+I starten af projektet, under brainstormen, besluttede vi os for at måle banen op med et accelerometer. Dette gik vi væk fra, da vi besluttede os for at det ikke vil være præcist nok, at det ville drive for meget, samt at det ville være svært at arbejde med.
+\\
+Vi valgte derfor i stedet et tachometer. Dette er nemt at benytte til at måle afstand og hastighed, og er meget præcist med mindre der kommer hjul-spin eller -blokade.
+\\
+Vi undersøgte muligheden for at benytte et accelerometer til at holde øje med hjulspin, men da vi ikke oplevede at det var et stort problem valgte vi at lade være. I stedet forlængede vi det første banestykke med 7 centimeter, hvilket betyder at vi både tager højde for at gyroskopet ser det første og det sidste stykke af svingene som lige stykker, samt at bilen skrider lidt under bremsninger.
+
+\subsection{Bremse}
+
+Der er tre måder vi har overvejet at bremse på. Den ene er ved brugen af en elektromagnet. Dette giver meget ekstra vægt på bilen, og er ikke særligt effektivt. En anden er at blokere hjulet, eller at bremse direkte på banen. Begge disse er meget effektive, men har en stor chance for at hjulet skrider, hvilket vil ødelægge vores map.
+\\
+Den sidste mulighed, som også var den vi valgte, var at kortslutte motoren. Denne mulighed bremser ganske godt, men ikke så meget at hjulet skrider, hvilket vi valgte til at være den perfekte middelvej.
+
+\subsection{Indstilling af permamagnet}
+
+Bilen er udstyrret med en permamagnet som kan instilles, eller fjernes helt. Denne holder bilen på banen i svingene, men samtidig bremser den konstant. Altså skal der findes en balance mellem at køre hurtigt på de lige stykker, og at køre hurtigt i svingene.
+\\
+Vi har valgt at sætte magneten næsten helt ned på banen, da vi bedømmer at hastigheden på de lige stykker ikke bliver påvirket lige så meget som hastigheden i svingene bliver.
+
+\subsection{Bluetooth debugging mod visuelt analog debugging}
+
+Da vi har lavet en række bluetooth funktioner som gør det nemt at sende data fra bilen til en computer, ligger det os naturligt at benytte dette til at debugge. Dog har vi erfaret at dette ikke er en god måde at gøre det på, da dette kan være ustabilt, og kan være svært at få til at virke.
+\\
+I stedet lavede vi et simpelt LED display, som lod os debugge problemer vi havde siddet fast med i dagevis på enkelte timer. Det blev meget klart for os at dette er den mest effektive metode til at debugge systemerne vi arbejder med.
