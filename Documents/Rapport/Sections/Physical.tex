@@ -123,7 +123,7 @@ sampleWindow=sampleRate[samples/s]*toneLaengde[s]
 
 Når \textit{syncToFirstDTMF} leder bufferen igennem, er dens vigtigste opgave at stille sampleWindow mere eller mindre lige oveni den første DTMF-tone den finder, så magnitude på den næste gang samples er på sit højeste. På den måde kan \textit{findNextDTMF} blive ved med at kigge på et sampleWindow, finde tonen og så slette alle de analyserede samples fra bufferen uden at bekymre sig om, om man har slettet for meget af en anden tone. Inden den første tone er fundet, slettes der kun 1/4 af sampleWindow ad gangen, så man ikke risikere at slette nogle vigtige samples. Første gang man støder på en tone, søges et område á to sample vinduer i nærheden igennem, for at finde den position, hvor magnitude for den fundne karakter er størst. Den viden kan så bruges til at bestemme nogenlunde præcist, hvor mange samples der skal slettes, for at det næste vindue står lige oveni en tone. På transmittersiden, er der sørget for at volumen er højest midt i en tone ved at gange et slags vindue på - på den måde kan man godt antage, at magnitude fra goertzel-algoritmen er højest cirka midt i tonen.
 
-\paragraph{Threshold-synkronisering}
+\paragraph{Threshold-synkronisering}\hfill \break
 
 Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirkes magnitude i forskellig grad for hver frekvens. SE REFERENCE HERXXXX. Det vil derfor være meget svært at programmere et fast threshold på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere threshold løbende mens programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
 
