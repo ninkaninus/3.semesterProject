@@ -1,6 +1,6 @@
 \section{Programstruktur}
-Baseret på de førnævnte krav blev designfasen påbegyndt. Målet var at forsimple opgaven for brugeren så meget som overhovedet muligt, da det ikke vil kunne forvæntes at denne person kender noget til det bagvedlæggende system. 
-Tilsvarende ønskes der en simpel og generel anvendelse af programmets services fra de højere lag nær chat-klienten, hvor imod de mere administrative og praktiske funktionaliteter skal håndteres længere nede i systemet.
+Baseret på de førnævnte krav blev designfasen påbegyndt. Målet var at forsimple opgaven for brugeren så meget som overhoved muligt, da det ikke vil kunne forvæntes at denne person kender noget til det bagvedlæggende system. 
+Tilsvarende ønskes der en simpel og generel anvendelse af programmets services fra de høje lag nær chat-klienten, hvor imod de mere administrative og praktiske funktionaliteter skal håndteres længere nede i systemet.
 
 \begin{figure}[h!]
 \centering
@@ -9,7 +9,7 @@ Tilsvarende ønskes der en simpel og generel anvendelse af programmets services 
 \label{fig:Blokdiagram}
 \end{figure}
 
-Figur \ref{fig:Blokdiagram} viser første udkast til programmets struktur i grove træk. Afsenderen modtager data fra brugeren, og indkapsler dette i et format modtageren er i stand til at bearbejde. Herfra tager det næste lag sig ad den reelle transmission og afkodning af informationen. Dette lag er upålideligt, så modtageren skal tilsvarende her validere indholdet og rækkefølgen af informationen får at kunne sikre at informationen når korrekt frem til brugeren. 
+Figur \ref{fig:Blokdiagram} viser første udkast til programmets struktur i grove træk. Afsenderen modtager data fra brugeren, og indkapsler dette i en format modtageren er i stand til at bearbejde. Herfra tager det fysiske lag sig af den reelle transmission og afkodning af informationen. Dette lag er dog upålideligt, så modtageren skal her validere indholdet og rækkefølgen af informationen får at kunne sikre at informationen når korrekt frem til brugeren. 
 
 I og med at den ønskede applikation er et chat-program, er det af høj prioritet, at den logiske forbindelse mellem de to brugere er pålidelig. Dette indebære at det som afsenderen skriver skal være præcis det samme som modtageren læser. Systemet vil derfor tage udgangspunkt i TCP/IP, da denne protokol vigtigst af alt tilbyder en pålidelig overførsel af data. 
 
@@ -31,12 +31,21 @@ For at anvende af den service programmet tilbyder, er det nok at inkludere klass
 Det opstillede designklassediagram vil blive anvendt som en retningslinje for programmets opbygning, men da det i dette stadie af projektet kan være svært at tage højde for alt, vil det ikke være utænkeligt der måtte forkomme ændringer her i.
 
 
-\subsection{Ansvarsfordeling til klasser}
-Hvordan forvæntes de forskellige “sorte kasser” at arbejde sammen (grænse flader)
+\subsection{Ansvarsfordeling og grænseflader}
+For at sikre en "high cohesion", nedbryddes programmet til et sæt af veldefinerede ansvarsområder, og grænseflader mellem programmets forskellige lag. På den måde vil flere mennesker kunne arbejde op samme projekt uafhængig af hinanden.  
 
--Udpenslende forklaring af ansvarsfordeling og programstruktur.  
+\textbf{Det fysiske lag} har ansvar et for at hvad det kræver for sucessfuldt at afsende DTMF toner, og modtage dem igen på den anden side. Dette betyder at det fysiske lag på afsenderens side kan forvænte at modtage et array af bits (bools) som skal transmiteres, og forventes at returnere et array af bits på modtagersiden. Det fysiske lag må under intet step i denne process forholde sig til indholdet af denne besked, men må gerne tilføje ekstra data, så længe at det tilsvarende fjernes igen inden det når næste lag.
 
-hvert lag får tildelt et ansvarsområde 
-seberation of conserns
+\textbf{Datalinklaget} har ansvaret at indpakke og udpakning af den mængde informationer som anvendes på laget over den. Disse oplysninger skal på afsendersiden pakkes ind i en til et array af bits kaldet en frame, som det til det fysiske lag kan sende og modtage. På modtagersiden vil der modtages et array  konverteres tilbage til de oplysninger som oprindeligt blev sendt på afsendersiden og returneres til transportlaget. 
+Datalinklaget har yderligere ansvaret for at sikre at korrupte pakker eller pakker med forkert adresse aldrig når de øvre lag.
 
-Derfor vil opgraderinger i konverteringen på applikationslaget være nok til at lade systemet understøtte flere datatyper (billeder, lyd og filer)
+\textbf{Transportlaget} har ansvaret for at det alle pakker modtaget fra det øverste lag  når frem, og i korrekt rækkefølge. Mellem transprotlaget og applikationslaget udveksles arrays af bits transportlaget må ikke forholde sig til indholdet af disse arrays. I grænsefladen mellem transportlaget og datalinklaget vil der blive overført en datapakke, sammen med administrative oplysninger som modtager adresse, besked type og indexering. 
+
+\textbf{Applikationslaget} har ansvaret at konvertere beskeder fra hvad end brugeren ønsker at sende, til et array af bools, og tilbage igen. Programmet kan derfor understøtte flere dataformater, ved blot at tilføje funktionalitet på dette lag. 
+Dette lag har ansvaret for at opdele beskeden i pakker som kan håndteres af transportlaget, og på tilsvarende samle pakker modtaget fra transportlaget til den afsendte besked. På dette lag kan det antages at pakker modtages i korrekt rækkefølge, og uden fejl. 
+
+
+
+
+
+
