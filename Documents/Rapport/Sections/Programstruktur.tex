@@ -1,6 +1,6 @@
 \section{Programstruktur}
-Baseret på de førnævnte krav blev designfasen påbegyndt. Målet var at forsimple opgaven for brugeren så meget som overhoved muligt, da det ikke vil kunne forvæntes at denne person kender noget til det bagvedlæggende system. 
-Tilsvarende ønskes der en simpel og generel anvendelse af programmets services fra de høje lag nær chat-klienten, hvor imod de mere administrative og praktiske funktionaliteter skal håndteres længere nede i systemet.
+Baseret på de førnævnte krav blev designfasen påbegyndt. Målet var at forsimple opgaven for brugeren så meget som overhovedet muligt, da det ikke vil kunne forvæntes at denne person kender noget til det bagvedlæggende system. 
+Tilsvarende ønskes der en simpel og generel anvendelse af programmets services fra de højere lag nær chat-klienten, hvor imod de mere administrative og praktiske funktionaliteter skal håndteres længere nede i systemet.
 
 \begin{figure}[h!]
 \centering
@@ -9,7 +9,7 @@ Tilsvarende ønskes der en simpel og generel anvendelse af programmets services 
 \label{fig:Blokdiagram}
 \end{figure}
 
-Figur \ref{fig:Blokdiagram} viser første udkast til programmets struktur i grove træk. Afsenderen modtager data fra brugeren, og indkapsler dette i en format modtageren er i stand til at bearbejde. Herfra tager det næste lag sig ad den reelle transmission og afkodning af informationen. Dette lag er upålideligt, så modtageren skal tilsvarende her validere indholdet og rækkefølgen af informationen får at kunne sikre at informationen når korrekt frem til brugeren. 
+Figur \ref{fig:Blokdiagram} viser første udkast til programmets struktur i grove træk. Afsenderen modtager data fra brugeren, og indkapsler dette i et format modtageren er i stand til at bearbejde. Herfra tager det næste lag sig ad den reelle transmission og afkodning af informationen. Dette lag er upålideligt, så modtageren skal tilsvarende her validere indholdet og rækkefølgen af informationen får at kunne sikre at informationen når korrekt frem til brugeren. 
 
 I og med at den ønskede applikation er et chat-program, er det af høj prioritet, at den logiske forbindelse mellem de to brugere er pålidelig. Dette indebære at det som afsenderen skriver skal være præcis det samme som modtageren læser. Systemet vil derfor tage udgangspunkt i TCP/IP, da denne protokol vigtigst af alt tilbyder en pålidelig overførsel af data. 
 
