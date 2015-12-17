@@ -2,7 +2,7 @@
 
 For at finde ud af hvordan der kan bestemmes et fornuftigt threshold, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere threshold efter. 
 
-\subsection{Vinduefunktioner}
+\subsection{Vinduefunktioner} \label{sec:Windowfunction}
 
 Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan blandt andet mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
 Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det - der skal helst ikke foretages for mange beregninger i goertzel-algoritmen, da den bliver brugt hele tiden. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
@@ -25,7 +25,7 @@ Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast m�
 \centering
 \includegraphics[scale=0.8]{Billeder/HannWindow.PNG}
 \caption{Her ses magnitude på 770 Hz for samme signal sendt med en tonelængde på 20 ms, med et Hann-vindue på modtagersiden}
-\label{fig:NoWindow}
+\label{fig:HannWindow}
 \end{figure}
 
 Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret smal - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold (se figur \ref{fig:NoWindow} ved sample 9000). Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
