@@ -105,7 +105,7 @@ makeMessage er den primære metode i modtageren, som benytter hjælpemetoderne t
 \subsection{Opsummering}
 Efter C++-implementeringen af både det afsendende og modtagende datalinklag, er det muligt at oprette en logisk forbindelse mellem disse, der i fællesskab sikrer integriteten af data på højere niveauer igennem fejl-kontrol, samt gør det muligt at identificere data fra det fysiske lag på modtagersiden.
 
-En tidslinje for den logiske transmission af en et stykke data kan demonstreres ved følgende figur. Data kommer fra afsenderens transportlag, og dette får tilføjet startflag og et CRC, udregnet for dataen i den grønne kasse. Herefter bliver informationen i den blå kasse bitstuffet, og til sidst tilføjes et slutflag. Det modtagende datalinklag fjerner hhv. flag, bitstuffing og CRC. Er dataen valid, placeres denne i en buffer til det modtagende transportlag.
+En tidslinje for den logiske transmission af en et stykke data demonstreres på figur \ref{fig:DataLinkExample}. Data kommer fra afsenderens transportlag, og dette får tilføjet startflag og et CRC, udregnet for dataen i den grønne kasse. Herefter bliver informationen i den blå kasse bitstuffet, og til sidst tilføjes et slutflag. Det modtagende datalinklag fjerner hhv. flag, bitstuffing og CRC. Er dataen valid, placeres denne i en buffer til det modtagende transportlag.
 
 \begin{figure}[h]
 \centering
