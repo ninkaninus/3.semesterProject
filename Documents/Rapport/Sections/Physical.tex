@@ -2,10 +2,10 @@
 Det fysiske lag er det nederste lag i systemet. Det står for at interagerer med hardwaren og leverer data til datalinklaget. 
 
 \subsection{Mediet}
-Transmissionsmediet der bruges til at sende data over er lyd i form af DTMF toner. Der findes 16 forskellige DTMF toner. Ud fra emperiske målinger er den hurtigste sendetid fastlagt til at være 25ms per tone for at en tone bliver afkodet på modtagersiden. Dette giver en båndbredde begrænsning på 40hz.
+Transmissionsmediet der bruges til at sende data over er lyd i form af DTMF toner. Der findes 16 forskellige DTMF toner. Ud fra emperiske målinger er den mest stabile(se \ref{sec:hastighedstest}) sendetid fastlagt til at være 25ms per tone for at en tone bliver afkodet på modtagersiden. Dette giver en båndbredde begrænsning på 40hz.
 
 \subsection{SFML}
-Til at afsende og optage /lyd bruges der et bibliotek kaldet Simple and Fast Multimedie Library forkortet SFML. Dette bibliotek er skrevet i c++ og indeholder funktioner til at interagerer med hardwaren uden at skulle rode med at initialiserer og opsætte hardwaren. Biblioteket er opdelt i forskellige underbiblioteker alt efter, hvilken del af computerens hardware der skal interageres med. Og der kan derfor nøjes med kun at inkluderer den funktionalitet der er ønsket i projektet. Biblioteket er veldokumenteret på deres hjemmeside, hvor der også findes adskille tutorials til, hvordan de forskellige funktioner bruges.
+Til at afsende og optage lyd bruges der et bibliotek kaldet Simple and Fast Multimedie Library forkortet SFML. Dette bibliotek er skrevet i c++ og indeholder funktioner til at interagerer med hardwaren uden at skulle rode med at initialiserer og opsætte hardwaren. Biblioteket er opdelt i forskellige underbiblioteker alt efter, hvilken del af computerens hardware der skal interageres med. Og der kan derfor nøjes med kun at inkluderer den funktionalitet der er ønsket i projektet. Biblioteket er veldokumenteret på deres hjemmeside, hvor der også findes adskille tutorials til, hvordan de forskellige funktioner bruges.
 
 \subsection{Kodning}
 For at kunne sende data over mediet skal der vælges en linjekodning der fastsætter, hvor mange dataelementer der repræsenteres af et signalelement. Dataraten er det antal bits der kan sendes på et sekund og signalraten er det antal signalelementer der sendes på et sekund. Målet med linjekodningen er at øge dataraten og sænke signalraten. Da en øget datarate øger hastigheden af kommunikationen og en sænket signalrate sænker niveauet for båndbredde på mediet. Hvis en DTMF tone anses for at være et signalelement så vil der med et signalelement kunne opnås $16^{1}$ mulige kombinationer af signalelementer. Hvis dataelementerne uddeles en til en på signalelementerne medfører dette at et dataelement indeholder $\sqrt{16}=4$ bits information. Dette giver at forholdet mellem dataelementer og signalelementer er $r=4$. Ud fra den båndbredde begrænsning der er bestemt giver dette en bitrate på $N=40*4=160bps$. Dette er den hurtigste linjekodning der kan implementeres, og indeholder ingen ekstra signalelementer i forhold til dataelementer. Så der er ikke mulighed for at implementere fejltjek i forbindelse med linjekodningen. Ud fra tests blev der fundet ud af at hardwaren og softwaren fint kan kende forskel på de 16 DTMF toner. Så der vil fint kunne bruges denne hurtige linjekodning til at få så meget data igennem på som muligt. Denne linjekodning er blevet valgt da den fungere godt sammen med DTMF tonerne. I tabel \ref{DTMFBitTabel} kan kortlægning af hvilke DTMF toner der svarer til hvilke bit sekvenser ses.
@@ -21,8 +21,8 @@ For at kunne sende data over mediet skal der vælges en linjekodning der fastsæ
 & 0						 \\ \hline
 1 								& 0						 & 0					  & 0
 & 1						 \\ \hline
-2								& 0						 & 0					  & 0
-& 1						 \\ \hline
+2								& 0						 & 0					  & 1
+& 0						 \\ \hline
 3                               & 0                      & 0                      & 1                      & 1                      \\ \hline
 4                               & 0                      & 1                      & 0                      & 0                      \\ \hline
 5                               & 0                      & 1                      & 0                      & 1                      \\ \hline
@@ -46,7 +46,10 @@ Der er ikke implementeret nogen form for fejl-kontrol i det fysiske lag. Linjeko
 Det fysiske lag implementerer ikke nogen form for flow-kontrol. Så snart data kommer ned til laget bliver det sendt afsted uden at tjekke om mediet er optaget. På modtagersiden bliver der konstant lyttet efter data og i det øjeblik data modtages så puttes det i et buffer som datalink laget kan hente fra. Dette sker uanset om datalink laget er travlt beskæftiget eller ej og bufferen er kun begrænset af den fysiske hukommelse i den maskine der kører softwaren.
 
 \subsection{Afsender}
+Afsenderen modtager en vektor af booleans fra datalinklaget. Denne vektor omdannes til DTMF toner og ud fra disse DTMF toner genererer generator klassen den lydfil som bliver afspillet over højtalerne.
 
+\subsubsection{Generator}
+Generator klassen er den klasse der står for at generere den lyd der skal afspilles. Klassen har en central funktion der genererer lyden kaldet \textit{generate}. Funktionen tager en vektor af \textit{DTMF::Tone} og returnerer en pointer til et \textit{sf::SoundBuffer} objekt. Dette objekt kommer fra SFML og kan bruges til at definerer en lyd ud fra et array af heltal og en samplerate. Selve \textit{generate} funktionen tager DTMF-tonerne en af gangen og slår op i en tabel, hvilke frekvenser den pågældende tone indeholder. Ud fra dette kan den så generere to sinus der overlejres med hinanden og ganges med en volumen. Hvis volumen er sat til en fast værdi, så vil der opstå et brat skift imellem DTMF-tonerne grundet at en tone starter i fase 0 og dette bratte skift resulterer i at højtaleren laver en pop-lyd. Til at undgå dette er der implementeret forskellige funktioner til at modulerer den volumen der ganges på sådan så overgangen mellem DTMF-tonerne kan justeres til at være blød. Der kan læses om de forskellige overgange i afsnit \ref{sec:ToneTransition}
 
 
 \subsection{Receiver}

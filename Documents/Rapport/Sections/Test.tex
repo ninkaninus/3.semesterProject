@@ -73,7 +73,7 @@ Rent visuelt bliver det svært at afkode nogen information, ved tonebredder unde
 
 Something something zero-padding... Det kan muligvis lade sig gøre at øge frekvensopløsning ved at zero-padde de samples, der bliver behandlet i goertzel-algoritmen.
 
-\subsection{DTMF-tone transition}
+\subsection{DTMF-tone transition} \label{sec:ToneTransition}
 
 Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Det får højtalerne til at poppe og bidrager med unødig støj til signalet. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen (se figur \ref{fig:modulation}). 
 
