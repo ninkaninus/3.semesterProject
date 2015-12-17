@@ -50,28 +50,27 @@ Det fysiske lag implementerer ikke nogen form for flow-kontrol. Så snart data k
 
 
 \subsection{Receiver}
-Receiveren er en paraply af flere klasser, som tilsammen sørger for at optage lyd og afkode alle DTMF-toner der bliver modtaget. Tonerne bliver konverteret til en vektor af bools, som datalink-laget kan pulle fra.
+Receiveren er en samling af flere klasser, som tilsammen sørger for at optage lyd og afkode alle DTMF-toner der bliver modtaget. Tonerne bliver konverteret til en vektor af bools, som datalink-laget kan pulle fra.
 
 \subsubsection{Goertzel}
 
-For at afgøre om bestemte frekvenser er til stede i et signal anvendes Goertzel-algoritmen. Den kan returnere en magnitude, hvis størrelse afhænger af hvor meget signalet man giver, korrelerer med bestemte frekvenser. På den måde kan man se på om den returnerede magnitude er over et bestemt threshold, for at afgøre om den ønskede frekvens er til stede i signalet.\\
-
-For at konvertere fra frekvenser til frekvens-bins og  bruges følgende formler:
+For at afgøre om bestemte frekvenser er til stede i et signal anvendes Goertzel-algoritmen. Den kan returnere en magnitude, hvis størrelse afhænger af hvor meget signalet man giver, korrelerer med bestemte frekvenser. På den måde kan man se på om den returnerede magnitude er over et bestemt threshold, for at afgøre om den ønskede frekvens er til stede i signalet. 
+For at konvertere til diskrete frekvenser bruges formel \eqref{eq:targetBin} og \eqref{eq:omega} - k beskriver hvilken bin targetfrekvensen ligger i, og $\omega$ er den normaliserede frekvens. k skal afrundes til et heltal.
 
 \noindent\begin{minipage}{.5\linewidth}
-\begin{equation}
-  k=N*\dfrac{targetFrekvens}{Samplerate}
+\begin{equation} \label{eq:targetBin}
+ k=N*\dfrac{targetFrekvens}{Samplerate}
 \end{equation}
 \end{minipage}%
 \begin{minipage}{.5\linewidth}
 \begin{equation}
-  \omega = \dfrac{2*\pi}{N}*k
+\label{eq:omega}  
+\omega = \dfrac{2*\pi}{N}*k
 \end{equation}
 \end{minipage}
 
 
-Fordelen ved at anvende Goertzel-algoritmen frem for en DFT/FFT er, at man kan nøjes med kun at kigge på nogle få frekvens-bins ad gangen, og så derfra finde DFT-koefficienten for den bin alene. Den udregning er langt nemmere at foretage, så længe man kun er interesseret i relativt få frekvenser. Selve algoritmen kommer fra et 2. ordens IIR-båndpas-filter, med en pol og dens konjugerede placeret på enhedscirklen i de bins, hvor man leder efter frekvenser. En anden ting der taler for Goertzel-algoritmen i vores tilfælde, er at de tungeste udregninger kan foretages på forhånd, og gemmes som konstanter i en tabel, man så kan slå op i. I goertzel-klassen foretages det tunge arbejde i en initialiseringsfunktion \textit{init()}, der regner alle konstanter til hver frekvens og gemmer dem i et map, man så kan slå op i med den ønskede frekvens. For at lave udregningerne, skal man bare kende samplingfrekvensen og antallet af samples man regner med at bruge i selve algoritmen - det vil i vores tilfælde være sampleWindow. Der udregnes også en skaleringsfaktor, der skal ganges på DFT-koefficienten's magnitude for at finde det en-sidede amplitudespektrum. Amplitudespektret vil være den værdi, man kigger på for at afgøre om en frekvens er til stede i et signal. 
-Overføringsfunktionen til Goertzel-filteret:
+Fordelen ved at anvende Goertzel-algoritmen frem for en DFT/FFT er, at man kan nøjes med kun at kigge på nogle få frekvens-bins ad gangen, og så derfra finde DFT-koefficienten for den bin alene. Den udregning er langt nemmere at foretage, så længe man kun er interesseret i relativt få frekvenser. Selve algoritmen kommer fra et 2. ordens IIR-båndpas-filter, med en pol og dens konjugerede placeret på enhedscirklen i de bins, hvor man leder efter frekvenser (se ligning \eqref{eq:transferfunction}) En anden ting der taler for Goertzel-algoritmen i vores tilfælde, er at de tungeste udregninger kan foretages på forhånd, og gemmes som konstanter i en tabel, man så kan slå op i. I goertzel-klassen foretages det tunge arbejde i en initialiseringsfunktion \textit{init()}, der regner alle konstanter til hver frekvens og gemmer dem i et map, man så kan slå op i med den ønskede frekvens. For at lave udregningerne, skal man bare kende samplingfrekvensen og antallet af samples man regner med at bruge i selve algoritmen - det vil i vores tilfælde være sampleWindow. Der udregnes også en skaleringsfaktor, der skal ganges på DFT-koefficienten's magnitude for at finde det en-sidede amplitudespektrum. Amplitudespektret vil være den værdi, man kigger på for at afgøre om en frekvens er til stede i et signal. 
 
 
 
@@ -80,7 +79,7 @@ H(z) = \frac{1}{1-2Cos(\omega)z^{-1}+z^{-2}}
 \end{equation}
 
 
-I goertzel-klassen foretages det tunge arbejde i en initialiseringsfunktion \textit{init()}, der regner alle konstanter til hver frekvens og gemmer dem i et map, man så kan slå op i med den ønskede frekvens. For at lave udregningerne, skal man bare kende samplingfrekvensen og antallet af samples man regner med at bruge i selve algoritmen. Der udregnes også en skaleringsfaktor, der skal ganges på DFT-koefficienten's magnitude for at finde det en-sidede amplitudespektrum. Amplitudespektret vil være den værdi, man kigger på for at afgøre om en frekvens er til stede i et signal. \\
+I goertzel-klassen foretages det tunge arbejde i en initialiseringsfunktion \textit{init()}, der regner alle konstanter til hver frekvens og gemmer dem i et map, man så kan slå op i med den ønskede frekvens. \\
 Når selve algoritmen bliver brugt, køres alle samples igennem filteret og derefter regnes magnitude ud, fra den reelle og den imaginære del af DFT-koefficienten.
 
 
@@ -89,7 +88,7 @@ Når selve algoritmen bliver brugt, køres alle samples igennem filteret og dere
 
 \subsubsection{Recorder}
 
-Recorderen kommer fra SFML-biblioteket. Man har mulighed for at designe sin egen recorder-klasse, ved at arve fra en af de indbyggede klasser og så overloade tre funktioner der returnerer bools. Funktionerne bruges til at fortælle superklasserne om de kan fortsætte med at udføre bestemte handlinger, man sætter igang med andre funktioner. Hvis de returnerer false stoppes handlingen og omvendt hvis de returnerer true.
+Recorderen kommer fra SFML-biblioteket. Det er muligt at designe sin egen recorder-klasse, ved at arve fra en af de indbyggede klasser og så overloade tre funktioner der returnerer bools. Funktionerne bruges til at fortælle superklasserne om de kan fortsætte med at udføre bestemte handlinger, man sætter igang med andre funktioner. Hvis de returnerer false stoppes handlingen og omvendt hvis de returnerer true.
 
 \begin{itemize}
 
