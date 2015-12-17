@@ -48,8 +48,13 @@ Det fysiske lag implementerer ikke nogen form for flow-kontrol. Så snart data k
 \subsection{Afsender}
 Afsenderen modtager en vektor af booleans fra datalinklaget. Denne vektor omdannes til DTMF toner og ud fra disse DTMF toner genererer generator klassen den lydfil som bliver afspillet over højtalerne.
 
+\subsubsection{Transmitter}
+Transmitter klassen er den primære klasse i det fysiske lag. Klassen står for at konverterer binær data i form af en \textit{vektor$<$bool$>$} om til en \textit{vektor$<$DTMF::Tone$>$} og sende denne nye vektor videre til \textit{generator} klassen som behandler data og returnerer en lyd indeholdende de ønskede DTMF-toner. Denne lyd kan så afspilles via et  \textit{sf::Sound} objekt.
+
 \subsubsection{Generator}
 Generator klassen er den klasse der står for at generere den lyd der skal afspilles. Klassen har en central funktion der genererer lyden kaldet \textit{generate}. Funktionen tager en vektor af \textit{DTMF::Tone} og returnerer en pointer til et \textit{sf::SoundBuffer} objekt. Dette objekt kommer fra SFML og kan bruges til at definerer en lyd ud fra et array af heltal og en samplerate. Selve \textit{generate} funktionen tager DTMF-tonerne en af gangen og slår op i en tabel, hvilke frekvenser den pågældende tone indeholder. Ud fra dette kan den så generere to sinus der overlejres med hinanden og ganges med en volumen. Hvis volumen er sat til en fast værdi, så vil der opstå et brat skift imellem DTMF-tonerne grundet at en tone starter i fase 0 og dette bratte skift resulterer i at højtaleren laver en pop-lyd. Til at undgå dette er der implementeret forskellige funktioner til at modulerer den volumen der ganges på sådan så overgangen mellem DTMF-tonerne kan justeres til at være blød. Der kan læses om de forskellige overgange i afsnit \ref{sec:ToneTransition}
+
+
 
 
 \subsection{Receiver}
@@ -74,6 +79,7 @@ For at konvertere til diskrete frekvenser bruges formel \eqref{eq:targetBin} og 
 
 
 Fordelen ved at anvende Goertzel-algoritmen frem for en DFT/FFT er, at man kan nøjes med kun at kigge på nogle få frekvens-bins ad gangen, og så derfra finde DFT-koefficienten for den bin alene. Den udregning er langt nemmere at foretage, så længe man kun er interesseret i relativt få frekvenser. Selve algoritmen kommer fra et 2. ordens IIR-båndpas-filter, med en pol og dens konjugerede placeret på enhedscirklen i de bins, hvor man leder efter frekvenser (se ligning \eqref{eq:transferfunction}) En anden ting der taler for Goertzel-algoritmen i vores tilfælde, er at de tungeste udregninger kan foretages på forhånd, og gemmes som konstanter i en tabel, man så kan slå op i. I goertzel-klassen foretages det tunge arbejde i en initialiseringsfunktion \textit{init()}, der regner alle konstanter til hver frekvens og gemmer dem i et map, man så kan slå op i med den ønskede frekvens. For at lave udregningerne, skal man bare kende samplingfrekvensen og antallet af samples man regner med at bruge i selve algoritmen - det vil i vores tilfælde være sampleWindow. Der udregnes også en skaleringsfaktor, der skal ganges på DFT-koefficienten's magnitude for at finde det en-sidede amplitudespektrum. Amplitudespektret vil være den værdi, man kigger på for at afgøre om en frekvens er til stede i et signal. 
+Overføringsfunktionen til Goertzel-filteret:
 
 
 
