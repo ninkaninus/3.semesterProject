@@ -1,6 +1,6 @@
 \section{Test}
 
-For at finde ud af hvordan der kan bestemmes et fornuftigt threshold, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere threshold efter. 
+For at finde ud af hvordan der kan bestemmes en fornuftig grænseværdi, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere grænseværdi efter. 
 
 \subsection{Vinduefunktioner} \label{sec:Windowfunction}
 
@@ -28,7 +28,7 @@ Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast m�
 \label{fig:HannWindow}
 \end{figure}
 
-Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere threshold ret smal - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på threshold (se figur \ref{fig:NoWindow} ved sample 9000). Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
+Signalet på billederne indeholder fem toner, hvor 770 Hz indgår. De steder hvor magnitude stiger til godt 50 \% af de store peaks, er der toner, hvor 697 Hz indgår. Det gør margenen, hvor man kan placere grænseværdien ret smal - det er et problem der bliver værre jo kortere toner man sender (se \ref{sec:hastighedstest}). Typen af vinduefunktion gør ikke den store forskel, men forskellen fra at køre med og uden er ret markant. Man kan opleve spikes, hvor magnitude stiger op på et niveau, der ligger meget tæt på grænseværdien (se figur \ref{fig:NoWindow} ved sample 9000). Det kan derfor konkluderes at det er nødvendigt at bruge en vinduefunktion, hvis man er interesseret i at sende korte toner.
 
 \subsection{Hastighedstests} \label{sec:hastighedstest}
 
@@ -69,7 +69,7 @@ For at afgøre hvilken indflydelse tonebredden har på, hvor svært det er at af
 \label{fig:50ms}
 \end{figure} 
 
-Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20 ms, og selv ved 20 ms er margenen for placeringen af threshold ret smal. Ved de nuværende forhold er 25 ms, nok det mest stabile, men 20 ms kan også lade sig gøre, hvis man får lavet sig et fornuftigt threshold.
+Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20 ms, og selv ved 20 ms er margenen for placeringen af grænseværdien ret smal. Ved de nuværende forhold er 25 ms, nok det mest stabile, men 20 ms kan også lade sig gøre, hvis man får lavet sig en fornuftig grænseværdi.
 
 Something something zero-padding... Det kan muligvis lade sig gøre at øge frekvensopløsning ved at zero-padde de samples, der bliver behandlet i goertzel-algoritmen.
 
