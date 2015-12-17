@@ -1,10 +1,12 @@
 \section{Datalinklag}
-Datalinklaget er det første lag efter det fysiske. Det yder services til transportlaget og modtager services fra det fysiske lag.
-    Det afsendende datalinklag skal modtage payloads fra transportlaget, og har ansvaret for at pakke disse ned i et format, der tillader det modtagende lag at genkende og finde fejl i den transmitterede data.
-    Det modtagende datalinklag skal modtage bitstrøm fra sit fysiske lag, og er ansvarlig for genkendelsen og opdelingen af disse i de originale datapakker, som afsenderen gav til sit fysiske lag. Herefter skal det originale payload fra afsenderens transportlag verificeres og udvindes, således at det kan gives videre til det modtagende transportlag.
+Datalinklaget er laget efter det fysiske, Det yder services til transportlaget og modtager services fra det fysiske lag.
+Når datalinklaget tager rollen som afsender, skal det modtage payloads fra transportlaget, samt den skal tage ansvaret for at pakke disse ned i et format.
+Dette tillader det modtagende datalinklag at genkende og finde fejl i den transmitterede data.
+Når datalinklaget tager rollen som modtager, skal den modtage en bitstrøm fra sit fysiske lag, samt den er ansvarlig for genkendelse og opdeling af disse i de originale datapakker.
+Herefter skal det originale payload fra afsenderens transportlag verificeres og udvindes, således at det kan gives videre til det modtagende transportlag.
 
 \subsection{Afsender}
-For at facilitere den logiske forbindelse mellem de afsendende- og modtagende datalinklag, er det relevant at beslutte sig for et pakkeformat, som begge sider kender til. Der er her fokus på overvejelser omkring pakkernes størrelse, udformning og afgrænsning, samt hvilken redundant information der tilføjes, for at opnå den førnævnte funktionalitet.
+For at facilitere den logiske forbindelse mellem de afsendende- og modtagende datalinklag, er det relevant at beslutte sig for et pakkeformat, som både afsender og modtager kender til. Der er her fokus på overvejelser omkring pakkernes størrelse, udformning og afgrænsning, samt hvilken redundant information der tilføjes, for at opnå den førnævnte funktionalitet.
 
 \begin{figure}[h!]
 \centering
