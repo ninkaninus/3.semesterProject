@@ -11,7 +11,7 @@ Applikationslaget er det højeste lag i strukturen, og kan betragtes som brugere
 \end{figure}
 	
 
-\subsubsection{Buffere}
+\subsection{Buffere}
 Alle buffere på applikationslaget er deque-containere implementeret som first-in-first-out buffere - deques er mere effektive end vektorer, hvis data tages ud fra starten af bufferen. På afsendersiden bliver der brugt to buffere - den ene er en kø, hvor beskeder bliver gemt, når de bliver sendt fra brugeren med funktionen \textit{send()}. Den anden er bindeledet til transportlaget, og indeholder den næste besked der skal sendes oversat til bools. Det er nødvendigt at have den i en buffer, hvis den er så stor at den skal skæres op i mindre stykker. Elementerne i bufferen er pointere til vektorerne. På modtagersiden bruges der kun en buffer, som brugeren kan polle for at hente beskeder ud. Beskeder der kommer op fra transportlaget som bools, bliver oversat til en streng og bliver først flyttet til bufferen, når længden af den matcher den der er givet i de 32 første bits.
 
 \subsection{Afsender}
