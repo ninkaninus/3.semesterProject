@@ -125,9 +125,16 @@ Når \textit{syncToFirstDTMF} leder bufferen igennem, er dens vigtigste opgave a
 
 \paragraph{Threshold-synkronisering}
 
-Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirker disse faktorer frekvensmålinger i forskellig grad. SE REFERENCE HERXXXX. Det vil derfor være meget svært at programmere et fast threshold på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere threshold efterhånden som programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
+Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirkes magnitude i forskellig grad for hver frekvens. SE REFERENCE HERXXXX. Det vil derfor være meget svært at programmere et fast threshold på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere threshold løbende mens programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
 
-Idet threshold kan varierer forskelligt for alle frekvenser, vil det være nødvendigt at have et threshold til hver frekvens. I praksis er det gjort med et map XXXX, hvor hvert threshold er gemt med frekvensen som key. PhysicalReceive-klassen holder styr på om alle frekvenser er opdateret i et map, med bools med frekvenserne som key (XXXX uddybning). Når disse bools er \textit{false} finder analyzeren den største magnitude til frekvenserne, og sætter det nye threshold til 75 \% af den værdi (hvor kommer denne værdi fra? XXXX). Mappet (XXXXhvad er et map?) med bools er designet så det løbende bliver opdateret, i takt med at de specifikke frekvenser bliver modtaget. (XXXX billede)
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Billeder/Threshold.PNG}
+\caption{Den røde linje viser threshold. Hvis magnitude for en række samples er større end threshold, kan det antages at en frekvens på 770 Hz er til stede i de samples}
+\label{fig:threshold}
+\end{figure}
+
+Idet threshold kan varierer forskelligt for alle frekvenser, vil det være nødvendigt at have et threshold til hver frekvens. I praksis er det gjort med et map, hvor hvert threshold er gemt med frekvensen som key. Et map er en container fra standard biblioteket, hvor man kan referere en datatype med en nøgle som man selv kan definere. Nøglen kan være stort set hvilken som helst datatype. PhysicalReceive-klassen holder styr på om alle frekvenser er opdateret i et map, med bools med frekvenserne som nøgle. Når disse bools er \textit{false} finder analyzeren den største magnitude til frekvenserne, og sætter det nye threshold til 75 \% af den værdi (På figur \ref{fig:threshold} er threshold ca 75 \% af max, og det er lige på kanten af hvad der er optimalt, da det kun er de største peaks, der skal regnes som steder, hvor 770 Hz er til stede). Mappet med bools er designet så det løbende bliver opdateret, i takt med at de specifikke frekvenser bliver modtaget. 
 
 \subsubsection{Physical Receive}
 
