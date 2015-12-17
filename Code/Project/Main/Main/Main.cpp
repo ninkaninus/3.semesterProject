@@ -15,7 +15,7 @@ using namespace std;
 
 int main()
 {
-
+/*
 	ApplicationLayer objA;
 
 	string hej;
@@ -25,6 +25,14 @@ int main()
 		getline(cin, hej);
 		objA.send(hej);
 	}
+*/
+
+	PhysicalReceive receiver;
+	receiver.startRecording();
+	Sleep(5000);
+	receiver.stopRecording();
+
+	receiver.printMagnitudes();
 
 	return 0;
 }
