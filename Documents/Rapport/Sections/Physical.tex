@@ -117,7 +117,7 @@ sampleWindow=sampleRate[samples/s]*toneLaengde[s]
 \label{eq:sampleWindow}
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.5]{Billeder/Samplewindow.PNG}
 \caption{Her ses samplewindow, når det er stillet optimalt på den første tone. Magnitudes ved 941 Hz er vist op ad y-aksen}
@@ -130,7 +130,7 @@ Når \textit{syncToFirstDTMF} leder bufferen igennem, er dens vigtigste opgave a
 
 Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirkes magnitude i forskellig grad for hver frekvens. SE REFERENCE HERXXXX. Det vil derfor være meget svært at programmere et fast threshold på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere threshold løbende mens programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.7]{Billeder/Threshold.PNG}
 \caption{Den røde linje viser threshold. Hvis magnitude for en række samples er større end threshold, kan det antages at en frekvens på 770 Hz er til stede i de samples}

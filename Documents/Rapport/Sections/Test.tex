@@ -7,21 +7,21 @@ For at finde ud af hvordan der kan bestemmes en fornuftig grænseværdi, skal de
 Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan blandt andet mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
 Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det - der skal helst ikke foretages for mange beregninger i goertzel-algoritmen, da den bliver brugt hele tiden. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/SpectralLeak.PNG}
 \caption{Her kan man se at der kommer uønskede frekvenser med i signalet, fordi N er valgt så samplingen stopper et stykke inde i 3. periode}
 \label{fig:Spectral}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/NoWindow.PNG}
 \caption{Her ses magnitude på 770 Hz for et signal sendt med en tonelængde på 20 ms, uden en vinduefunktion på modtagersiden}
 \label{fig:NoWindow}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/HannWindow.PNG}
 \caption{Her ses magnitude på 770 Hz for samme signal sendt med en tonelængde på 20 ms, med et Hann-vindue på modtagersiden}
@@ -34,35 +34,35 @@ Signalet på figur \ref{fig:NoWindow} og \ref{fig:HannWindow} indeholder fem ton
 
 For at afgøre hvilken indflydelse tonebredden har på, hvor svært det er at afkode de rigtige frekvenser, kigges der igen på magnitudes for det samme signal, men her ved forskellige tonebredder. En af effekterne ved at forkorte tonelængden er at alle frekvens-bins bliver bredere, fordi antallet af samples man kigger på ad gangen bliver mindre - det betyder at frekvensopløsningen også falder, og det kan have den effekt at frekvenser, der ligger tæt på hinanden kan komme til at ligge i samme bin eller meget tæt på hinanden. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Speed10ms.PNG}
 \caption{770 Hz 10 ms}
 \label{fig:10ms}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Speed15ms.PNG}
 \caption{770 Hz 15 ms}
 \label{fig:15ms}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Speed20ms.PNG}
 \caption{770 Hz 20 ms}
 \label{fig:20ms}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Speed25ms.PNG}
 \caption{770 Hz 25 ms}
 \label{fig:25ms}
 \end{figure} 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Speed50ms.PNG}
 \caption{770 Hz 50 ms}
@@ -77,7 +77,7 @@ Something something zero-padding... Det kan muligvis lade sig gøre at øge frek
 
 Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Det får højtalerne til at poppe og bidrager med unødig støj til signalet. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen (se figur \ref{fig:modulation}). 
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.6]{Billeder/Modulation.PNG}
 \caption{Her ses de forskellige modulationer, der blev anvendt}
@@ -86,28 +86,28 @@ Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så am
 
 Moduleringen betyder at man skærer en masse af et ellers fint signal fra. Derfor var det smart at teste om man kunne få bedre resultater ved at modulere lidt anderledes, og så holde det op imod et signal uden modulation. Der blev forsøgt med en funktion der modulerede en trapez ovenpå signalet, så signalet blev holdt på 100 \% amplitude i længere tid (se figur \ref{fig:modulation}), og en funktion der tvinger fasen i 0 lidt blødere end, hvis der ikke havde været nogen modulation. 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Snap.PNG}
 \caption{Her ses et signal uden modulation}
 \label{fig:snap}
 \end{figure} 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Triangle.PNG}
 \caption{Her ses trekant-signalet}
 \label{fig:triangle}
 \end{figure} 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Steep10.PNG}
 \caption{Her ses trapez-signalet}
 \label{fig:steep10}
 \end{figure} 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/Smooth.PNG}
 \caption{Her er signalet hvor fasen tvinges i 0}

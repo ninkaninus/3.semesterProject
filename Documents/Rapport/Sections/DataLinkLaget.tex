@@ -6,7 +6,7 @@ Datalinklaget er det første lag efter det fysiske. Det yder services til transp
 \subsection{Afsender}
 For at facilitere den logiske forbindelse mellem de afsendende- og modtagende datalinklag, er det relevant at beslutte sig for et pakkeformat, som begge sider kender til. Der er her fokus på overvejelser omkring pakkernes størrelse, udformning og afgrænsning, samt hvilken redundant information der tilføjes, for at opnå den førnævnte funktionalitet.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.7]{Billeder/DataLinkLogical.PNG}
 \caption{Her ses et uddrag fra designklassediagrammet, som viser den logiske forbindelse mellem to datalinklag}
@@ -28,7 +28,7 @@ Et af projektets primære mål er udviklingen af en chat-klient. Chat-beskeder e
 \subsubsection{Pakkeindhold}
 Efter præmisserne for pakkernes opbygning var fastsat, skulle deres indhold fastsættes. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.8]{Billeder/DataLinkFrame.PNG}
 \caption{Her ses udformningen af en pakke på datalinklagets niveau}
@@ -107,7 +107,7 @@ Efter C++-implementeringen af både det afsendende og modtagende datalinklag, er
 
 En tidslinje for den logiske transmission af en et stykke data demonstreres på figur \ref{fig:DataLinkExample}. Data kommer fra afsenderens transportlag, og dette får tilføjet startflag og et CRC, udregnet for dataen i den grønne kasse. Herefter bliver informationen i den blå kasse bitstuffet, og til sidst tilføjes et slutflag. Det modtagende datalinklag fjerner hhv. flag, bitstuffing og CRC. Er dataen valid, placeres denne i en buffer til det modtagende transportlag.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.6]{Billeder/DataLinkExample.PNG}
 \caption{Eksempel på transmission af en pakke på datalinklaget}
