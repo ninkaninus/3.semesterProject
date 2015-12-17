@@ -28,7 +28,7 @@ Er pakkernes længde variabel, er det nødvendig at indsætte flag i begyndelsen
 Et af projektets primære mål er udviklingen af en chat-klient. Chat-beskeder er af naturlige årsager af meget varierende længde. Af denne årsag er det svært at finde en uniform pakke-længde, der minimerer spild i datatransmissionen. Derfor blev frames med variabel længde valgt.
 
 \subsubsection{Pakkeindhold}
-Disse præmisser bliver  brugt til at fastsætte pakkens opbygning og indhold.
+Disse præmisser bliver  bruget til at fastsætte pakkens opbygning og indhold.
 
 \begin{figure}[h!]
 \centering
@@ -67,6 +67,7 @@ Et CRC16 detekterer alle burst-fejl med en længde under 16. Sandsynligheden for
 
 \subsubsection{C++ implementering}
 Pakkernes indhold og udformning er implementeret i C++-klassen "Datalink-transmit"
+
 
 \paragraph{Beholder-format}\hfill \break
 I C++ implementeringen af afsenderen, var det oplagt at arbejde med et beholder-format, med beholdere til at indeholde pakkernes forskellige data-elementer.
