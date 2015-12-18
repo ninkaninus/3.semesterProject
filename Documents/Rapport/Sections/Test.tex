@@ -144,7 +144,7 @@ nyttevirkning = \frac{Data}{Header + Data}
 
 Uafhængig af hvor meget data der der sendes af gangen fra det øverste lag vil den administrative data være af fast længde. På applikationslaget tilføjes en 32 bits header til hele beskeden. På datalinklaget tilføjes en header og trailer på i alt 44 bits, hvis der anvendes et CRC16 til fejldetektion. og yderligere 8 bits preample på det fysiske lag. Udover dette skal der tilføjes 52 bits for hver ACK der skal sendes tilbage igen. Hvis hver frame har en maksimal datalængde pakkelængde er på henholdsvist 25 og 250 bytes, kan en nyttevirkningen udregnes som funktion af pakkelængden ved brug af formel \eqref{eq:Nyttevirkning}.  
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.5]{Billeder/Nyttevirkning25.jpg} 
 \includegraphics[scale=0.5]{Billeder/Nyttevirkning250.jpg}
