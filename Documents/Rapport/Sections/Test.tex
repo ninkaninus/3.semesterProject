@@ -3,7 +3,15 @@
 For at finde ud af hvordan der kan bestemmes en fornuftig grænseværdi, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere grænseværdien efter. 
 
 \subsection{Vinkel og afstand} \label{sec:afstand}
-Når man øger afstanden mellem mikrofon og højtaler, kan det forventes at magnitude falder kraftigt, men det er også interessant at vide om alle frekvenser bliver påvirket ens. Det kan testes ved at sende samme signal ved forskellige afstande, og se på om den gennemsnitlige magnitude ændrer sig med samme faktor for alle målepunkter. På figur \ref{fig:degrees} kan det ses at magnitude falder hurtigt, når afstanden øges, men det er svært at finde andre tendenser der gør sig gældende for alle frekvenser. Generelt er det svært at forudsige, hvordan magnitude vil opføre sig. Den samme test er også lavet ved 45 og 90 grader, og der kan man også fornemme udsvingende i magnitude, men de er bare ikke lige så udtalte som på figur \ref{fig:degrees}, da magnitude falder noget kraftigere med afstanden. De to andre tests kan ses i bilaget 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.2]{Billeder/Opstillinger/AngleTest45deg.jpg}
+\caption{Opstillingen af vinkel og afstandstests}
+\label{fig:opstilling}
+\end{figure} 
+
+Når man øger afstanden mellem mikrofon og højtaler, kan det forventes at magnitude falder kraftigt, men det er også interessant at vide om alle frekvenser bliver påvirket ens. Det kan testes ved at sende samme signal ved forskellige afstande, og se på om den gennemsnitlige magnitude ændrer sig med samme faktor for alle målepunkter. På figur \ref{fig:degrees} kan det ses at magnitude falder hurtigt, når afstanden øges, men det er svært at finde andre tendenser der gør sig gældende for alle frekvenser. Generelt er det svært at forudsige, hvordan magnitude vil opføre sig. Den samme test er også lavet ved 45 og 90 grader, og der kan man også fornemme udsvingende i magnitude, men de er bare ikke lige så udtalte som på figur \ref{fig:degrees}, da magnitude falder noget kraftigere med afstanden. De to andre tests kan ses i bilaget og selve opstillingen på figur \ref{fig:opstilling}.
 
 \begin{figure}[h!]
 \centering
@@ -14,7 +22,7 @@ Når man øger afstanden mellem mikrofon og højtaler, kan det forventes at magn
 
 \subsection{Vinduefunktioner} \label{sec:Windowfunction}
 
-Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral}) tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan blandt andet mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
+Når et signal samples, kan der opstå spectral leakage, hvis signalet er ude af fase, når man kommer til sidste sample. Denne diskontinuitet (figur \ref{fig:Spectral})\footnote{Digital Signal Processing, kapitel 4.3} tilfører støj til signalet i form a frekvenser, der egentlig ikke er til stede. Man kan blandt andet mindske indflydelsen af spectral leakage ved at gange en såkaldt vinduefunktion på alle samples. Vinduet går mod 0 i enderne, og er højest midt i signalet.\\
 Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast mængde af samples, der kigges på til at finde forskellige frekvenser. Det skal derfor også undersøges om problemet er stort nok til at det er nødvendigt at gøre noget ved det - der skal helst ikke foretages for mange beregninger i goertzel-algoritmen, da den bliver brugt hele tiden. For at teste det kan man plotte magnitude for det samme signal, med forskellige vinduer ganget på. 
 
 \begin{figure}[h!]
@@ -23,6 +31,8 @@ Spectral leakage vil nødvendigvis blive et problem, når der vælges en fast m�
 \caption{Her kan man se at der kommer uønskede frekvenser med i signalet, fordi N er valgt så samplingen stopper et stykke inde i 3. periode}
 \label{fig:Spectral}
 \end{figure} 
+
+
 
 \begin{figure}[h!]
 \centering
