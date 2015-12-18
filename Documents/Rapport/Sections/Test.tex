@@ -1,6 +1,16 @@
 \section{Test}
 
-For at finde ud af hvordan der kan bestemmes en fornuftig grænseværdi, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere grænseværdi efter. 
+For at finde ud af hvordan der kan bestemmes en fornuftig grænseværdi, skal der findes ud af hvorledes magnitude for DTMF-frekvenserne ændrer sig under forskellige fysiske forhold - nærmere bestemt vinklen mellem højtaler og mikrofon, afstanden mellem dem og transmissionshastigheden. Målet er at finde ud af, om der er tendenser man kan programmere grænseværdien efter. 
+
+\subsection{Vinkel og afstand} \label{sec:afstand}
+Når man øger afstanden mellem mikrofon og højtaler, kan det forventes at magnitude falder kraftigt, men det er også interessant at vide om alle frekvenser bliver påvirket ens. Det kan testes ved at sende samme signal ved forskellige afstande, og se på om den gennemsnitlige magnitude ændrer sig med samme faktor for alle målepunkter. På figur \ref{fig:degrees} kan det ses at magnitude falder hurtigt, når afstanden øges, men det er svært at finde andre tendenser der gør sig gældende for alle frekvenser. Generelt er det svært at forudsige, hvordan magnitude vil opføre sig. Den samme test er også lavet ved 45 og 90 grader, og der kan man også fornemme udsvingende i magnitude, men de er bare ikke lige så udtalte som på figur \ref{fig:degrees}, da magnitude falder noget kraftigere med afstanden. De to andre tests kan ses i bilaget 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Billeder/0degrees.jpg}
+\caption{Langs y-aksen kan man se den gennemsnitligt højeste magnitude for et signal. Samme signal er blevet målt ved forskellige afstande som er plottet ud ad x-aksen}
+\label{fig:degrees}
+\end{figure} 
 
 \subsection{Vinduefunktioner} \label{sec:Windowfunction}
 

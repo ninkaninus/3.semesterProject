@@ -110,7 +110,7 @@ Recorderen kommer fra SFML-biblioteket. Det er muligt at designe sin egen record
 \end{itemize}
 
 Der er sådan set en fungerende optagerklasse inkluderet i SFML-biblioteket fra starten af, men den er lidt mindre fleksibel, og nærmere tiltænkt brug som en slags plug-and-play optager. Det er ikke muligt løbende at trække samples ud af bufferen, hvis man er interesseret i at processere dem i real-time. Derfor er en custom recorder at foretrække i vores tilfælde. \\
-Recorderen kører i sin egen tråd, parallelt med alt andet, så derfor skal man huske at låse delte resourcer med en mutex, for at forhindre data race situationer - det er nødvendigt når man læser fra eller skriver til bufferen. SFML har også sin egen mutex-klasse som vi bruger flere steder.
+Recorderen kører i sin egen tråd, parallelt med alt andet, så derfor skal man huske at låse delte resourcer med en mutex, for at forhindre data race situationer - det er nødvendigt når der læses fra eller skrives til bufferen. SFML har også sin egen mutex-klasse som bruges flere steder.
 
 \subsubsection{Analyzer}
 
@@ -134,7 +134,7 @@ Når \textit{syncToFirstDTMF} leder bufferen igennem, er dens vigtigste opgave a
 
 \paragraph{Synkronisering af grænseværdier}\hfill \break
 
-Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirkes magnitude i forskellig grad for hver frekvens. SE REFERENCE HERXXXX. Det vil derfor være meget svært at programmere en fast grænseværdi på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere grænseværdien løbende mens programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
+Magnituden for de anvendte frekvenser varierer en del afhængigt af modulationen på afsendersiden, afstanden og vinklen imellem mikrofon og højtaler. Derudover påvirkes magnitude i forskellig grad for hver frekvens (se \ref{sec:afstand}). Det vil derfor være meget svært at programmere en fast grænseværdi på forhånd, medmindre det er til meget bestemte fysiske forhold. En bedre løsning er at synkronisere grænseværdien løbende mens programmet kører, så programmet bliver mere stabilt og kan anvendes i flere situationer.
 
 \begin{figure}[h!]
 \centering
