@@ -10,7 +10,6 @@
 #include "PhysicalReceive.h"
 #include <sstream>
 #include <thread>
-#include <Constants.h>
 #include <SFML\System\Mutex.hpp>
  
 using namespace std;

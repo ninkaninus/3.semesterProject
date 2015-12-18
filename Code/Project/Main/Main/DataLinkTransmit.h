@@ -5,7 +5,7 @@
 #include <random>
 #include <bitset>
 #include "Constants.h"
-#include "Transmitter\Transmitter\Transmitter.h"
+#include "Transmitter.h"
 
 //"Transmitter/Transmitter/Transmitter.h"
 

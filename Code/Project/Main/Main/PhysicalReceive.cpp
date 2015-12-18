@@ -15,13 +15,13 @@ void PhysicalReceive::init(int aSampleRate, int aProcessingTime)
 
 void PhysicalReceive::startRecording()
 {
-	std::cout << "Recording" << std::endl;
+	//std::cout << "Recording" << std::endl;
 	DTMF_analyzer.startRecording();
 }
 
 void PhysicalReceive::stopRecording()
 {
-	std::cout << "Stopped recording" << std::endl;
+	//std::cout << "Stopped recording" << std::endl;
 	DTMF_analyzer.stopRecording();
 }
 

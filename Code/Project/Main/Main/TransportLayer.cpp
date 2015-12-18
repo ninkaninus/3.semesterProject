@@ -1,5 +1,5 @@
 #include "TransportLayer.h"
-#include <Constants.h>
+#include "Constants.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -117,7 +117,7 @@ void TransportLayer::sendData()
 	
 	while (numberOfACKTries < DTMF::ACKTimeoutCount) {
 		transmitter.transmitFrame(frame);
-		cout << "ACK Try: " << numberOfACKTries + 1 << endl;
+		//cout << "ACK Try: " << numberOfACKTries + 1 << endl;
 		if (!receiveACK()) {
 			numberOfACKTries++;
 		}
@@ -128,7 +128,7 @@ void TransportLayer::sendData()
 		}
 	}
 
-	cout << "Ran out of ACK tries" << endl;
+	//cout << "Ran out of ACK tries" << endl;
 	setSendAllowed(false);
 	std::thread sendAgainTimer(&TransportLayer::sendAgainTimer, this);
 	sendAgainTimer.detach();
@@ -182,7 +182,7 @@ void TransportLayer::sendAgainTimer() {
 
 	float timeOut = unif(eng);
 
-	cerr << "Starting a random wait time of: " << timeOut << endl;
+	//cerr << "Starting a random wait time of: " << timeOut << endl;
 
 	while (timeDifference < timeOut)
 	{
@@ -190,7 +190,7 @@ void TransportLayer::sendAgainTimer() {
 		diffTimePoint = endTimePoint - startTimePoint;
 		timeDifference = diffTimePoint.count();
 	}
-	cerr << "Waited enough time now, ready to resend!" << endl;
+	//cerr << "Waited enough time now, ready to resend!" << endl;
 	setSendAllowed(true);
 }
 

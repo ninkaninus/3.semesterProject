@@ -160,7 +160,7 @@ void ApplicationLayer::handleReceive()
 				messageInBuffer.push_back(messageIn);
 				mutex.unlock();
 				
-				cout << "Jonas siger: " << messageIn << endl;
+				cout << "Besked: " << messageIn << endl;
 				messageIn = "";
 			}
 			delete tempChunk;
