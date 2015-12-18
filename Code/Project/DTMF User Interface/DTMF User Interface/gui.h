@@ -25,7 +25,6 @@ public:
 	void on_textEdit_returnPressed();
 
 private:
-	ApplicationLayer AppObj;
 	QString qsData;
 	string data;
 	Ui::GuiClass ui;

@@ -14,7 +14,7 @@ void Gui::stringToQString()
 
 void Gui::transmitInfo()
 {
-	AppObj.send(data);
+	//AppObj.send(data);
 }
 
 void Gui::showOnGui()

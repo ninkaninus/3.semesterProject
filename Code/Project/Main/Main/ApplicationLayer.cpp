@@ -4,8 +4,8 @@
 
 ApplicationLayer::ApplicationLayer()
 {
-	std::thread appLoop(&ApplicationLayer::loop, this);
-	appLoop.detach();
+	/*std::thread appLoop(&ApplicationLayer::loop, this);
+	appLoop.detach();*/
 }
 
 ApplicationLayer::~ApplicationLayer()
