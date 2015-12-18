@@ -1,12 +1,12 @@
 \section{Transportlaget}
-Transportlaget ligger i denne protokolsuite mellem applikationslaget og datalinklaget. Grunden til dette er at netværkslaget ikke er relevant i forhold til node-til-node kommunikation. Transportlaget står for at implementere flow-og fejlkontrol. Da dette ikke er implementeret i de underliggende lag. XXXX specificer hvad der menes med "ingen fejlkontrol i lavere lag" XXXX Transportlaget står derfor for en pålidelig dataoverførsel over de upålidelige underliggende lag.
+Transportlaget ligger i denne protokolsuite mellem applikationslaget og datalinklaget. Grunden til dette er at netværkslaget ikke er relevant i forhold til node-til-node kommunikation. Transportlaget står for at implementere flow-og fejlkontrol der sørger for at garanterer en pålidelig forbindelse mellem to enheder. Transportlaget står derfor for en pålidelig dataoverførsel over de ellers upålidelige underliggende lag.
 
 \subsection{Protokoltype}
 Den simpleste protokoltype at implementere er en protokol, hvor data sendes med det samme det modtages fra applikationslaget. Og data sendes op til applikationslaget i det øjeblik transportlaget har modtaget det. Denne protokoltype har hverken fejl- eller flowkontrol. Hvis en pakke går tabt undervejs i forsendelsen f.eks. fordi den er blevet fundet korrupt nede på datalinklaget. Så vil dette aldrig blive opdaget af hverken det modtagende eller det afsendende transportlag. Data vil derfor være gået tabt. For at modvirke dette, kan der implementeres ACK beskeder, der sendes tilbage fra modtageren til afsenderen, og essentielt kvitterer for den modtagende pakke. ACK kan enten sendes tilbage for hver datapakke der bliver modtaget, eller der kan køres kumulative ACK's, hvor et ACK kvitterer for flere pakker ad gangen. Der er blevet valgt at implementere stop-and-wait protokollen, der venter med at sende en ny datapakke, til der er modtaget et ACK for den foregående datapakke. Begrundelsen for dette er, at denne protokol giver mulighed en let-programmérbar fejlkontrol. Implementeringen danner grundlag for at kunne opgraderes til en anden protokol, hvis behovet opstår. Figur \ref{StopAndWait} viser stop-and-wait protokollen.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{Billeder/StopAndWait.png}
-\caption{Stop-and-wait protokollen
+\caption{Stop-and-wait protokollen \\ (modificeret udgave af: Data Communications and Networking, figur 23.20)
 \label{StopAndWait}}
 \end{figure}
 
@@ -18,12 +18,11 @@ Transportlaget implementerer flow-kontrol i form af de ACK-beskeder, der sendes 
 
 \subsection{Fejlkontrol}
 Der er implementeret fejlkontrol i form af sekvensnumre. Afsenderen af data ved hvilket sekvensnummer den forventer at få tilbage på et ACK, og modtageren ved hvilket sekvensnummer den næste modtagne pakke burde have. Et eksempel på, hvordan fejlkontrollen fungerer kan ses i figur \ref{StopAndWaitFlow}.
-XXXX der skal tilføjes fodnoter til kopierede figurer med reference til KOM-bog og kapitel.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{Billeder/StopAndWaitFlow.png}
-\caption{flowdiagram over stop-and-wait protokollen
+\caption{Flowdiagram over stop-and-wait protokollen \\(Data Communications and Networking, figur 23.22)
 \label{StopAndWaitFlow}}
 \end{figure}
 
