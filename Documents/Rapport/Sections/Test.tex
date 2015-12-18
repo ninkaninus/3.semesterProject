@@ -91,8 +91,6 @@ For at afgøre hvilken indflydelse tonebredden har på, hvor svært det er at af
 
 Rent visuelt bliver det svært at afkode nogen information, ved tonebredder under 20 ms, og selv ved 20 ms er margenen for placeringen af grænseværdien ret smal. Ved de nuværende forhold er 25 ms, nok det mest stabile, men 20 ms kan også lade sig gøre, hvis man får lavet sig en fornuftig grænseværdi.
 
-Something something zero-padding... Det kan muligvis lade sig gøre at øge frekvensopløsning ved at zero-padde de samples, der bliver behandlet i goertzel-algoritmen.
-
 \subsection{DTMF-tone transition} \label{sec:ToneTransition}
 
 Til at hjælpe med synkroniseringen moduleres signalet på afsendersiden, så amplituden er størst i midten af tonen og går mod 0 i enderne. Det har også den effekt at signalet ikke lige pludselig hopper tilbage til 0, når der skiftes til en ny tone, hvis signalet ikke er i fase i overgangen. Det får højtalerne til at poppe og bidrager med unødig støj til signalet. Oprindeligt blev der kun moduleret så amplituden steg lineært fra 0 \% i starten af tonen til 100 \% i midten og derfra faldt den lineært til 0 igen (se figur \ref{fig:modulation}). 
@@ -137,10 +135,10 @@ Moduleringen betyder at man skærer en masse af et ellers fint signal fra. Derfo
 Det kan ses at magnitude for de to nye moduleringer (se figur \ref{fig:steep10} og \ref{fig:smooth}) er større og til stede i længere tid. Men ingen af dem er mærkbart bedre eller værre, end hvis der ikke er nogen modulering. Magnitude er mindre på trekant-signalet, men alle peaks er bedre definerede og der er ikke så meget støj.
 
 \subsection{Nyttevirkningsberegninger for pakkeformatet}
-Da det må antages at fejl kan forkomne under transmissionen, skal pakkerne tilføjes en header og trailer, som kan kompensere for de fejl der måtte forvæntes at opstå under transmissionen. Denne redundante information er nødvendig for en pålidelig kommunikation, men dette optager plads for data som ellers kunne være sendt. Effektiviteten af den anvendte pakkeformat vil derfor kunne beregnes ved nedenstående formel: 
+Da det må antages at fejl kan forkomne under transmissionen, skal pakkerne tilføjes en header og trailer, som kan kompensere for de fejl der måtte forventes at opstå under transmissionen. Denne redundante information er nødvendig for en pålidelig kommunikation, men dette optager plads for data som ellers kunne være sendt. Effektiviteten af den anvendte pakkeformat vil derfor kunne beregnes ved nedenstående formel: 
 
 \begin{equation}
-nyttevirkning = \frac{Data}{Headder + Data}
+nyttevirkning = \frac{Data}{Header + Data}
 \label{eq:Nyttevirkning}
 \end{equation}
 
@@ -148,10 +146,10 @@ Uafhængig af hvor meget data der der sendes af gangen fra det øverste lag vil 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{Billeder/Nyttevirkning_25.jpg} 
-\includegraphics[scale=0.5]{Billeder/Nyttevirkning_250.jpg}
-\caption{ Her ses hvordan nyttevirkningen af hver transmitterede tekstbesked, afhængeer af længden framelængden, og det total dataindhold som skal sendes fra applikationslaget}
-\label{fig:Nyttevirkning_ved_25}
+\includegraphics[scale=0.5]{Billeder/Nyttevirkning25.jpg} 
+\includegraphics[scale=0.5]{Billeder/Nyttevirkning250.jpg}
+\caption{ Her ses hvordan nyttevirkningen af hver transmitterede tekstbesked, afhænger af længden framelængden, og det total dataindhold som skal sendes fra applikationslaget}
+\label{fig:Nyttevirkningved25}
 \end{figure}
 
-Som vist af figur \ref{eq:Nyttevirkning}, har længden af datapakkerne en stor effekt på systemets nyttevirkning. Ved en pakkestørrelse på 25 bits + header, kan det aflæses af grafen at nyttevirkningen vil konvergere mod 65 \% efterhånden som længden af den sendte besked går mod uendelig. Tidobles indholdet af hver frame, vil udnyttelsen af mediet i stedet konvergere mod 95 \%. Denne modellering tager dog ikke højde for at hele pakker kan gå tabt under transmissionen. 
+Som vist af figur \ref{fig:Nyttevirkningved25}, har længden af datapakkerne en stor effekt på systemets nyttevirkning. Ved en pakkestørrelse på 25 bits + header, kan det aflæses af grafen at nyttevirkningen vil konvergere mod 65 \% efterhånden som længden af den sendte besked går mod uendelig. Tidobles indholdet af hver frame, vil udnyttelsen af mediet i stedet konvergere mod 95 \%. Denne modellering tager dog ikke højde for at hele pakker kan gå tabt under transmissionen. 

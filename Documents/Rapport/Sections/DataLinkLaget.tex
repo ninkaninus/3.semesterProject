@@ -1,7 +1,6 @@
 \section{Datalinklag}
 Datalinklaget er laget efter det fysiske. Det yder services til transportlaget og modtager services fra det fysiske lag.
-Når datalinklaget tager rollen som afsender, skal det modtage payloads fra transportlaget, samt tage ansvaret for at pakke disse ned i et format.
-Dette tillader det modtagende datalinklag at genkende og finde fejl i den transmitterede data.
+Når datalinklaget tager rollen som afsender, skal det modtage payloads fra transportlaget, samt tage ansvaret for at pakke disse ned i et format, der tillader det modtagende datalinklag at genkende og finde fejl i den transmitterede data.
 Når datalinklaget tager rollen som modtager, skal den modtage en bitstrøm fra sit fysiske lag, og er ansvarlig for genkendelse og opdeling af disse i de originale datapakker.
 Herefter skal det originale payload fra afsenderens transportlag verificeres og udvindes, således at det kan gives videre til det modtagende transportlag.
 
@@ -37,7 +36,7 @@ Disse præmisser bliver  bruget til at fastsætte pakkens opbygning og indhold.
 \label{fig:DataLinkFrame}
 \end{figure}
 
-Flag: Pakkerne af variabel størrelse markeres gennem hhv. start- og stopflag. Hvis flagene indgår i dataens bitmønster, er det nødvendigt at tilføje bits i data-link lagets afsender, så disse ikke bliver forvekslet med begyndelsen eller afslutningen på en frame. De indsatte bits skal ligeledes fjernes i afsenderen. 
+\textbf{Flag:} Pakkerne af variabel størrelse markeres gennem hhv. start- og stopflag. Hvis flagene indgår i dataens bitmønster, er det nødvendigt at tilføje bits i datalinklagets afsender, så disse ikke bliver forvekslet med begyndelsen eller afslutningen på en frame. De indsatte bits skal ligeledes fjernes i afsenderen. 
 
 \textbf{Type:} Da transportlaget skal benytte acknowledge-pakker i implementeringen af flow- og fejlkontrol, er det nødvendigt med et type-felt. Dette denoterer pakken som værende enten en kvitterings- eller datapakke. Datalinklaget har fået ansvaret for at tilføje dette felt, da resten af datapakken alligevel opbygges på dette lag, og det derfor er oplagt at tilføje.
 
@@ -51,18 +50,18 @@ Der er implementeret CRC af varierende størrelser. Dataordet, som består af pa
 Når en CRC længde vælges, detekteres alle fejl med en længde lavere eller lig CRC'ets længde. Er fejlens længde 1 længere end CRC'et, udregnes sandsynligheden for detektering af fejl ved følgende ligning:
 \begin{equation}
 \label{eq:CRCError}
-1-(1/2)^{r-1}
+P_{fejl1}=1-(1/2)^{r-1}
 \end{equation}
 
 Er fejlen længere end dette, udregnes sandsynligheden for detektion ved:
 \begin{equation}
 \label{eq:CRCError2}
-1-(1/2)^r
+P_{fejl2}=1-(1/2)^r
 \end{equation}
 Et CRC8 detekterer alle burst-fejl med en længde under 8. I dette tilfælde kan sandsynligheden for at detektere fejl af højere længde end 10 findes som $1-(1/2)^8 = 99,61\%$
 Et CRC16 detekterer alle burst-fejl med en længde under 16. Sandsynligheden for at detektere længere fejl end 18 findes som $1-(1/2)^{16} = 99,9999\%.$
 	Det ses, at sandsynligheden for at detektere fejl fra et CRC8 til et CRC16 stiger drastisk. Denne sandsynlighed blev vurderet som værende tilstrækkelig stor, og et CRC16 blev valgt.
-    Der blev valgt ikke at fokusere på manuel dimensionering af en generator. Istedet benyttedes et, der med garanti opfylder kravene opfylder kravene for gode polynomier\footnote{Data Communications and Networking, kapitel 10.3.4}.
+    Der blev valgt ikke at fokusere på manuel dimensionering af en generator. Istedet benyttedes et, der med garanti opfylder kravene for gode polynomier\footnote{Data Communications and Networking, kapitel 10.3.4}.
 
 
 \subsubsection{C++ implementering}
@@ -96,7 +95,7 @@ Modtagerens første opgave er genkendelse af data fra det fysiske lag. Fra udvik
 \subsubsection{Buffering}
 Når dataen er valideret, skal den udvindes fra vectoren og gemmes. Til dette benyttes en struct, hvor hhv. adresse, type, sekvensnummer og payload placeres. Denne struct skal placeres i en buffer, hvor den kan tilgås af det modtagende transportlag.
 
-\subsection{C++ implementering}
+\subsubsection{C++ implementering}
 Efter fastsættelsen af modtagerens ansvarsområde og fremgangsmåde, kan funktionaliteten implementeres.
 	DataLink-Receive benytter følgende metoder til at implementere genkendelse, validering og videresendelse af pakker.
 
