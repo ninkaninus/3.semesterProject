@@ -41,7 +41,7 @@ protected:
 	deque<std::string> messageInBuffer;
 	deque<std::string> messageOutBuffer;
 	deque<std::vector<bool>*> currentBuffer;
-	const unsigned int BITS_IN_FRAME = 160 * 8;
+	const unsigned int BITS_IN_FRAME = 250 * 8;
 	sf::Mutex mutex;
 };
 
