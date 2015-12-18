@@ -1,6 +1,7 @@
-\section{Opgradering}
-dette er fokusoprøder til optimering af 
-Brug af tråde på modtager siden kan samles i en tråd
+\section{Forbedringer}
 
-En taktik til at transmitere mere data, kan være ved at transmitere mere 
-Hvis man sender to toner ven i hinanden  (og tre og fire 4). 
+Det kunne være en mulighed at øge båndbredden ved at overlejre flere DTMF-toner, så man på den måde kan få flere signalniveauer. Implementeringen af det er ikke kompliceret, og det ville ikke kræve meget ekstra arbejde at bygge på det nuværende system. Det kan dog være spørgsmålet om flere toner vil skabe mere interferens, men det vil kræve flere tests, hvis det skal påvises. 
+
+En anden opgradering, er muligheden for at sende kumulative acknowledgements, så der kan kvitteres for mere end en pakke ad gangen. 
+
+Endelig kunne det være en fordel at strømline koden, så der ikke er så store forskelle på kodeskikken i klasserne. Der er en smule redundans nogle enkelte steder, hvor der har været lidt tvivl om, hvor ansvaret for bestemte funktionaliteter skulle placeres. 
