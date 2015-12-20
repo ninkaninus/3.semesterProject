@@ -222,14 +222,20 @@ char Analyzer::findNextDTMF()
 {
 	int column = 5;
 	int row = 5;
-
+	float mag = 0;
+	float currentMag = 0;
 
 	for (int i = 0; i < 4; i++)
 	{
-		if(myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_HI[i]) > thresholdMap[FREQ_HI[i]])
+		currentMag = myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_HI[i]);
+		if(currentMag > thresholdMap[FREQ_HI[i]])
 		{
-			column = i;
-			break;
+			if (currentMag > mag)
+			{
+				mag = currentMag;
+				column = i;
+			}
+			//break;
 		}
 	}
 	if (column == 5)
@@ -239,12 +245,20 @@ char Analyzer::findNextDTMF()
 	}
 	else
 	{
+		mag = 0;
+		currentMag = 0;
+
 		for (int i = 0; i < 4; i++)
 		{
-			if (myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_LO[i]) > thresholdMap[FREQ_LO[i]])
+			currentMag = myGoertzel.algorithm(activeBuffer, sampleWindow, FREQ_LO[i]);
+			if (currentMag > thresholdMap[FREQ_LO[i]])
 			{
-				row = i;
-				break;
+				if (currentMag > mag)
+				{
+					mag = currentMag;
+					row = i;
+					//break;
+				}
 			}
 		}
 	}

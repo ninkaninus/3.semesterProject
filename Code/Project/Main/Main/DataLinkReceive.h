@@ -53,7 +53,7 @@ protected:
 	deque<DTMF::Frame> toTrans;
 	int fail;
 	unsigned int sampleRate = 8000;
-	unsigned int processingTime = 25;
+	unsigned int processingTime = 20;
 
 	sf::Mutex mutex;
 
